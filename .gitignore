@@ -1,0 +1,4 @@
+bin/
+*.xcuserstate
+*.class
+.DS_Store
