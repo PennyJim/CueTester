@@ -102,14 +102,23 @@ public class RunRunner {
 			public void run() {
 				try {
 					RunnerObj currentRunner = null;
-					while (!commands.isEmpty())
+					int startIndex = -1, repeatIndex = -1;
+					for (int curIndex = -1; curIndex < commands.size();)
 					{
 						if (currentRunner == null || !currentRunner.isAlive())
 						{
-							commands.remove(currentRunner);
-							if (commands.size() > 0)
+							curIndex++;
+//							commands.remove(currentRunner);
+							if (commands.size() > curIndex && commands.get(curIndex).getCommandType() != null)
 							{
-								currentRunner = commands.get(0);
+								currentRunner = commands.get(curIndex);
+								System.out.println(currentRunner.getCommandType());
+								if (currentRunner.getCommandType().equals("START")) { startIndex = curIndex; }
+								else if (currentRunner.getCommandType().equals("REPEAT"))
+								{ 
+									repeatIndex = curIndex;
+									curIndex = startIndex;
+								}
 								currentRunner.executeOnThread();
 							} else {
 								currentRunner = null;
@@ -118,7 +127,7 @@ public class RunRunner {
 					}
 				} catch (Exception e)
 				{
-					
+					System.err.println(e);
 				}
 			}
 		});
