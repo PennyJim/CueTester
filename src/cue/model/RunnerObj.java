@@ -6,6 +6,8 @@ public abstract class RunnerObj {
 	
 	public void execute() {
 	}
+	public void executeOnThread() {
+	}
 	public boolean isAlive()
 	{
 		return false;

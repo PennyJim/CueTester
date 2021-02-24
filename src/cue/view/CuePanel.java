@@ -29,6 +29,7 @@ public class CuePanel extends JPanel {
 	private JTextArea textArea;
 	private JButton pickColor;
 	private JButton runButton;
+	private RunRunner runner;
 	
 	public CuePanel(CueController controller)
 	{
@@ -40,6 +41,7 @@ public class CuePanel extends JPanel {
 		this.textArea = new JTextArea();
 		this.pickColor = new JButton("Pick Color");
 		this.runButton = new JButton("Run");
+		this.runner = new RunRunner("", textArea);
 		
 		setupPanel();
 		setupListeners();
@@ -114,7 +116,8 @@ public class CuePanel extends JPanel {
 	
 	private String run2(String code)
 	{
-		RunRunner runner = new RunRunner(code, textArea);
+		runner.setCode(code);
+		runner.whatDoINeedToRun();
 		if (runner.iFailed) return "Failure to execute code";
 		return runner.execute();
 	}

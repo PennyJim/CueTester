@@ -9,7 +9,7 @@ import javax.swing.JTextArea;
 
 public class RunRunner {
 	
-	private final String code;
+	private String code;
 	private final JTextArea textArea;
 	private ArrayList<RunnerObj> commands;
 	public boolean iFailed = false;
@@ -19,7 +19,12 @@ public class RunRunner {
 		this.code = code;
 		this.textArea = textArea;
 		commands = new ArrayList<>();
-		whatDoINeedToRun();
+//		whatDoINeedToRun();
+	}
+	
+	public void setCode(String code)
+	{
+		this.code = code;
 	}
 	
 	public String whatDoINeedToRun()
@@ -29,7 +34,7 @@ public class RunRunner {
 			if (!code.substring(0, 5).equals("START")) { return "Needs to start with \"START\""; }
 			
 			String[] sentences = code.split("\n");
-			
+			commands.clear();
 			int startIndex = 0;
 			int loopIndex = -1;
 			for (int index = 0; index < sentences.length; index++)
@@ -105,7 +110,7 @@ public class RunRunner {
 							if (commands.size() > 0)
 							{
 								currentRunner = commands.get(0);
-								currentRunner.execute();
+								currentRunner.executeOnThread();
 							} else {
 								currentRunner = null;
 							}
