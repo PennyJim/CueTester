@@ -16,8 +16,10 @@ public class RunRunner {
 	private final JButton proceedButton;
 	private final JButton pauseButton;
 	
+	
 	private ArrayList<RunnerIFace> commands;
 	public boolean iFailed = false;
+	private boolean doProceed = false;
 	private Thread t;
 	
 	public RunRunner(String code, JTextArea textArea, JButton stopButton, JButton proceedButton, JButton pauseButton) {
@@ -109,6 +111,7 @@ public class RunRunner {
 	
 	public String execute()
 	{	
+//		stop();
 		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -119,16 +122,18 @@ public class RunRunner {
 					{
 						if (currentRunner == null || !currentRunner.isAlive())
 						{
+							if(doProceed && curIndex <= repeatIndex) { curIndex = repeatIndex; doProceed = false; }
 							curIndex++;
 //							commands.remove(currentRunner);
 							if (commands.size() > curIndex && commands.get(curIndex).getCommandType() != null)
 							{
 								currentRunner = commands.get(curIndex);
-								System.out.println(currentRunner.getCommandType());
+//								System.out.println(currentRunner.getCommandType());
 								if (currentRunner.getCommandType().equals("START")) { startIndex = curIndex; }
 								else if (currentRunner.getCommandType().equals("REPEAT"))
 								{ 
-									repeatIndex = curIndex;
+									System.out.println(repeatIndex);
+									if (curIndex > repeatIndex) {repeatIndex = curIndex; }
 									curIndex = startIndex;
 								}
 								currentRunner.executeOnThread();
@@ -153,13 +158,19 @@ public class RunRunner {
 		});
 		t.start();
 		return null;
-		
-		
+	}
+	
+	public void proceed()
+	{
+		doProceed = true;
 	}
 	
 	public void stop()
 	{
-		t.stop();
+		if (t.isAlive())
+		{
+			t.stop();
+		}
 	}
 	
 	public void pause()
