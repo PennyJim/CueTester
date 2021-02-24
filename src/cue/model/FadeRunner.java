@@ -42,6 +42,7 @@ public class FadeRunner extends RunnerObj {
 						e.printStackTrace();
 					}
 				}
+				panel.setBackground(new Color(endColor[0], endColor[1], endColor[2]));
 				
 			}
 		});
