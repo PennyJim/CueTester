@@ -117,8 +117,8 @@ public class CuePanel extends JPanel {
 	private String run2(String code)
 	{
 		runner.setCode(code);
-		runner.whatDoINeedToRun();
-		if (runner.iFailed) return "Failure to execute code";
+		String output = runner.whatDoINeedToRun();
+		if (runner.iFailed) return output;
 		return runner.execute();
 	}
 	
