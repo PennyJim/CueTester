@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import cue.controller.CueController;
+import cue.model.RunRunner;
 
 public class CuePanel extends JPanel {
 
@@ -25,6 +26,8 @@ public class CuePanel extends JPanel {
 	private JButton runButton;
 	private JButton pickColor;
 	
+	private RunRunner runner;
+	
 	public CuePanel(CueController controller)
 	{
 		super();
@@ -38,6 +41,8 @@ public class CuePanel extends JPanel {
 		this.proceedButton = new JButton("Proceed");
 		this.runButton = new JButton("Run");
 		this.pickColor = new JButton("Pick Color");
+		
+		this.runner = new RunRunner("", textArea);
 		
 		setupPanel();
 		setupListeners();
@@ -103,14 +108,16 @@ public class CuePanel extends JPanel {
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				String output = run(textArea.getText().toUpperCase());
-				if (output != null)
+				runner.setCode(textArea.getText().toUpperCase());
+				String output = runner.whatDoINeedToRun();
+				if (output != null && runner.iFailed)
 				{
 					textArea.setBackground(Color.WHITE);
 					JOptionPane.showMessageDialog(null, "Program Failed:\n" + output , "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
 				}
 				else
 				{
+					runner.execute();
 					JOptionPane.showMessageDialog(null, "Program Succeded", "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
 				}
 			}
