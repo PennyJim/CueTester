@@ -85,10 +85,10 @@ public class RunRunner {
 					commands.add(new FadeRunner(textArea, length, endColor));
 					System.out.println("Added FADE runner");
 				}
-				else if (words[0].equals("JUMP"))
-				{
-					//Fade to the next color in a very short amount of time
-				}
+//				else if (words[0].equals("JUMP")) //Probably won't be used. Either that or will replace REPEAT & START after adding numbered lines to the 'editor'
+//				{
+//					//Fade to the next color in a very short amount of time
+//				}
 				else if (words[0].equals("REPEAT"))
 				{
 					commands.add(new RepeatRunner());
