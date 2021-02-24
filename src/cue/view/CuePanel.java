@@ -14,6 +14,7 @@ public class CuePanel extends JPanel {
 
 	private CueController controller;
 	private SpringLayout layout;
+	private Font font;
 	
 	private JScrollPane textPane;
 	private JTextArea textArea;
@@ -41,14 +42,20 @@ public class CuePanel extends JPanel {
 		this.setBackground(Color.DARK_GRAY);
 		this.setSize(800,600);
 		this.setLayout(layout);
+		
+		font = this.getFont();
+		font = new Font(font.getFontName(), font.getStyle(), 20);
 
 		textArea.setMargin(new Insets(5, 5, 5, 5));
+		textArea.setFont(font);
 		textArea.setBackground(Color.WHITE);
 		textPane.setViewportView(textArea);
 		this.add(textPane);
 		
+		pickColor.setFont(font);
 		this.add(pickColor);
 		
+		runButton.setFont(font);
 		this.add(runButton);
 	}
 	
