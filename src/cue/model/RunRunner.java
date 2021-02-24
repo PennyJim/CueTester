@@ -12,13 +12,21 @@ public class RunRunner {
 	
 	private String code;
 	private final JTextArea textArea;
+	private final JButton stopButton;
+	private final JButton proceedButton;
+	private final JButton pauseButton;
+	
 	private ArrayList<RunnerIFace> commands;
 	public boolean iFailed = false;
 	private Thread t;
 	
-	public RunRunner(String code, JTextArea textArea) {
+	public RunRunner(String code, JTextArea textArea, JButton stopButton, JButton proceedButton, JButton pauseButton) {
 		this.code = code;
 		this.textArea = textArea;
+		this.stopButton = stopButton;
+		this.proceedButton = proceedButton;
+		this.pauseButton = pauseButton;
+		
 		commands = new ArrayList<>();
 //		whatDoINeedToRun();
 	}
