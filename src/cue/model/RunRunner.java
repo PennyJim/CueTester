@@ -63,7 +63,8 @@ public class RunRunner {
 				}
 				else if (words[0].equals("HOLD"))
 				{
-					//Wait until button press?
+					commands.add(new HoldRunner());
+					System.out.println("Added HOLD runner");
 				}
 				else if (words[0].equals("WAIT"))
 				{
@@ -136,6 +137,8 @@ public class RunRunner {
 									if (curIndex > repeatIndex) {repeatIndex = curIndex; }
 									curIndex = startIndex;
 								}
+								else if (currentRunner.getCommandType().equals("HOLD")) { while (!doProceed) { Thread.sleep(10); } }
+								
 								currentRunner.executeOnThread();
 							} else {
 								currentRunner = null;
