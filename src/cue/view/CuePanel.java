@@ -1,5 +1,11 @@
 package cue.view;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 import cue.controller.CueController;
@@ -9,9 +15,10 @@ public class CuePanel extends JPanel {
 	private CueController controller;
 	private SpringLayout layout;
 	
-	private JTextField textField;
-	private JButton runButton;
+	private JScrollPane textPane;
+	private JTextArea textArea;
 	private JButton pickColor;
+	private JButton runButton;
 	
 	public CuePanel(CueController controller)
 	{
@@ -19,9 +26,10 @@ public class CuePanel extends JPanel {
 		this.controller = controller;
 		this.layout = new SpringLayout();
 		
-		this.textField = new JTextField();
-		this.runButton = new JButton("Run");
+		this.textPane = new JScrollPane();
+		this.textArea = new JTextArea();
 		this.pickColor = new JButton("Pick Color");
+		this.runButton = new JButton("Run");
 		
 		setupPanel();
 		setupListeners();
@@ -30,9 +38,18 @@ public class CuePanel extends JPanel {
 	
 	private void setupPanel()
 	{
-		this.add(textField);
-		this.add(runButton);
+		this.setBackground(Color.DARK_GRAY);
+		this.setSize(800,600);
+		this.setLayout(layout);
+
+		textArea.setMargin(new Insets(5, 5, 5, 5));
+		textArea.setBackground(Color.WHITE);
+		textPane.setViewportView(textArea);
+		this.add(textPane);
+		
 		this.add(pickColor);
+		
+		this.add(runButton);
 	}
 	
 	private void setupListeners()
@@ -42,17 +59,19 @@ public class CuePanel extends JPanel {
 	
 	private void setupLayout()
 	{
-		layout.putConstraint(SpringLayout.WEST, textField, 50, SpringLayout.WEST, this);
-		layout.putConstraint(SpringLayout.EAST, textField, -50, SpringLayout.EAST, this);
-		layout.putConstraint(SpringLayout.NORTH, textField, 50, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, textPane, 25, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.EAST, textPane, -25, SpringLayout.EAST, this);
+		layout.putConstraint(SpringLayout.NORTH, textPane, 25, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.SOUTH, textPane, -12, SpringLayout.NORTH, pickColor);
 
-		layout.putConstraint(SpringLayout.WEST, pickColor, 0, SpringLayout.EAST, textField);
-		layout.putConstraint(SpringLayout.EAST, pickColor, 0, SpringLayout.EAST, textField);
-		layout.putConstraint(SpringLayout.NORTH, pickColor, 20, SpringLayout.SOUTH, textField);
+		layout.putConstraint(SpringLayout.WEST, pickColor, 0, SpringLayout.WEST, textPane);
+		layout.putConstraint(SpringLayout.EAST, pickColor, 0, SpringLayout.EAST, textPane);
+		layout.putConstraint(SpringLayout.NORTH, pickColor, -33, SpringLayout.NORTH, runButton);
+		layout.putConstraint(SpringLayout.SOUTH, pickColor, -8, SpringLayout.NORTH, runButton);
 		
-		layout.putConstraint(SpringLayout.WEST, runButton, 0, SpringLayout.WEST, textField);
-		layout.putConstraint(SpringLayout.EAST, runButton, 0, SpringLayout.EAST, textField);
-		layout.putConstraint(SpringLayout.NORTH, runButton, 20, SpringLayout.SOUTH, pickColor);
-		layout.putConstraint(SpringLayout.SOUTH, runButton, -50, SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.WEST, runButton, 0, SpringLayout.WEST, textPane);
+		layout.putConstraint(SpringLayout.EAST, runButton, 0, SpringLayout.EAST, textPane);
+		layout.putConstraint(SpringLayout.NORTH, runButton, -50, SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.SOUTH, runButton, -25, SpringLayout.SOUTH, this);
 	}
 }
