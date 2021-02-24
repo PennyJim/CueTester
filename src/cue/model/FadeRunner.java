@@ -10,6 +10,7 @@ public class FadeRunner implements RunnerIFace
 	private final int time;
 	private final int[] endColor;
 	private boolean isRunning = false;
+	private boolean stopEarly = false;
 	private Thread t;
 	
 	public FadeRunner(JTextArea panel, int time, int[] endColor) {
@@ -39,7 +40,7 @@ public class FadeRunner implements RunnerIFace
 		long endMilis = startMilis + time;
 		Color start = panel.getBackground();
 		int[] startColor = new int[] {start.getRed(), start.getGreen(), start.getBlue()};
-		while (System.currentTimeMillis() < endMilis)
+		while (System.currentTimeMillis() < endMilis && !stopEarly)
 		{
 			double factor = (double)(System.currentTimeMillis() - startMilis) / (double)time;
 			panel.setBackground(new Color(	startColor[0] + (int)(factor * (double)(endColor[0] - startColor[0])),
@@ -52,8 +53,13 @@ public class FadeRunner implements RunnerIFace
 				e.printStackTrace();
 			}
 		}
-		panel.setBackground(new Color(endColor[0], endColor[1], endColor[2]));
+		if (!stopEarly) {panel.setBackground(new Color(endColor[0], endColor[1], endColor[2])); }
 		isRunning = false;
+	}
+	
+	public void stopEarly()
+	{
+		stopEarly = true;
 	}
 	
 	public boolean isAlive()

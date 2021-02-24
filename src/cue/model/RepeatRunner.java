@@ -19,6 +19,7 @@ public class RepeatRunner implements RunnerIFace
 	}
 
 	public void executeOnThread() {}
+	public void stopEarly() {}
 	
 	public boolean isAlive() { return isRunning; }
 	public boolean isThreadAlive() { return t.isAlive(); }

@@ -141,6 +141,12 @@ public class RunRunner {
 								currentRunner = null;
 							}
 						}
+						else if (doProceed && currentRunner != null)
+						{
+							if (repeatIndex < curIndex) { doProceed = false; }
+							currentRunner.stopEarly();
+						}
+						System.out.println((currentRunner == null || !currentRunner.isAlive()) ? "Dead" : "Alive");
 					}
 				} catch (Exception e)
 				{
