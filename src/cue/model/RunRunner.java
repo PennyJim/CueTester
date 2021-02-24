@@ -68,7 +68,9 @@ public class RunRunner {
 				}
 				else if (words[0].equals("WAIT"))
 				{
-					//Wait x milliseconds
+					int length = Integer.parseInt(words[1]);
+					commands.add(new WaitRunner(length));
+					System.out.println("Added WAIT runner");
 				}
 				else if (words[0].equals("FADE"))
 				{
