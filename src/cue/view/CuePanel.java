@@ -61,6 +61,28 @@ public class CuePanel extends JPanel {
 	
 	private void setupListeners()
 	{
+		pickColor.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				Color color = Color.white;
+			    JFrame frame = new JFrame();
+			    frame.setAlwaysOnTop(true);
+			    color = JColorChooser.showDialog(frame, "Pick a color", color);
+			    
+				int position = textArea.getCaretPosition();
+				String codeFull = textArea.getText();
+				String codeFHalf = codeFull.substring(0, position);
+				String codeSHalf = codeFull.substring(position);
+				System.out.println(codeFHalf + "|" + codeSHalf);
+				
+				double red = ((double)color.getRed() / 255.0) * 100;
+				double green = ((double)color.getGreen() / 255.0) * 100;
+				double blue = ((double)color.getBlue() / 255.0) * 100;
+				
+				textArea.setText(codeFHalf + String.format("%.2f", red) + " " + String.format("%.2f", green) + " " + String.format("%.2f", blue) + "\n" + codeSHalf);
+			}
+		});
 		
 	}
 	
