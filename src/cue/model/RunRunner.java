@@ -133,6 +133,14 @@ public class RunRunner {
 				{
 					System.err.println(e);
 				}
+				try
+				{
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {}
+				finally
+				{
+					textArea.setBackground(Color.WHITE);
+				}
 			}
 		});
 		t.start();

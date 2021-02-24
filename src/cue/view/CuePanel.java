@@ -118,7 +118,7 @@ public class CuePanel extends JPanel {
 				else
 				{
 					runner.execute();
-					JOptionPane.showMessageDialog(null, "Program Succeded", "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
+//					JOptionPane.showMessageDialog(null, "Program Succeded", "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
 				}
 			}
 		});
