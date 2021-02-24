@@ -67,11 +67,11 @@ public class CuePanel extends JPanel {
 		this.add(textPane);
 		
 		stopButton.setFont(font);
-		stopButton.setEnabled(false);
+//		stopButton.setEnabled(false);
 		proceedButton.setFont(font);
-		proceedButton.setEnabled(false);
+//		proceedButton.setEnabled(false);
 		pauseButton.setFont(font);
-		pauseButton.setEnabled(false);
+//		pauseButton.setEnabled(false);
 		runButton.setFont(font);
 		pickColor.setFont(font);
 		
