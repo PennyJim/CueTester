@@ -36,7 +36,7 @@ public class FadeRunner extends RunnerObj {
 														startColor[1] + (int)(factor * (double)(endColor[1] - startColor[1])),
 														startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
 					try {
-						Thread.sleep(100);
+						Thread.sleep(20);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
