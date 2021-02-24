@@ -167,6 +167,7 @@ public class RunRunner {
 	
 	public void stop()
 	{
+		textArea.setBackground(Color.WHITE);
 		if (t.isAlive())
 		{
 			t.stop();
