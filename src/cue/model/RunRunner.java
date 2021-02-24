@@ -35,20 +35,20 @@ public class RunRunner {
 			
 			String[] sentences = code.split("\n");
 			commands.clear();
-			int startIndex = 0;
-			int loopIndex = -1;
 			for (int index = 0; index < sentences.length; index++)
 			{
 				String[] words = sentences[index].split(" ");
 				if (words[0].equals("START"))
 				{
-					startIndex = index;
+					int[] newColor = null;
 					if (!words[1].equals("NULL"))
 					{
-						textArea.setBackground(new Color(	(int)((double)Double.parseDouble(words[1]) * 2.55),
-															(int)((double)Double.parseDouble(words[2]) * 2.55),
-															(int)((double)Double.parseDouble(words[3]) * 2.55)));
+						newColor = new int[] {	(int)((double)Double.parseDouble(words[1]) * 2.55),
+												(int)((double)Double.parseDouble(words[2]) * 2.55),
+												(int)((double)Double.parseDouble(words[3]) * 2.55)};
 					}
+					commands.add(new StartRunner(textArea, newColor));
+					System.out.println("Added START runner");
 				}
 				else if (words[0].equals("HOLD"))
 				{
@@ -68,9 +68,8 @@ public class RunRunner {
 					int[] endColor = new int[] {(int)((double)Double.parseDouble(words[2]) * 2.55),
 												(int)((double)Double.parseDouble(words[3]) * 2.55),
 												(int)((double)Double.parseDouble(words[4]) * 2.55)};
-					FadeRunner runner = new FadeRunner(textArea, length, endColor);
-					commands.add(runner);
-					System.out.println("Added fade runner");
+					commands.add(new FadeRunner(textArea, length, endColor));
+					System.out.println("Added FADE runner");
 				}
 				else if (words[0].equals("JUMP"))
 				{
@@ -84,7 +83,7 @@ public class RunRunner {
 				else
 				{
 					iFailed = true;
-					return "Incorrect command type";
+					return "Incorrect command type at line " + index;
 				}
 			}
 
