@@ -75,6 +75,11 @@ public class RunRunner {
 				{
 					//Fade to the next color in a very short amount of time
 				}
+				else if (words[0].equals("REPEAT"))
+				{
+					commands.add(new RepeatRunner());
+					System.out.println("Added REPEAT runner");
+				}
 				else if (words[0].equals("STOP"))
 				{
 //					textArea.setBackground(Color.WHITE);
