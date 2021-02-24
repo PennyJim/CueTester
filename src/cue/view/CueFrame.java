@@ -23,7 +23,7 @@ public class CueFrame extends JFrame
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(panel);
 		this.setSize(800, 600);
-		this.setTitle("Chatbot");
+		this.setTitle("Cue Tester");
 		this.setResizable(true);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
