@@ -86,6 +86,56 @@ public class CuePanel extends JPanel {
 	
 	private void setupListeners()
 	{
+		stopButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				runner.stop();
+			}
+		});
+		
+		proceedButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				runner.proceed();
+			}
+		});
+		
+		pauseButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				if (runner.isPaused())
+				{
+					runner.play();
+				}
+				else
+				{
+					runner.pause();
+				}
+			}
+		});
+		
+		runButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				runner.setCode(textArea.getText().toUpperCase());
+				String output = runner.compile();
+				if (output != null && runner.iFailed)
+				{
+					textArea.setBackground(Color.WHITE);
+					JOptionPane.showMessageDialog(null, "Program Failed:\n" + output , "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
+				}
+				else
+				{
+					runner.execute();
+//					JOptionPane.showMessageDialog(null, "Program Succeded", "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
+				}
+			}
+		});
+		
 		pickColor.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent click)
@@ -106,25 +156,6 @@ public class CuePanel extends JPanel {
 				double blue = ((double)color.getBlue() / 255.0) * 100;
 				
 				textArea.setText(codeFHalf + String.format("%.2f", red) + " " + String.format("%.2f", green) + " " + String.format("%.2f", blue) + "\n" + codeSHalf);
-			}
-		});
-		
-		runButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent click)
-			{
-				runner.setCode(textArea.getText().toUpperCase());
-				String output = runner.compile();
-				if (output != null && runner.iFailed)
-				{
-					textArea.setBackground(Color.WHITE);
-					JOptionPane.showMessageDialog(null, "Program Failed:\n" + output , "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
-				}
-				else
-				{
-					runner.execute();
-//					JOptionPane.showMessageDialog(null, "Program Succeded", "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
-				}
 			}
 		});
 	}
