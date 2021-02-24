@@ -23,6 +23,7 @@ public class CuePanel extends JPanel {
 	private JPanel buttonPane;
 	private JButton stopButton;
 	private JButton proceedButton;
+	private JButton pauseButton;
 	private JButton runButton;
 	private JButton pickColor;
 	
@@ -39,6 +40,7 @@ public class CuePanel extends JPanel {
 		this.buttonPane = new JPanel(new GridLayout(1, 0, 8, 0));
 		this.stopButton = new JButton("Stop");
 		this.proceedButton = new JButton("Proceed");
+		this.pauseButton = new JButton("Pause");
 		this.runButton = new JButton("Run");
 		this.pickColor = new JButton("Pick Color");
 		
@@ -68,12 +70,15 @@ public class CuePanel extends JPanel {
 		stopButton.setEnabled(false);
 		proceedButton.setFont(font);
 		proceedButton.setEnabled(false);
+		pauseButton.setFont(font);
+		pauseButton.setEnabled(false);
 		runButton.setFont(font);
 		pickColor.setFont(font);
 		
 		buttonPane.setBackground(new Color (0,0,0,0));
 		buttonPane.add(stopButton);
 		buttonPane.add(proceedButton);
+		buttonPane.add(pauseButton);
 		buttonPane.add(runButton);
 		buttonPane.add(pickColor);
 		this.add(buttonPane);
