@@ -146,7 +146,7 @@ public class RunRunner {
 							if (repeatIndex < curIndex) { doProceed = false; }
 							currentRunner.stopEarly();
 						}
-						System.out.println((currentRunner == null || !currentRunner.isAlive()) ? "Dead" : "Alive");
+//						System.out.println((currentRunner == null || !currentRunner.isAlive()) ? "Dead" : "Alive");
 					}
 				} catch (Exception e)
 				{
