@@ -34,11 +34,11 @@ public class FadeRunner implements RunnerIFace
 	
 	public void executeOnThread()
 	{
+		isRunning = true;
 		long startMilis = System.currentTimeMillis();
 		long endMilis = startMilis + time;
 		Color start = panel.getBackground();
 		int[] startColor = new int[] {start.getRed(), start.getGreen(), start.getBlue()};
-		isRunning = true;
 		while (System.currentTimeMillis() < endMilis)
 		{
 			double factor = (double)(System.currentTimeMillis() - startMilis) / (double)time;
@@ -52,8 +52,8 @@ public class FadeRunner implements RunnerIFace
 				e.printStackTrace();
 			}
 		}
-		isRunning = false;
 		panel.setBackground(new Color(endColor[0], endColor[1], endColor[2]));
+		isRunning = false;
 	}
 	
 	public boolean isAlive()

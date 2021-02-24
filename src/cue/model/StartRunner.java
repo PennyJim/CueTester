@@ -34,11 +34,11 @@ public class StartRunner implements RunnerIFace
 	{
 		if (newColor != null)
 		{
+			isRunning = true;
 			long startMilis = System.currentTimeMillis();
 			long endMilis = startMilis + 100;
 			Color start = panel.getBackground();
 			int[] startColor = new int[] {start.getRed(), start.getGreen(), start.getBlue()};
-			isRunning = true;
 			while (System.currentTimeMillis() < endMilis)
 			{
 				double factor = (double)(System.currentTimeMillis() - startMilis) / 100.0;
@@ -52,8 +52,8 @@ public class StartRunner implements RunnerIFace
 					e.printStackTrace();
 				}
 			}
-			isRunning = false;
 			panel.setBackground(new Color(newColor[0], newColor[1], newColor[2]));
+			isRunning = false;
 		}
 	}
 	
