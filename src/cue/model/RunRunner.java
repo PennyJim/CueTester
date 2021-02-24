@@ -3,6 +3,7 @@ package cue.model;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JTextArea;
 
 //TODO: Implement no run while run, chnge popup, accomodate for repeat
@@ -27,7 +28,7 @@ public class RunRunner {
 		this.code = code;
 	}
 	
-	public String whatDoINeedToRun()
+	public String compile()
 	{
 		try
 		{

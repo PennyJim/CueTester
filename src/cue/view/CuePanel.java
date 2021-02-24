@@ -109,7 +109,7 @@ public class CuePanel extends JPanel {
 			public void actionPerformed(ActionEvent click)
 			{
 				runner.setCode(textArea.getText().toUpperCase());
-				String output = runner.whatDoINeedToRun();
+				String output = runner.compile();
 				if (output != null && runner.iFailed)
 				{
 					textArea.setBackground(Color.WHITE);
