@@ -110,7 +110,6 @@ public class RunRunner {
 	public String execute()
 	{	
 		Thread t = new Thread(new Runnable() {
-			
 			@Override
 			public void run() {
 				try {
@@ -158,4 +157,23 @@ public class RunRunner {
 		
 	}
 	
+	public void stop()
+	{
+		t.stop();
+	}
+	
+	public void pause()
+	{
+		t.suspend();
+	}
+	
+	public void play()
+	{
+		t.resume();
+	}
+	
+	public boolean isPaused()
+	{
+		return t.isInterrupted();
+	}
 }
