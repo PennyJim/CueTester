@@ -6,9 +6,18 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SpringLayout;
 
 import cue.controller.CueController;
+import cue.model.FadeRunner;
+import cue.model.RunRunner;
 
 public class CuePanel extends JPanel {
 
@@ -88,7 +97,8 @@ public class CuePanel extends JPanel {
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				String output = run(textArea.getText().toUpperCase());
+//				String output = run(textArea.getText().toUpperCase());
+				String output = run2(textArea.getText().toUpperCase());
 				if (output != null)
 				{
 					textArea.setBackground(Color.WHITE);
@@ -100,6 +110,13 @@ public class CuePanel extends JPanel {
 				}
 			}
 		});
+	}
+	
+	private String run2(String code)
+	{
+		RunRunner runner = new RunRunner(code, textArea);
+		if (runner.iFailed) return "Failure to execute code";
+		return runner.execute();
 	}
 	
 	private String run(String code)
@@ -139,21 +156,23 @@ public class CuePanel extends JPanel {
 					if(length < 10) { length = 10; }
 					
 					Color start = textArea.getBackground();
-					int[] startColor = new int[] {start.getRed(), start.getGreen(), start.getBlue()};
+//					int[] startColor = new int[] {start.getRed(), start.getGreen(), start.getBlue()};
 					int[] endColor = new int[] {(int)((double)Double.parseDouble(words[2]) * 2.55),
 												(int)((double)Double.parseDouble(words[3]) * 2.55),
 												(int)((double)Double.parseDouble(words[4]) * 2.55)};
+					FadeRunner runner = new FadeRunner(textArea, length, endColor);
+					runner.execute();
 					
-					long startMilis = System.currentTimeMillis();
-					long endMilis = startMilis + length;
-					while (System.currentTimeMillis() < endMilis)
-					{
-						double factor = (double)(System.currentTimeMillis() - startMilis) / (double)length;
-						textArea.setBackground(new Color(	startColor[0] + (int)(factor * (double)(endColor[0] - startColor[0])),
-															startColor[1] + (int)(factor * (double)(endColor[1] - startColor[1])),
-															startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
-						Thread.sleep(100);
-					}
+//					long startMilis = System.currentTimeMillis();
+//					long endMilis = startMilis + length;
+//					while (System.currentTimeMillis() < endMilis)
+//					{
+//						double factor = (double)(System.currentTimeMillis() - startMilis) / (double)length;
+//						textArea.setBackground(new Color(	startColor[0] + (int)(factor * (double)(endColor[0] - startColor[0])),
+//															startColor[1] + (int)(factor * (double)(endColor[1] - startColor[1])),
+//															startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
+//						Thread.sleep(100);
+//					}
 				}
 				else if (words[0].equals("JUMP"))
 				{
