@@ -12,4 +12,8 @@ public abstract class RunnerObj {
 	{
 		return false;
 	}
+	public String getCommandType()
+	{
+		return null;
+	}
 }

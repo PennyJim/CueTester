@@ -66,4 +66,9 @@ public class FadeRunner extends RunnerObj {
 		return t.isAlive();
 	}
 	
+	public String getCommandType()
+	{
+		return "FADE";
+	}
+	
 }
