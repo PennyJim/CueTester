@@ -129,6 +129,8 @@ public class CuePanel extends JPanel {
 		});
 	}
 	
+	@SuppressWarnings("unused")
+	@Deprecated
 	private String run(String code)
 	{
 		try
