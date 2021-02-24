@@ -43,8 +43,8 @@ public class FadeRunner extends RunnerObj {
 		{
 			double factor = (double)(System.currentTimeMillis() - startMilis) / (double)time;
 			panel.setBackground(new Color(	startColor[0] + (int)(factor * (double)(endColor[0] - startColor[0])),
-												startColor[1] + (int)(factor * (double)(endColor[1] - startColor[1])),
-												startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
+											startColor[1] + (int)(factor * (double)(endColor[1] - startColor[1])),
+											startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
