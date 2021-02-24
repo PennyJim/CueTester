@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JTextArea;
 
-public class StartRunner extends RunnerObj
+public class StartRunner implements RunnerIFace
 {
 	private final JTextArea panel;
 	private final int[] newColor;

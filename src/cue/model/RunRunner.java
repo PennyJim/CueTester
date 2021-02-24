@@ -11,7 +11,7 @@ public class RunRunner {
 	
 	private String code;
 	private final JTextArea textArea;
-	private ArrayList<RunnerObj> commands;
+	private ArrayList<RunnerIFace> commands;
 	public boolean iFailed = false;
 	private Thread t;
 	
@@ -100,7 +100,7 @@ public class RunRunner {
 			@Override
 			public void run() {
 				try {
-					RunnerObj currentRunner = null;
+					RunnerIFace currentRunner = null;
 					int startIndex = -1, repeatIndex = -1;
 					for (int curIndex = -1; curIndex < commands.size();)
 					{

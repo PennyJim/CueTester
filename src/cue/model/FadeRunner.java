@@ -4,8 +4,8 @@ import java.awt.Color;
 
 import javax.swing.JTextArea;
 
-public class FadeRunner extends RunnerObj {
-	
+public class FadeRunner implements RunnerIFace
+{	
 	private final JTextArea panel;
 	private final int time;
 	private final int[] endColor;
