@@ -58,7 +58,12 @@ public class FadeRunner extends RunnerObj {
 	
 	public boolean isAlive()
 	{
-		return isRunning || t.isAlive();
+		return isRunning;
+	}
+	
+	public boolean isThreadAlive()
+	{
+		return t.isAlive();
 	}
 	
 }
