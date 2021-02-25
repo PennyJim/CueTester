@@ -248,4 +248,9 @@ public class CuePanel extends JPanel {
 		layout.putConstraint(SpringLayout.NORTH, buttonPane, -80, SpringLayout.SOUTH, this);
 		layout.putConstraint(SpringLayout.SOUTH, buttonPane, -25, SpringLayout.SOUTH, this);
 	}
+	
+	public String getCode()
+	{
+		return textArea.getText();
+	}
 }
