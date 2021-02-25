@@ -42,7 +42,8 @@ public class RunRunner {
 	{
 		try
 		{
-			if (!code.substring(0, 5).equals("START")) { return "Needs to start with \"START\""; }
+			if (code.length() < 5 || !code.substring(0, 5).equals("START")) { iFailed = true; return "Needs to start with \"START\""; }
+			System.out.println("Code length: " + code.length());
 			
 			String[] sentences = code.split("\n");
 			commands.clear();
