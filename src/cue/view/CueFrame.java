@@ -1,14 +1,19 @@
 package cue.view;
 
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import java.io.FileWriter;
 import java.io.IOException;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import cue.controller.CueController;
-import javafx.stage.WindowEvent;
 
 public class CueFrame extends JFrame
 {
@@ -29,6 +34,7 @@ public class CueFrame extends JFrame
 //	    this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	    this.addWindowListener(new WindowAdapter()
 		{
+	    	@Override
 	    	public void windowClosing(WindowEvent event)
 	    	{
 	    		JFrame frame = (JFrame)event.getSource();
@@ -47,10 +53,17 @@ public class CueFrame extends JFrame
 	    					JOptionPane.INFORMATION_MESSAGE,
 	    					null,
 	    					null,
-	    					"SavedCues.txt");
+	    					"SavedCues.blcl");
 	    			try
 	    			{
-	    				FileWriter savedCode = new FileWriter(System.getProperty("user.home") + "/Downloads/" + name);
+	    				String blcl = System.getProperty("user.home") + "/BLCL/";
+	    				Path path = Paths.get(blcl);
+	    				if (!(Files.exists(path) && Files.isDirectory(path)))
+	    				{
+	    					Files.createDirectory(path);
+	    				}
+	    				
+	    				FileWriter savedCode = new FileWriter(blcl + name);
 	    				savedCode.write(panel.getCode());
 	    				savedCode.close();
 	    				System.out.println("Saved the code");
