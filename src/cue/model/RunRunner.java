@@ -140,7 +140,7 @@ public class RunRunner {
 									if (curIndex > repeatIndex) {repeatIndex = curIndex; }
 									curIndex = startIndex;
 								}
-								else if (currentRunner.getCommandType().equals("HOLD")) { while (!doProceed) { Thread.sleep(10); } }
+								else if (currentRunner.getCommandType().equals("HOLD")) { while (!doProceed) { Thread.sleep(10); } doProceed = false; }
 								
 								currentRunner.executeOnThread();
 							} else {
