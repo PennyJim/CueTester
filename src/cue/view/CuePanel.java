@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import cue.controller.CueController;
-import cue.model.RunRunner;
 
 public class CuePanel extends JPanel {
 
@@ -27,8 +26,6 @@ public class CuePanel extends JPanel {
 	private JButton runButton;
 	private JButton pickColor;
 	
-	private RunRunner runner;
-	
 	public CuePanel(CueController controller)
 	{
 		super();
@@ -43,8 +40,6 @@ public class CuePanel extends JPanel {
 		this.pauseButton = new JButton("Pause");
 		this.runButton = new JButton("Run");
 		this.pickColor = new JButton("Pick Color");
-		
-		this.runner = new RunRunner("", textArea, stopButton, proceedButton, pauseButton);
 		
 		setupPanel();
 		setupListeners();
@@ -90,7 +85,7 @@ public class CuePanel extends JPanel {
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				runner.stop();
+//				runner.stop();
 			}
 		});
 		
@@ -98,7 +93,7 @@ public class CuePanel extends JPanel {
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				runner.proceed();
+//				runner.proceed();
 			}
 		});
 		
@@ -106,14 +101,14 @@ public class CuePanel extends JPanel {
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				if (runner.isPaused())
-				{
-					runner.play();
-				}
-				else
-				{
-					runner.pause();
-				}
+//				if (runner.isPaused())
+//				{
+//					runner.play();
+//				}
+//				else
+//				{
+//					runner.pause();
+//				}
 			}
 		});
 		
@@ -121,18 +116,18 @@ public class CuePanel extends JPanel {
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				runner.setCode(textArea.getText().toUpperCase());
-				String output = runner.compile();
-				if (output != null && runner.iFailed)
-				{
-					textArea.setBackground(Color.WHITE);
-					JOptionPane.showMessageDialog(null, "Program Failed:\n" + output , "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
-				}
-				else
-				{
-					runner.execute();
-//					JOptionPane.showMessageDialog(null, "Program Succeded", "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
-				}
+//				runner.setCode(textArea.getText().toUpperCase());
+//				String output = runner.compile();
+//				if (output != null && runner.iFailed)
+//				{
+//					textArea.setBackground(Color.WHITE);
+//					JOptionPane.showMessageDialog(null, "Program Failed:\n" + output , "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
+//				}
+//				else
+//				{
+//					runner.execute();
+////					JOptionPane.showMessageDialog(null, "Program Succeded", "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
+//				}
 			}
 		});
 		
