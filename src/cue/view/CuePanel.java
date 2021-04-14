@@ -18,7 +18,7 @@ public class CuePanel extends JPanel {
 	private Font font;
 	
 	private JScrollPane textPane;
-	private JTextArea textArea;
+	private JTextArea textArea; //Change to JEditorPane (or JTextPane)
 	private JPanel buttonPane;
 	private JButton stopButton;
 	private JButton proceedButton;
