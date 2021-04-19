@@ -4,11 +4,11 @@ import java.util.HashMap;
 
 public class Parser
 {
-	private static HashMap<String,Object> keywords = new HashMap<String,Object>(); //Create Custom Objects for each keyword all following an interface. Likely similar to current Runner's but static.
+	private static HashMap<String,Keyword> keywords = new HashMap<String,Keyword>(); //Create Custom Objects for each keyword all following an interface. Likely similar to current Runner's but static.
 	
 	//Basic list of keywords wanted:
 	//ColorVar - create a static color variable
-	//Var - Creates a static variable
+	//Var - Creates a static variable			//Entirely new for me to implement
 	//Fade - Fades to a color over x time
 	//Hold - Waits for a user input to move on
 	//Wait - Waits x amount of time and moves on
