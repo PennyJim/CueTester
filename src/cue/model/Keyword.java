@@ -1,9 +1,10 @@
 package cue.model;
 
-public interface Keyword
+public abstract class Keyword
 {
-	public boolean go();		//Starts the cue
-	public boolean stop();		//Cancels the cue
-	public boolean pause();		//Pauses the cue
-	public boolean play();		//Continues the cue
+	public Keyword(String code) {}		//Default constructor
+	public abstract boolean go();		//Starts the cue
+	public abstract boolean stop();		//Cancels the cue
+	public abstract boolean pause();		//Pauses the cue
+	public abstract boolean play();		//Continues the cue
 }
