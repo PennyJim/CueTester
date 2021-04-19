@@ -1,6 +1,7 @@
 package cue.model;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Parser
 {
@@ -20,7 +21,7 @@ public class Parser
 	
 	public boolean initParse(String code)
 	{
-		
+		Scanner lines = new Scanner(code);
 		
 		return false;
 	}
