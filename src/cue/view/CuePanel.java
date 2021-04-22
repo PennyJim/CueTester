@@ -19,7 +19,7 @@ public class CuePanel extends JPanel {
 	private Font font;
 	
 	private JScrollPane textPane;
-	private JTextArea textArea; //Change to JEditorPane (or JTextPane)
+	private JTextPane textArea; //Change to JEditorPane (or JTextPane)
 	private JPanel buttonPane;
 	private JButton stopButton;
 	private JButton proceedButton;
@@ -34,7 +34,7 @@ public class CuePanel extends JPanel {
 		this.layout = new SpringLayout();
 		
 		this.textPane = new JScrollPane();
-		this.textArea = new JTextArea(new SyntaxStyleDocument());
+		this.textArea = new JTextPane(new SyntaxStyleDocument());
 		this.buttonPane = new JPanel(new GridLayout(1, 0, 8, 0));
 		this.stopButton = new JButton("Stop");
 		this.proceedButton = new JButton("Proceed");
@@ -57,8 +57,8 @@ public class CuePanel extends JPanel {
 		font = new Font(font.getFontName(), font.getStyle(), 20);
 
 		textArea.setMargin(new Insets(5, 5, 5, 5));
-//		textArea.setFont(font);
-//		textArea.setBackground(Color.WHITE);
+		textArea.setFont(font);
+		textArea.setBackground(Color.WHITE);
 		textPane.setViewportView(textArea);
 		this.add(textPane);
 		
