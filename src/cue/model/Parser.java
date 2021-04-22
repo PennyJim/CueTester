@@ -75,6 +75,7 @@ public class Parser
 				throw new IOException("Keyword '" + keyword + "' not found");
 			}
 		}
+		lines.close();
 		
 		return false;
 	}
