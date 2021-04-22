@@ -2,13 +2,69 @@ package cue.model;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Parser
 {
-	private static HashMap<String,Class<Keyword>> keywords = new HashMap<String,Class<Keyword>>(); //Create Custom Objects for each keyword all following an interface.
+	private static HashMap<String,Class<Keyword>> keywords; //Create Custom Objects for each keyword all following the abstract Keyword.
+	static {
+		keywords = new HashMap<String,Class<Keyword>>();
+		keywords.put("VAR", Keyword.class);
+		keywords.put("FADE", Keyword.class);
+		keywords.put("HOLD", Keyword.class);
+		keywords.put("WAIT", Keyword.class);
+		keywords.put("REPEAT", Keyword.class);
+	}
+	
+	public static String DEFAULT = "defaultStyle";
+	public static String NUMBER = "numberStyle";
+	public static String VARIABLE = "variableStyle";
+	public static String KEYWORD = "keywordStyle";
+	
+	public static List<String> parseVariables(String code)
+	{
+		ArrayList<String> variables = new ArrayList<String>();
+		
+		Scanner lines = new Scanner(code);
+		while (lines.hasNext())
+		{
+			String line = lines.nextLine();
+			String[] words = line.split(" ");
+			
+			if (words.length >= 3 && words[0].equalsIgnoreCase("VAR"))
+			{
+				variables.add(words[1]);
+			}
+		}
+		
+		return variables;
+	}
+	
+	public static String wordType(String word, List<String> variableList)
+	{
+		try
+		{
+			Double.parseDouble(word);
+			return NUMBER;
+		}
+		catch (Exception e) {}
+		
+		if (keywords.get(word) != null)
+		{
+			return KEYWORD;
+		}
+		
+		if (variableList != null && variableList.contains(word))
+		{
+			return VARIABLE;
+		}
+		
+		return DEFAULT;
+	}
 	
 	//Basic list of keywords wanted:
 	//ColorVar - create a static color variable
