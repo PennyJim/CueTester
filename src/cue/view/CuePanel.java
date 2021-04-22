@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import cue.controller.CueController;
+import cue.model.SyntaxStyleDocument;
 
 public class CuePanel extends JPanel {
 
@@ -33,7 +34,7 @@ public class CuePanel extends JPanel {
 		this.layout = new SpringLayout();
 		
 		this.textPane = new JScrollPane();
-		this.textArea = new JTextArea();
+		this.textArea = new JTextArea(new SyntaxStyleDocument());
 		this.buttonPane = new JPanel(new GridLayout(1, 0, 8, 0));
 		this.stopButton = new JButton("Stop");
 		this.proceedButton = new JButton("Proceed");
@@ -56,8 +57,8 @@ public class CuePanel extends JPanel {
 		font = new Font(font.getFontName(), font.getStyle(), 20);
 
 		textArea.setMargin(new Insets(5, 5, 5, 5));
-		textArea.setFont(font);
-		textArea.setBackground(Color.WHITE);
+//		textArea.setFont(font);
+//		textArea.setBackground(Color.WHITE);
 		textPane.setViewportView(textArea);
 		this.add(textPane);
 		
@@ -155,6 +156,19 @@ public class CuePanel extends JPanel {
 		});
 	}
 	
+	private void setupLayout()
+	{
+		layout.putConstraint(SpringLayout.WEST, textPane, 25, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.EAST, textPane, -25, SpringLayout.EAST, this);
+		layout.putConstraint(SpringLayout.NORTH, textPane, 25, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.SOUTH, textPane, -12, SpringLayout.NORTH, buttonPane);
+		
+		layout.putConstraint(SpringLayout.WEST, buttonPane, 0, SpringLayout.WEST, textPane);
+		layout.putConstraint(SpringLayout.EAST, buttonPane, 0, SpringLayout.EAST, textPane);
+		layout.putConstraint(SpringLayout.NORTH, buttonPane, -80, SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.SOUTH, buttonPane, -25, SpringLayout.SOUTH, this);
+	}
+	
 	@SuppressWarnings("unused")
 	@Deprecated
 	private String run(String code)
@@ -176,8 +190,8 @@ public class CuePanel extends JPanel {
 					if (!words[1].equals("NULL"))
 					{
 						textArea.setBackground(new Color(	(int)((double)Double.parseDouble(words[1]) * 2.55),
-															(int)((double)Double.parseDouble(words[2]) * 2.55),
-															(int)((double)Double.parseDouble(words[3]) * 2.55)));
+								(int)((double)Double.parseDouble(words[2]) * 2.55),
+								(int)((double)Double.parseDouble(words[3]) * 2.55)));
 					}
 				}
 				else if (words[0].equals("HOLD"))
@@ -196,8 +210,8 @@ public class CuePanel extends JPanel {
 					Color start = textArea.getBackground();
 					int[] startColor = new int[] {start.getRed(), start.getGreen(), start.getBlue()};
 					int[] endColor = new int[] {(int)((double)Double.parseDouble(words[2]) * 2.55),
-												(int)((double)Double.parseDouble(words[3]) * 2.55),
-												(int)((double)Double.parseDouble(words[4]) * 2.55)};
+							(int)((double)Double.parseDouble(words[3]) * 2.55),
+							(int)((double)Double.parseDouble(words[4]) * 2.55)};
 					
 					long startMilis = System.currentTimeMillis();
 					long endMilis = startMilis + length;
@@ -205,8 +219,8 @@ public class CuePanel extends JPanel {
 					{
 						double factor = (double)(System.currentTimeMillis() - startMilis) / (double)length;
 						textArea.setBackground(new Color(	startColor[0] + (int)(factor * (double)(endColor[0] - startColor[0])),
-															startColor[1] + (int)(factor * (double)(endColor[1] - startColor[1])),
-															startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
+								startColor[1] + (int)(factor * (double)(endColor[1] - startColor[1])),
+								startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
 						Thread.sleep(100);
 					}
 				}
@@ -224,23 +238,10 @@ public class CuePanel extends JPanel {
 					return "Incorrect command type";
 				}
 			}
-
+			
 //			textArea.setBackground(Color.WHITE);
 			return null;
 		}
 		catch (Exception e) { System.out.println(e); return "invalid number type"; }
-	}
-	
-	private void setupLayout()
-	{
-		layout.putConstraint(SpringLayout.WEST, textPane, 25, SpringLayout.WEST, this);
-		layout.putConstraint(SpringLayout.EAST, textPane, -25, SpringLayout.EAST, this);
-		layout.putConstraint(SpringLayout.NORTH, textPane, 25, SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.SOUTH, textPane, -12, SpringLayout.NORTH, buttonPane);
-		
-		layout.putConstraint(SpringLayout.WEST, buttonPane, 0, SpringLayout.WEST, textPane);
-		layout.putConstraint(SpringLayout.EAST, buttonPane, 0, SpringLayout.EAST, textPane);
-		layout.putConstraint(SpringLayout.NORTH, buttonPane, -80, SpringLayout.SOUTH, this);
-		layout.putConstraint(SpringLayout.SOUTH, buttonPane, -25, SpringLayout.SOUTH, this);
 	}
 }
