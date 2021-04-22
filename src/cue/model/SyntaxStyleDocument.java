@@ -1,6 +1,7 @@
 package cue.model;
 
 import java.awt.Color;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -23,10 +24,19 @@ public class SyntaxStyleDocument extends DefaultStyledDocument
 	}
 	
 	private void createStyles()
-	{		
-		Style numberStyle = addStyle("numberStyle", null);
-		StyleConstants.setForeground(numberStyle, Color.ORANGE);
+	{
+
+		Style testStyle = addStyle(Parser.DEFAULT, null);
+		StyleConstants.setForeground(testStyle, Color.BLACK);
 		
+		Style numberStyle = addStyle(Parser.NUMBER, null);
+		StyleConstants.setForeground(numberStyle, Color.BLUE);
+		
+		Style keywordStyle = addStyle(Parser.KEYWORD, null);
+		StyleConstants.setForeground(keywordStyle, new Color(252, 90, 3));
+		
+		Style variableStyle = addStyle(Parser.VARIABLE, null);
+		StyleConstants.setForeground(variableStyle, Color.YELLOW);
 	}
 
 	@Override
@@ -49,22 +59,16 @@ public class SyntaxStyleDocument extends DefaultStyledDocument
 	{
 		System.out.println("EVIL");
 		String code = getText(0, getLength());
+		List<String> variables = Parser.parseVariables(code);
 		
 		Scanner lines = new Scanner(code);
 		int cPosition = 0;
 		
-		
-		Style testStyle = addStyle("testStyle", null);
-		StyleConstants.setForeground(testStyle, Color.MAGENTA);
-		
-		setCharacterAttributes(0, code.length(), testStyle, true);
+		setCharacterAttributes(0, code.length(), getStyle(Parser.DEFAULT), true);
 		while (lines.hasNext())
 		{
 			String word = lines.next();
-			System.out.println("GOOD:" + word + cPosition);
-			System.out.println("G00D:" + getStyle("numberStyle").toString());
-			System.out.println("8008:" + getCharacterElement(cPosition + 1).getAttributes().containsAttributes(testStyle));
-//			setCharacterAttributes(cPosition, word.length(), styleList.get("numberStyle"), true);
+			setCharacterAttributes(cPosition, word.length(), getStyle(Parser.wordType(word, variables)), true);
 			cPosition += word.length() + 1;
 		} lines.close();
 	}
