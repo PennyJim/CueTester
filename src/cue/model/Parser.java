@@ -37,7 +37,7 @@ public class Parser
 			
 			if (words.length >= 3 && words[0].equalsIgnoreCase("VAR"))
 			{
-				variables.add(words[1]);
+				variables.add(words[1].toUpperCase());
 			}
 		}
 		
@@ -46,6 +46,8 @@ public class Parser
 	
 	public static String wordType(String word, List<String> variableList)
 	{
+		word = word.toUpperCase();
+		
 		try
 		{
 			Double.parseDouble(word);
@@ -98,7 +100,7 @@ public class Parser
 				keyword = line.substring(0, splitIndex);
 				inputs = line.substring(splitIndex + 1);
 			}
-			Class<Keyword> word = keywords.get(keyword);
+			Class<Keyword> word = keywords.get(keyword.toUpperCase());
 			
 			
 			if (word != null)
