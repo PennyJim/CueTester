@@ -57,9 +57,10 @@ public class CuePanel extends JPanel {
 		font = new Font(font.getFontName(), font.getStyle(), 20);
 
 		textArea.setMargin(new Insets(5, 5, 5, 5));
-		textArea.setFont(font);
-		textArea.setBackground(Color.WHITE);
+//		textArea.setFont(font);
+		textArea.setBackground(new Color(50, 50, 50));
 		textPane.setViewportView(textArea);
+		textPane.setBorder(null);
 		this.add(textPane);
 		
 		stopButton.setFont(font);

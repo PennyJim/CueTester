@@ -26,23 +26,26 @@ public class SyntaxStyleDocument extends DefaultStyledDocument
 	private void createStyles()
 	{
 
-		Style testStyle = addStyle(Parser.DEFAULT, null);
-		StyleConstants.setForeground(testStyle, Color.BLACK);
+		Style defaultStyle = addStyle(Parser.DEFAULT, null);
+		StyleConstants.setForeground(defaultStyle, Color.WHITE);
+		StyleConstants.setFontSize(defaultStyle, 20);
 		
 		Style numberStyle = addStyle(Parser.NUMBER, null);
-		StyleConstants.setForeground(numberStyle, Color.BLUE);
+		StyleConstants.setForeground(numberStyle, new Color(80, 135, 188));
+		StyleConstants.setFontSize(numberStyle, 20);
 		
 		Style keywordStyle = addStyle(Parser.KEYWORD, null);
-		StyleConstants.setForeground(keywordStyle, new Color(252, 90, 3));
+		StyleConstants.setForeground(keywordStyle, new Color(206, 106, 64));
+		StyleConstants.setFontSize(keywordStyle, 20);
 		
 		Style variableStyle = addStyle(Parser.VARIABLE, null);
-		StyleConstants.setForeground(variableStyle, Color.YELLOW);
+		StyleConstants.setForeground(variableStyle, new Color(249, 242, 114));
+		StyleConstants.setFontSize(variableStyle, 20);
 	}
 
 	@Override
 	public void insertString(int offs, String str, AttributeSet a) throws BadLocationException
 	{
-		// TODO Auto-generated method stub
 		super.insertString(offs, str, a);
 		refreshDocument();
 	}
@@ -57,7 +60,6 @@ public class SyntaxStyleDocument extends DefaultStyledDocument
 	
 	private synchronized void refreshDocument() throws BadLocationException
 	{
-		System.out.println("EVIL");
 		String code = getText(0, getLength());
 		List<String> variables = Parser.parseVariables(code);
 		
