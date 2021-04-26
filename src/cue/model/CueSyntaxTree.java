@@ -7,7 +7,7 @@ public class CueSyntaxTree
 {
 	private Node<Keyword> root;
 	private Node<Keyword> curBuild;
-	private Node<Keyword> curRun;
+	private Node<Keyword> curSel;
 	
 	public CueSyntaxTree()
 	{
@@ -18,20 +18,65 @@ public class CueSyntaxTree
 	public CueSyntaxTree add(Keyword word)
 	{
 		Node<Keyword> newNode = new Node<Keyword>();
+		newNode.data = word;
+		
 		if (word.getClass().equals(RepeatRunner.class))
 		{
-			newNode.data = word;
 			newNode.parent = root;
 			newNode.children = new ArrayList<Node<Keyword>>();
+			
+			curBuild = newNode;
 		}
+		else
+		{
+			if (word.getClass().equals(RepeatRunner.class))
+			{
+				curBuild = root;
+			}
+			
+			newNode.parent = curBuild;
+		}
+		newNode.parent.children.add(newNode);
 		
 		return this;
+	}
+	
+	public Keyword next()
+	{
+		if (curSel != null)
+		{
+			curSel.selIndex++;
+			if (curSel.selIndex >= curSel.children.size())
+			{
+				if (curSel.parent == null) { return null; }
+				curSel = curSel.parent;
+				return next();
+			}
+			else
+			{
+				Node<Keyword> child = curSel.children.get(curSel.selIndex);
+				
+				if (child.children != null) { curSel = child; }
+				
+				return child.data;
+			}
+		}
+		else if (root.children.size() > 0)
+		{
+			curSel = root;
+			curSel.selIndex = 0;
+			return root.children.get(0).data;
+		}
+		
+		return null;
 	}
 	
 	public CueSyntaxTree clear()
 	{
 		root.children.clear();
 		root = new Node<Keyword>();
+		curBuild = root;
+		curSel = null;
 		
 		return this;
 	}
@@ -40,5 +85,6 @@ public class CueSyntaxTree
 		private T data;
 		private Node<T> parent;
 		private List<Node<T>> children;
+		private int selIndex = -1;
 	}
 }
