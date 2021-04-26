@@ -6,10 +6,12 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.*;
 
 import cue.controller.CueController;
+import cue.model.Parser;
 import cue.model.SyntaxStyleDocument;
 
 public class CuePanel extends JPanel {
@@ -27,6 +29,8 @@ public class CuePanel extends JPanel {
 	private JButton runButton;
 	private JButton pickColor;
 	
+	private Parser parser;
+	
 	public CuePanel(CueController controller)
 	{
 		super();
@@ -41,6 +45,8 @@ public class CuePanel extends JPanel {
 		this.pauseButton = new JButton("Pause");
 		this.runButton = new JButton("Run");
 		this.pickColor = new JButton("Pick Color");
+		
+		parser = new Parser();
 		
 		setupPanel();
 		setupListeners();
@@ -118,6 +124,15 @@ public class CuePanel extends JPanel {
 		{
 			public void actionPerformed(ActionEvent click)
 			{
+				try
+				{
+					parser.initParse(textArea.getText());
+				}
+				catch (IOException e)
+				{
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Cue Tester", JOptionPane.WARNING_MESSAGE, null);
+				}
+				
 //				runner.setCode(textArea.getText().toUpperCase());
 //				String output = runner.compile();
 //				if (output != null && runner.iFailed)
