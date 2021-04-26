@@ -1,12 +1,10 @@
 package cue.model;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Parser
 {
@@ -18,6 +16,7 @@ public class Parser
 		keywords.put("HOLD", Keyword.class);
 		keywords.put("WAIT", Keyword.class);
 		keywords.put("REPEAT", Keyword.class);
+		keywords.put("STOP", Keyword.class);
 	}
 	
 	public static String DEFAULT = "defaultStyle";
@@ -40,6 +39,7 @@ public class Parser
 				variables.add(words[1].toUpperCase());
 			}
 		}
+		lines.close();
 		
 		return variables;
 	}
@@ -121,18 +121,22 @@ public class Parser
 				}
 				catch (IOException e)
 				{
+					lines.close();
 					throw e;
 				}
 				catch (Exception e)
 				{
+					lines.close();
 					e.printStackTrace();
 				}
 			}
 			else
 			{
+				lines.close();
 				throw new IOException("Keyword '" + keyword + "' not found");
 			}
 		}
+		
 		lines.close();
 		
 		return false;
