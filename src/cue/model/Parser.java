@@ -8,11 +8,11 @@ import java.util.Scanner;
 
 public class Parser
 {
-	private static HashMap<String,Class<Keyword>> keywords; //Create Custom Objects for each keyword all following the abstract Keyword.
+	private static HashMap<String,Class<? extends Keyword>> keywords; //Create Custom Objects for each keyword all following the abstract Keyword.
 	static {
-		keywords = new HashMap<String,Class<Keyword>>();
+		keywords = new HashMap<String,Class<? extends Keyword>>();
 		keywords.put("VAR", Keyword.class);
-		keywords.put("FADE", Keyword.class);
+		keywords.put("FADE", FadeKeyword.class);
 		keywords.put("HOLD", Keyword.class);
 		keywords.put("WAIT", Keyword.class);
 		keywords.put("REPEAT", Keyword.class);
@@ -79,6 +79,7 @@ public class Parser
 	private CueSyntaxTree syntaxTree;	//Custom tree to implement Abstract Tree Syntax for loops?
 								//Otherwise I'll use an array
 								//Need to learn how to implement properly
+	private HashMap<String,Variable> variables;
 	
 	public boolean initParse(String code) throws IOException
 	{
@@ -100,7 +101,7 @@ public class Parser
 				keyword = line.substring(0, splitIndex);
 				inputs = line.substring(splitIndex + 1);
 			}
-			Class<Keyword> word = keywords.get(keyword.toUpperCase());
+			Class<? extends Keyword> word = keywords.get(keyword.toUpperCase());
 			
 			
 			if (word != null)
@@ -108,11 +109,14 @@ public class Parser
 				String error;
 				try
 				{
-					error = (String) word.getMethod("validateInputs", null).invoke(inputs);
-				
+					Class args[] = new Class[] {Parser.class, String.class};
+					
+					Keyword constructedWord = word.getConstructor(args).newInstance(this, inputs);
+					
+					error = constructedWord.validateInputs();
 					if (error.equals(""))
 					{
-						syntaxTree.add(word.getConstructor(null).newInstance(inputs));
+						syntaxTree.add(constructedWord);
 					}
 					else
 					{
@@ -157,5 +161,20 @@ public class Parser
 		return false;				//or dynamically continue fading
 	}
 	
+	public boolean isVariable(String variable)
+	{
+		return variables.get(variable) != null;
+	}
 	
+	public boolean addVariable(String variable, Variable value)
+	{
+		if (isVariable(variable)) { return false; }
+		variables.put(variable, value);
+		return true;
+	}
+	
+	public Variable getVariable(String variable)
+	{
+		return variables.get(variable);
+	}
 }
