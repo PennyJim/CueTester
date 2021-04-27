@@ -13,7 +13,7 @@ public class FadeKeyword extends Keyword
 	private long startMilis = 0;
 	private int[] startColor;
 	
-	public FadeKeyword(Parser parser, String inputs)
+	public FadeKeyword(Parser parser, String inputs) //TODO: Define endColor and length
 	{
 		super(parser, inputs);
 		this.parser = parser;
