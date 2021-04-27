@@ -92,7 +92,7 @@ public class Parser
 								//Need to learn how to implement properly
 	private HashMap<String,Variable> variables;
 	
-	public boolean initParse(String code) throws IOException
+	public void initParse(String code) throws IOException
 	{
 		Scanner lines = new Scanner(code);
 		
@@ -154,22 +154,20 @@ public class Parser
 		
 		lines.close();
 		
-		return false;
+		lines.close();
 	}
 	
-	public boolean pause()
+	public void pause()
 	{
-		return false;
 	}
 	
-	public boolean play()
+	public void play()
 	{
-		return false;
 	}
 	
-	public boolean moveForward()	//For fade cues. Decide to either jump to end,
+	public void moveForward()		//For fade cues. Decide to either jump to end,
 	{								//take current color and move on, //Likely this one
-		return false;				//or dynamically continue fading
+									//or dynamically continue fading //*Very* unlikely
 	}
 	
 	public boolean isVariable(String variable)
