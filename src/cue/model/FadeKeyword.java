@@ -11,6 +11,7 @@ public class FadeKeyword extends Keyword
 	public FadeKeyword(Parser parser, String inputs)
 	{
 		super(parser, inputs);
+		this.parser = parser;
 		
 		String[] input = inputs.split(" ");
 		
@@ -41,29 +42,16 @@ public class FadeKeyword extends Keyword
 	}
 
 	@Override
-	public boolean go()
+	public void step()
 	{
-		return false;
 	}
 
 	@Override
-	public boolean stop()
+	public boolean hasStep()
 	{
 		return false;
 	}
-
-	@Override
-	public boolean pause()
-	{
-		return false;
-	}
-
-	@Override
-	public boolean play()
-	{
-		return false;
-	}
-
+	
 	@Override
 	public String validateInputs()
 	{
