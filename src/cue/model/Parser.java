@@ -11,18 +11,29 @@ public class Parser
 	private static HashMap<String,Class<? extends Keyword>> keywords; //Create Custom Objects for each keyword all following the abstract Keyword.
 	static {
 		keywords = new HashMap<String,Class<? extends Keyword>>();
-		keywords.put("VAR", Keyword.class);
-		keywords.put("FADE", FadeKeyword.class);
-		keywords.put("HOLD", Keyword.class);
-		keywords.put("WAIT", Keyword.class);
-		keywords.put("REPEAT", Keyword.class);
-		keywords.put("STOP", Keyword.class);
+		keywords.put(KEY.VARIABLE,	Keyword.class);
+		keywords.put(KEY.FADE,		FadeKeyword.class);
+		keywords.put(KEY.HOLD,		Keyword.class);
+		keywords.put(KEY.WAIT,		Keyword.class);
+		keywords.put(KEY.REPEAT,	Keyword.class);
+		keywords.put(KEY.START,		Keyword.class);
+		keywords.put(KEY.STOP,		Keyword.class);
 	}
 	
 	public static String DEFAULT = "defaultStyle";
 	public static String NUMBER = "numberStyle";
 	public static String VARIABLE = "variableStyle";
 	public static String KEYWORD = "keywordStyle";
+	
+	public static class KEY {
+		public static String VARIABLE = "VAR";
+		public static String FADE = "FADE";
+		public static String HOLD = "HOLD";
+		public static String WAIT = "WAIT";
+		public static String REPEAT = "REPEAT";
+		public static String START = "START";
+		public static String STOP = "STOP";
+	}
 	
 	public static List<String> parseVariables(String code)
 	{
@@ -34,7 +45,7 @@ public class Parser
 			String line = lines.nextLine();
 			String[] words = line.split(" ");
 			
-			if (words.length >= 3 && words[0].equalsIgnoreCase("VAR"))
+			if (words.length >= 3 && words[0].equalsIgnoreCase(KEY.VARIABLE))
 			{
 				variables.add(words[1].toUpperCase());
 			}
