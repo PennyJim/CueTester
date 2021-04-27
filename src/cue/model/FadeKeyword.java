@@ -1,5 +1,7 @@
 package cue.model;
 
+import java.awt.Color;
+
 public class FadeKeyword extends Keyword
 {
 	private Parser parser;
@@ -7,6 +9,9 @@ public class FadeKeyword extends Keyword
 	
 	private int[] endColor;
 	private int length;
+	
+	private long startMilis = 0;
+	private int[] startColor;
 	
 	public FadeKeyword(Parser parser, String inputs)
 	{
@@ -44,12 +49,27 @@ public class FadeKeyword extends Keyword
 	@Override
 	public void step()
 	{
+		if (startMilis == 0 || startColor == null)
+		{
+			startMilis = System.currentTimeMillis();
+			System.out.println(parser);
+			Color start = parser.panel.getBackground();
+			startColor = new int[] {start.getRed(), start.getGreen(), start.getBlue()};
+			
+			
+			
+		}
+		
+		double factor = (double)(System.currentTimeMillis() - startMilis) / (double)length;
+		parser.panel.setBackground(new Color(	startColor[0] + (int)(factor * (double)(endColor[0] - startColor[0])),
+												startColor[1] + (int)(factor * (double)(endColor[1] - startColor[1])),
+												startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
 	}
 
 	@Override
 	public boolean hasStep()
 	{
-		return false;
+		return System.currentTimeMillis() > startMilis + length;
 	}
 	
 	@Override

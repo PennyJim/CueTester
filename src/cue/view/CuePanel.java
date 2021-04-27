@@ -46,7 +46,7 @@ public class CuePanel extends JPanel {
 		this.runButton = new JButton("Run");
 		this.pickColor = new JButton("Pick Color");
 		
-		parser = new Parser();
+		parser = new Parser(textArea);
 		
 		setupPanel();
 		setupListeners();

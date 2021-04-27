@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JTextPane;
+
 public class Parser
 {
 	private static HashMap<String,Class<? extends Keyword>> keywords; //Create Custom Objects for each keyword all following the abstract Keyword.
@@ -90,7 +92,12 @@ public class Parser
 	private CueSyntaxTree syntaxTree;	//Custom tree to implement Abstract Tree Syntax for loops?
 								//Otherwise I'll use an array
 								//Need to learn how to implement properly
+	public JTextPane panel;
 	private HashMap<String,Variable> variables;
+	public Parser(JTextPane panel)
+	{
+		this.panel = panel;
+	}
 	
 	public void initParse(String code) throws IOException
 	{
