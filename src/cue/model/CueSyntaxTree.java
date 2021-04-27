@@ -13,6 +13,7 @@ public class CueSyntaxTree
 	{
 		root = new Node<Keyword>();
 		root.children = new ArrayList<Node<Keyword>>();
+		curBuild = root;
 	}
 	
 	public CueSyntaxTree add(Keyword word)
@@ -69,6 +70,40 @@ public class CueSyntaxTree
 		}
 		
 		return null;
+	}
+	
+	public boolean hasNext()
+	{
+		if (curSel != null)
+		{
+			int index = curSel.selIndex + 1;
+			if (index >= curSel.children.size())
+			{
+				if (curSel.parent == null) { return false; }
+				return hasNext(curSel.parent);
+			}
+			else
+			{ return true; }
+		}
+		else if (root.children.size() > 0)
+		{ return true; }
+		
+		return false;
+	}
+	
+	private boolean hasNext(Node<Keyword> testSel)
+	{
+		if (testSel != null)
+		{
+			int index = testSel.selIndex + 1;
+			if (index >= testSel.children.size())
+			{
+				if (testSel.parent == null) { return false; }
+				return hasNext(testSel.parent);
+			}
+			else { return true; }
+		}
+		return false;
 	}
 	
 	public CueSyntaxTree clear()
