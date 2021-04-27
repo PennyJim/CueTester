@@ -89,19 +89,25 @@ public class Parser
 	//Wait - Waits x amount of time and moves on
 	//Repeat - Starts (and ends) a loop that loops x times or moves on on go
 	
-	private CueSyntaxTree syntaxTree;	//Custom tree to implement Abstract Tree Syntax for loops?
+	private CueSyntaxTree syntaxTree;
+								//Custom tree to implement Abstract Tree Syntax for loops?
 								//Otherwise I'll use an array
 								//Need to learn how to implement properly
 	public JTextPane panel;
 	private HashMap<String,Variable> variables;
+	private CueThread thread;
+	
 	public Parser(JTextPane panel)
 	{
 		this.panel = panel;
+		thread = new CueThread("Cues");
+		thread.start();
 	}
 	
 	public void initParse(String code) throws IOException
 	{
 		Scanner lines = new Scanner(code);
+		syntaxTree = new CueSyntaxTree();
 		
 		while (lines.hasNext())
 		{
@@ -159,17 +165,22 @@ public class Parser
 			}
 		}
 		
-		lines.close();
+		thread.pause();
+		thread.setRunTree(syntaxTree);
 		
 		lines.close();
 	}
 	
 	public void pause()
 	{
+		thread.pause();
+		thread.notifyAll();
 	}
 	
 	public void play()
 	{
+		thread.play();
+		thread.notifyAll();
 	}
 	
 	public void moveForward()		//For fade cues. Decide to either jump to end,
