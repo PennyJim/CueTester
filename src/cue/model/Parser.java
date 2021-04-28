@@ -1,5 +1,6 @@
 package cue.model;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,13 +95,15 @@ public class Parser
 								//Otherwise I'll use an array
 								//Need to learn how to implement properly
 	public JTextPane panel;
+	private Color defaultBG;
 	private HashMap<String,Variable> variables;
 	private CueThread thread;
 	
-	public Parser(JTextPane panel)
+	public Parser(JTextPane panel, Color defaultBG)
 	{
 		this.panel = panel;
-		thread = new CueThread("Cues");
+		this.defaultBG = defaultBG;
+		thread = new CueThread("Cues", this);
 		thread.start();
 	}
 	
@@ -171,21 +174,49 @@ public class Parser
 		lines.close();
 	}
 	
+	public void stop()
+	{
+		synchronized (thread)
+		{
+			thread.stopCues();
+			thread.notifyAll();
+		}
+	}
+	public boolean isPaused()
+	{
+		return thread.isPaused();
+	}
 	public void pause()
 	{
-		thread.pause();
-		thread.notifyAll();
+		synchronized (thread)
+		{
+			thread.pause();
+			thread.notifyAll();
+		}
 	}
-	
 	public void play()
 	{
-		thread.play();
+		synchronized (thread)
+		{
+			thread.play();
+			thread.notifyAll();
+		}
+	}
+	public void moveForward()		//For fade cues. Decide to either jump to end,
+	{								//take current color and move on, //Likely this one
+		thread.moveForward();		//or dynamically continue fading //*Very* unlikely
 		thread.notifyAll();
 	}
 	
-	public void moveForward()		//For fade cues. Decide to either jump to end,
-	{								//take current color and move on, //Likely this one
-									//or dynamically continue fading //*Very* unlikely
+	public void resetPanel()
+	{
+		panel.setBackground(defaultBG);
+	}
+
+	public void setDefaultBG(Color newBG)
+	{
+		if (newBG == null) { throw new IllegalArgumentException("Cannot be null"); }
+		defaultBG = newBG;
 	}
 	
 	public boolean isVariable(String variable)

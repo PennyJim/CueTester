@@ -46,7 +46,7 @@ public class CuePanel extends JPanel {
 		this.runButton = new JButton("Run");
 		this.pickColor = new JButton("Pick Color");
 		
-		parser = new Parser(textArea);
+		parser = new Parser(textArea, new Color(50, 50, 50));
 		
 		setupPanel();
 		setupListeners();
@@ -93,30 +93,24 @@ public class CuePanel extends JPanel {
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-//				runner.stop();
+				parser.stop();
 			}
 		});
 		
-		proceedButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent click)
-			{
-//				runner.proceed();
-			}
-		});
+		proceedButton.addActionListener(click -> parser.moveForward());
 		
 		pauseButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-//				if (runner.isPaused())
-//				{
-//					runner.play();
-//				}
-//				else
-//				{
-//					runner.pause();
-//				}
+				if (parser.isPaused())
+				{
+					parser.play();
+				}
+				else
+				{
+					parser.play();
+				}
 			}
 		});
 		
