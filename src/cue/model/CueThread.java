@@ -12,7 +12,7 @@ public class CueThread extends Thread
 	{
 		super(name);
 		exitEarly = false;
-		isPaused = true;
+		isPaused = false;
 	}
 	
 	public void setRunTree(CueSyntaxTree runTree)
@@ -39,11 +39,12 @@ public class CueThread extends Thread
 							currentWord.step();
 							long end = System.currentTimeMillis();
 							
-							if (end - start < 25) { try { sleep(start - end); }
+							if (end - start < 25) { try { sleep(25 - (end - start)); }
 							catch (InterruptedException e) {} }
 		
 							while(isPaused)
 							{
+								System.out.println("Slep");
 								try { wait(); }
 								catch (InterruptedException e){}
 							}
@@ -53,6 +54,7 @@ public class CueThread extends Thread
 			}
 			try { Thread.sleep(100); }
 			catch (InterruptedException e) {}
+//			System.out.println("Die");
 		}
 	}
 	

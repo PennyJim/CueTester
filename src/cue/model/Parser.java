@@ -165,7 +165,7 @@ public class Parser
 			}
 		}
 		
-		thread.pause();
+		thread.play();
 		thread.setRunTree(syntaxTree);
 		
 		lines.close();
