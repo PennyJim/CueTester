@@ -45,7 +45,7 @@ public class CueThread extends Thread
 							currentWord.step();
 							long end = System.currentTimeMillis();
 							
-							if (end - start < 25) { try { sleep(25 - (end - start)); }
+							if (end - start < 25) { try { wait(25 - (end - start)); }
 							catch (InterruptedException e) {} }
 							
 							while(isPaused.get())
@@ -59,7 +59,7 @@ public class CueThread extends Thread
 					}
 					stopEarly.set(false);
 					runTree = null; //May regret
-					try { Thread.sleep(2000); }
+					try { wait(2000); }
 					catch (InterruptedException e) {}
 					parser.resetPanel();
 				}
@@ -74,6 +74,7 @@ public class CueThread extends Thread
 	{
 		stopEarly.set(true);
 		exitEarly.set(true);
+		isPaused.set(false);
 	}
 	
 	public synchronized void pause()
@@ -81,7 +82,7 @@ public class CueThread extends Thread
 		isPaused.set(true);
 	}
 	
-	public boolean isPaused()
+	public synchronized boolean isPaused()
 	{
 		return isPaused.get();
 	}

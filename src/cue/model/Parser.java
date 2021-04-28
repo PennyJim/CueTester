@@ -202,10 +202,13 @@ public class Parser
 			thread.notifyAll();
 		}
 	}
-	public void moveForward()		//For fade cues. Decide to either jump to end,
-	{								//take current color and move on, //Likely this one
-		thread.moveForward();		//or dynamically continue fading //*Very* unlikely
-		thread.notifyAll();
+	public void moveForward()
+	{
+		synchronized(thread)
+		{
+			thread.moveForward();
+			thread.notifyAll();
+		}
 	}
 	
 	public void resetPanel()

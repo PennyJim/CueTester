@@ -109,7 +109,7 @@ public class CuePanel extends JPanel {
 				}
 				else
 				{
-					parser.play();
+					parser.pause();
 				}
 			}
 		});

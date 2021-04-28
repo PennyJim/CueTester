@@ -2,8 +2,6 @@ package cue.model;
 
 import java.awt.Color;
 
-import javax.swing.SwingUtilities;
-
 public class FadeKeyword extends Keyword
 {
 	private Parser parser;
@@ -152,12 +150,9 @@ public class FadeKeyword extends Keyword
 		}
 		
 		double factor = (double)(System.currentTimeMillis() - startMilis) / (double)duration;
-		System.out.println(parser.isPaused());
-		SwingUtilities.invokeLater(() -> {
-			parser.panel.setBackground(new Color(	startColor[0] + (int)(factor * (double)(endColor[0] - startColor[0])),
-					startColor[1] + (int)(factor * (double)(endColor[1] - startColor[1])),
-					startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
-		});
+		parser.panel.setBackground(new Color(	startColor[0] + (int)(factor * (double)(endColor[0] - startColor[0])),
+												startColor[1] + (int)(factor * (double)(endColor[1] - startColor[1])),
+												startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
 	}
 
 	@Override
