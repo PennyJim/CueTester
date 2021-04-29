@@ -31,6 +31,10 @@ public class CuePanel extends JPanel {
 	
 	private Parser parser;
 	
+	/**
+	 * Initializes and sets up the UI elements.
+	 * @param controller
+	 */
 	public CuePanel(CueController controller)
 	{
 		super();
@@ -53,6 +57,9 @@ public class CuePanel extends JPanel {
 		setupLayout();
 	}
 	
+	/**
+	 * Sets up the UI elements.
+	 */
 	private void setupPanel()
 	{
 		this.setBackground(Color.DARK_GRAY);
@@ -87,6 +94,9 @@ public class CuePanel extends JPanel {
 		this.add(buttonPane);
 	}
 	
+	/**
+	 * Sets up the listeners to the buttons.
+	 */
 	private void setupListeners()
 	{
 		stopButton.addActionListener(new ActionListener()
@@ -166,6 +176,9 @@ public class CuePanel extends JPanel {
 		});
 	}
 	
+	/**
+	 * Sets up the relational positions of the UI elements.
+	 */
 	private void setupLayout()
 	{
 		layout.putConstraint(SpringLayout.WEST, textPane, 25, SpringLayout.WEST, this);
@@ -177,81 +190,5 @@ public class CuePanel extends JPanel {
 		layout.putConstraint(SpringLayout.EAST, buttonPane, 0, SpringLayout.EAST, textPane);
 		layout.putConstraint(SpringLayout.NORTH, buttonPane, -80, SpringLayout.SOUTH, this);
 		layout.putConstraint(SpringLayout.SOUTH, buttonPane, -25, SpringLayout.SOUTH, this);
-	}
-	
-	@SuppressWarnings("unused")
-	@Deprecated
-	private String run(String code)
-	{
-		try
-		{
-			if (!code.substring(0, 5).equals("START")) { return "Needs to start with \"START\""; }
-			
-			String[] sentences = code.split("\n");
-			
-			int startIndex = 0;
-			int loopIndex = -1;
-			for (int index = 0; index < sentences.length; index++)
-			{
-				String[] words = sentences[index].split(" ");
-				if (words[0].equals("START"))
-				{
-					startIndex = index;
-					if (!words[1].equals("NULL"))
-					{
-						textArea.setBackground(new Color(	(int)((double)Double.parseDouble(words[1]) * 2.55),
-								(int)((double)Double.parseDouble(words[2]) * 2.55),
-								(int)((double)Double.parseDouble(words[3]) * 2.55)));
-					}
-				}
-				else if (words[0].equals("HOLD"))
-				{
-					//Wait until button press?
-				}
-				else if (words[0].equals("WAIT"))
-				{
-					//Wait x milliseconds
-				}
-				else if (words[0].equals("FADE"))
-				{
-					int length = (int)Integer.decode(words[1]);
-					if(length < 10) { length = 10; }
-					
-					Color start = textArea.getBackground();
-					int[] startColor = new int[] {start.getRed(), start.getGreen(), start.getBlue()};
-					int[] endColor = new int[] {(int)((double)Double.parseDouble(words[2]) * 2.55),
-							(int)((double)Double.parseDouble(words[3]) * 2.55),
-							(int)((double)Double.parseDouble(words[4]) * 2.55)};
-					
-					long startMilis = System.currentTimeMillis();
-					long endMilis = startMilis + length;
-					while (System.currentTimeMillis() < endMilis)
-					{
-						double factor = (double)(System.currentTimeMillis() - startMilis) / (double)length;
-						textArea.setBackground(new Color(	startColor[0] + (int)(factor * (double)(endColor[0] - startColor[0])),
-								startColor[1] + (int)(factor * (double)(endColor[1] - startColor[1])),
-								startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
-						Thread.sleep(100);
-					}
-				}
-				else if (words[0].equals("JUMP"))
-				{
-					//Fade to the next color in a very short amount of time
-				}
-				else if (words[0].equals("STOP"))
-				{
-//					textArea.setBackground(Color.WHITE);
-					return null;
-				}
-				else
-				{
-					return "Incorrect command type";
-				}
-			}
-			
-//			textArea.setBackground(Color.WHITE);
-			return null;
-		}
-		catch (Exception e) { System.out.println(e); return "invalid number type"; }
 	}
 }
