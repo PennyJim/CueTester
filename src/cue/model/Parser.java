@@ -38,6 +38,11 @@ public class Parser
 		public static String STOP = "STOP";
 	}
 	
+	/**
+	 * Returns a list of variables found in the given code
+	 * @param code The code it's looking for variables in
+	 * @return A list of the found variables
+	 */
 	public static List<String> parseVariables(String code)
 	{
 		ArrayList<String> variables = new ArrayList<String>();
@@ -58,6 +63,12 @@ public class Parser
 		return variables;
 	}
 	
+	/**
+	 * Returns what type of word the given word is and if it is in the variableList
+	 * @param word The word that you're testing
+	 * @param variableList The list of 'known' variables
+	 * @return One of 4 static strings indicating word type
+	 */
 	public static String wordType(String word, List<String> variableList)
 	{
 		word = word.toUpperCase();
@@ -90,15 +101,22 @@ public class Parser
 	//Wait - Waits x amount of time and moves on
 	//Repeat - Starts (and ends) a loop that loops x times or moves on on go
 	
+	//Custom tree to implement Abstract Tree Syntax for loops?
+	//Otherwise I'll use an array
+	//Need to learn how to implement properly
 	private CueSyntaxTree syntaxTree;
-								//Custom tree to implement Abstract Tree Syntax for loops?
-								//Otherwise I'll use an array
-								//Need to learn how to implement properly
+	
 	public JTextPane panel;
 	private Color defaultBG;
+	
 	private HashMap<String,Variable> variables;
 	private CueThread thread;
 	
+	/**
+	 * Initializes the Parser element
+	 * @param panel The panel that is affected by the cues
+	 * @param defaultBG The color the panel will reset to at the end of execution
+	 */
 	public Parser(JTextPane panel, Color defaultBG)
 	{
 		this.panel = panel;
@@ -107,6 +125,11 @@ public class Parser
 		thread.start();
 	}
 	
+	/**
+	 * Initializes the syntax tree and puts it within the thread running the cue
+	 * @param code The code that's parsed into a syntax tree
+	 * @throws IOException An error defining what is wrong with the given code. Currently does not give line numbers
+	 */
 	public void initParse(String code) throws IOException
 	{
 		Scanner lines = new Scanner(code);
@@ -174,6 +197,22 @@ public class Parser
 		lines.close();
 	}
 	
+	/**
+	 * Resets the panel to the given default background
+	 */
+	public void resetPanel()
+	{
+		panel.setBackground(defaultBG);
+	}
+	public void setDefaultBG(Color newBG)
+	{
+		if (newBG == null) { throw new IllegalArgumentException("Cannot be null"); }
+		defaultBG = newBG;
+	}
+	
+	/**
+	 * @see CueThread#stopCues()
+	 */
 	public void stop()
 	{
 		synchronized (thread)
@@ -182,10 +221,17 @@ public class Parser
 			thread.notifyAll();
 		}
 	}
+	/**
+	 * @return whether or not the cue is paused
+	 * @see CueThread#isPaused()
+	 */
 	public boolean isPaused()
 	{
 		return thread.isPaused();
 	}
+	/**
+	 * @see CueThread#pause()
+	 */
 	public void pause()
 	{
 		synchronized (thread)
@@ -194,6 +240,9 @@ public class Parser
 			thread.notifyAll();
 		}
 	}
+	/**
+	 * @see CueThread#play()
+	 */
 	public void play()
 	{
 		synchronized (thread)
@@ -202,6 +251,9 @@ public class Parser
 			thread.notifyAll();
 		}
 	}
+	/**
+	 * @see CueThread#moveForward()
+	 */
 	public void moveForward()
 	{
 		synchronized(thread)
@@ -210,30 +262,33 @@ public class Parser
 			thread.notifyAll();
 		}
 	}
-	
-	public void resetPanel()
-	{
-		panel.setBackground(defaultBG);
-	}
 
-	public void setDefaultBG(Color newBG)
-	{
-		if (newBG == null) { throw new IllegalArgumentException("Cannot be null"); }
-		defaultBG = newBG;
-	}
-	
+	/**
+	 * Checks whether the given variable name is in use
+	 * @param variable The variable name being tested
+	 * @return Whether or not the variable name is in use
+	 */
 	public boolean isVariable(String variable)
 	{
 		return variables.get(variable) != null;
 	}
-	
+	/**
+	 * Adds a variable of the given value with the given name to the HashMap
+	 * @param variable The name of the new variable
+	 * @param value The value of the new variable
+	 * @return Whether or not it was successful in adding a new variable
+	 */
 	public boolean addVariable(String variable, Variable value)
 	{
 		if (isVariable(variable)) { return false; }
 		variables.put(variable, value);
 		return true;
 	}
-	
+	/**
+	 * Retrieves a variable with the given name
+	 * @param variable The name of the variable you're looking for
+	 * @return The found variable or null if it doesn't exist
+	 */
 	public Variable getVariable(String variable)
 	{
 		return variables.get(variable);
