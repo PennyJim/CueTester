@@ -9,6 +9,9 @@ public class CueSyntaxTree
 	private Node<Keyword> curBuild;
 	private Node<Keyword> curSel;
 	
+	/**
+	 * Initializes the tree with only a root node
+	 */
 	public CueSyntaxTree()
 	{
 		root = new Node<Keyword>();
@@ -16,6 +19,11 @@ public class CueSyntaxTree
 		curBuild = root;
 	}
 	
+	/**
+	 * Adds the Keyword to the tree and automatically creates a new branch if the given Keyword is a repeat
+	 * @param word The Keyword to be added to the tree
+	 * @return Itself, for chaining methods
+	 */
 	public CueSyntaxTree add(Keyword word)
 	{
 		Node<Keyword> newNode = new Node<Keyword>();
@@ -42,6 +50,10 @@ public class CueSyntaxTree
 		return this;
 	}
 	
+	/**
+	 * Moves to the next place on the tree and returns it's Keyword
+	 * @return The next Keyword
+	 */
 	public Keyword next()
 	{
 		if (curSel != null)
@@ -72,6 +84,9 @@ public class CueSyntaxTree
 		return null;
 	}
 	
+	/**
+	 * @return Whether or not there is a next keyword in the tree
+	 */
 	public boolean hasNext()
 	{
 		if (curSel != null)
@@ -90,7 +105,6 @@ public class CueSyntaxTree
 		
 		return false;
 	}
-	
 	private boolean hasNext(Node<Keyword> testSel)
 	{
 		if (testSel != null)
@@ -106,6 +120,10 @@ public class CueSyntaxTree
 		return false;
 	}
 	
+	/**
+	 * Wipes the tree back down to only a root node
+	 * @return Itself, for chaining commands
+	 */
 	public CueSyntaxTree clear()
 	{
 		root.children.clear();
@@ -116,6 +134,12 @@ public class CueSyntaxTree
 		return this;
 	}
 	
+	/**
+	 * The basic node class used to make the tree structure of CueSyntaxTree
+	 * @author char2259
+	 *
+	 * @param <T> The type of data stored in the node
+	 */
 	public static class Node<T> {
 		private T data;
 		private Node<T> parent;
