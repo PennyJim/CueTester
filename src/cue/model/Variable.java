@@ -1,6 +1,6 @@
 package cue.model;
 
-public class Variable
+public class Variable //TODO: make an abstract type, just for the fun of it?
 {
 	private double a;
 	private double b;
@@ -8,12 +8,22 @@ public class Variable
 	
 	private boolean isThree;
 	
+	/**
+	 * Initializes a variable with a single value
+	 * @param a the single value held
+	 */
 	public Variable (double a)
 	{
 		this.a = a;
 		this.isThree = false;
 	}
 	
+	/**
+	 * Initializes a variable with 3 values
+	 * @param a the first value
+	 * @param b the second value
+	 * @param c the third value
+	 */
 	public Variable (double a, double b, double c)
 	{
 		this.a = a;
@@ -22,6 +32,9 @@ public class Variable
 		this.isThree = true;
 	}
 	
+	/**
+	 * @return an array of either 1 or 3 doubles based on what it contains
+	 */
 	public double[] getValue()
 	{
 		if (isThree)
@@ -34,6 +47,9 @@ public class Variable
 		}
 	}
 	
+	/**
+	 * @return Whether or not this variable contains 3 values
+	 */
 	public boolean isThree()
 	{
 		return isThree;
