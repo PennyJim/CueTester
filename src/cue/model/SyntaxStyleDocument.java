@@ -2,7 +2,6 @@ package cue.model;
 
 import java.awt.Color;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Scanner;
 
 import javax.swing.text.AttributeSet;
@@ -10,19 +9,24 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
-import javax.swing.text.StyleContext;
 
 
 public class SyntaxStyleDocument extends DefaultStyledDocument
 {
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Initializes this style document
+	 */
 	public SyntaxStyleDocument()
 	{
 		super();
 		createStyles();
 	}
 	
+	/**
+	 * Initializes the styles used in this style document
+	 */
 	private void createStyles()
 	{
 
@@ -43,6 +47,11 @@ public class SyntaxStyleDocument extends DefaultStyledDocument
 		StyleConstants.setFontSize(variableStyle, 20);
 	}
 
+	/** 
+	 * {@inheritDoc}
+	 * <br>(Adds a call to a private function: refreshDocument)
+	 * @see SytaxStyleDocument#refreshDocument()
+	 */
 	@Override
 	public void insertString(int offs, String str, AttributeSet a) throws BadLocationException
 	{
@@ -50,6 +59,11 @@ public class SyntaxStyleDocument extends DefaultStyledDocument
 		refreshDocument();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * <br>(Adds a call to a private function: refreshDocument)
+	 * @see SyntaxStyleDocument#refreshDocument()
+	 */
 	@Override
 	public void remove(int offs, int len) throws BadLocationException
 	{
@@ -58,6 +72,10 @@ public class SyntaxStyleDocument extends DefaultStyledDocument
 		refreshDocument();
 	}
 	
+	/**
+	 * A private function used to style the current document according to the predefined rules and defined styles
+	 * @throws BadLocationException Should never throw exception (0, getLength())
+	 */
 	private synchronized void refreshDocument() throws BadLocationException
 	{
 		String code = getText(0, getLength());
