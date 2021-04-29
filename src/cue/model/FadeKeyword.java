@@ -13,7 +13,18 @@ public class FadeKeyword extends Keyword
 	private long startMilis = 0;
 	private int[] startColor;
 	
-	public FadeKeyword(Parser parser, String inputs) //TODO: Define endColor and length
+	/**
+	 * Sets up the required variables and checks if the inputs are valid:<br>
+	 * <pre>
+	 * Variable one/first 3 numbers:	must be 0-100
+	 * Variable two/last number:	must be non-zero
+	 * </pre>
+	 * 
+	 * @param parser Used to access Panel to change its color
+	 * @param inputs 4 numbers or 2 variables (3 and 1 number)
+	 * @see Keyword#Keyword(Parser, String)
+	 */
+	public FadeKeyword(Parser parser, String inputs)
 	{
 		super(parser, inputs);
 		this.parser = parser;
@@ -136,6 +147,10 @@ public class FadeKeyword extends Keyword
 		}
 	}
 
+	/**
+	 * {@inheritDoc}<br>
+	 * This takes a step proportional to the color of the panel during the first step and the time since the first step
+	 */
 	@Override
 	public void step()
 	{
@@ -155,6 +170,9 @@ public class FadeKeyword extends Keyword
 												startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
 	}
 
+	/**
+	 * Returns whether or not the time passed since first step exceeds the duration found in the inputs
+	 */
 	@Override
 	public boolean hasStep()
 	{
@@ -162,6 +180,9 @@ public class FadeKeyword extends Keyword
 		return System.currentTimeMillis() < startMilis + duration;
 	}
 	
+	/**
+	 * Returns the generated string in {@link FadeKeyword#FadeKeyword(Parser, String) FadeKeyword}
+	 */
 	@Override
 	public String validateInputs()
 	{
