@@ -51,6 +51,20 @@ public class CueSyntaxTree
 	}
 	
 	/**
+	 * Wipes the tree back down to only a root node
+	 * @return Itself, for chaining commands
+	 */
+	public CueSyntaxTree clear()
+	{
+		root.children.clear();
+		root = new Node<Keyword>();
+		curBuild = root;
+		curSel = null;
+		
+		return this;
+	}
+	
+	/**
 	 * Moves to the next place on the tree and returns it's Keyword
 	 * @return The next Keyword
 	 */
@@ -118,20 +132,6 @@ public class CueSyntaxTree
 			else { return true; }
 		}
 		return false;
-	}
-	
-	/**
-	 * Wipes the tree back down to only a root node
-	 * @return Itself, for chaining commands
-	 */
-	public CueSyntaxTree clear()
-	{
-		root.children.clear();
-		root = new Node<Keyword>();
-		curBuild = root;
-		curSel = null;
-		
-		return this;
 	}
 	
 	/**

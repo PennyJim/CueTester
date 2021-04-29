@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>696</x>
+      <y>304</y>
+      <w>224</w>
+      <h>232</h>
+    </coordinates>
+    <panel_attributes>group=1
+CueSyntaxTree
+--
+-root : Node&lt;Keyword&gt;
+-curBuild : Node&lt;Keyword&gt;
+-curSel : Node&lt;Keyword&gt;
+--
++CueSyntaxTree()
++add(Keyword) : CueSyntaxTree
++clear() : CueSyntaxTree
++next() : Keyword
++hasNext() : boolean
+-hasNext(Node&lt;Keyword&gt;) : boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>704</x>
+      <y>448</y>
+      <w>208</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>group=1
+_Node&lt;T&gt;_
+--
+-data : T
+-parent : Node&lt;T&gt;
+-children : List&lt;Node&lt;T\&gt;&gt;
+-selIndex : int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>584</x>
+      <y>216</y>
+      <w>176</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>/Keyword/
+--
+--
++Keyword(Parser, String)
++step() : void
++hasStep() : boolean
++validateInputs() : String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>216</x>
+      <y>704</y>
+      <w>264</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>SyntaxStyleDocument
+--
+--
++SyntaxStyleDocument()
++insertString(int, String, AttributeSet) : void
++remove(int, int) : void
+-createStyles() : void
+-refreshDocument : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>488</x>
+      <y>688</y>
+      <w>200</w>
+      <h>136</h>
+    </coordinates>
+    <panel_attributes>Variable
+--
+-a : double
+-b : double
+-c : double
+-isThree : boolean
+--
++Variable(double)
++Variable(double,double,double)
++getValue() : double[]
++isThree : boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>696</x>
+      <y>544</y>
+      <w>224</w>
+      <h>208</h>
+    </coordinates>
+    <panel_attributes>CueThread
+--
+-exitEarly : AtomicBoolean
+-stopEarly : AtomicBoolean
+-isPaused : AtomicBoolean
+-parser : Parser
+-runTree : CueSyntaxTree
+-currentWord : Keyword
+--
++CueThread(String, Parser)
++run() : void
++stopCues() : void
++pause() : void
++play() : void
++moveForward() : void
++isPaused() : boolean
++setRunTree(CueSyntaxTree) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>768</x>
+      <y>112</y>
+      <w>160</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>FadeKeyword
+--
+-parser : Parser
+-validateString : String
+-endColor : int[]
+-duration : int
+-startColor : int[]
+-startMilis : long
+--
++FadeKeyword(Parser, String)
++step() : void
++hasStep() : boolean
++validateInputs() : String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>664</x>
+      <y>144</y>
+      <w>120</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>320</x>
+      <y>320</y>
+      <w>360</w>
+      <h>344</h>
+    </coordinates>
+    <panel_attributes>group=2
+Parser
+--
+_-KEYWORDS : HashMap&lt;String,Class&lt;? extends Keyword\&gt;&gt;_
+_-DEFAULT : String_
+_-NUMBER : String_
+_-VARIABLE : String_
+_-KEYWORD : String_
+-syntaxTree : CueSyntaxTree
+-panel : JTextPane
+-defaultBG : Color
+-variables : HashMap&lt;String,Variable&gt;
+-thread : CueThread
+
+--
+_+parseVariables(String) : List&lt;String&gt;_
+_+wordType(String, List&lt;String&gt;) : String_
++Parser(JTextPane, Color)
++initParse(String) : void
++resetPanel() : void
++setDefaultBG(Color) : void
++stop() : void
++pause() : void
++play() : void
++isPaused() : boolean
++moveForward() : void
++isVariable(String) : boolean
++addVariable(String,Variable) : boolean
++getVariable(String) : Variable</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>552</x>
+      <y>360</y>
+      <w>120</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>group=0
+group=2
+_KEY_
+--
+_+VARIABLE : String_
+_+FADE : String_
+_+HOLD : String_
+_+WAIT : String_
+_+REPEAT : String_
+_+START : String_
+_+STOP : String_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>184</x>
+      <y>88</y>
+      <w>776</w>
+      <h>752</h>
+    </coordinates>
+    <panel_attributes>model</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>0</x>
+      <y>328</y>
+      <w>176</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>group=-1
+controller</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>0</x>
+      <y>488</y>
+      <w>176</w>
+      <h>352</h>
+    </coordinates>
+    <panel_attributes>group=0
+view</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>8</x>
+      <y>600</y>
+      <w>160</w>
+      <h>232</h>
+    </coordinates>
+    <panel_attributes>group=0
+CuePanel
+--
+-controller : CueController
+-layout : SpringLayout
+-font : Font
+-textPane : JScrollPane
+-textArea : JTextPane
+-buttonPane : JPanel
+-stopButton : JButton
+-proceedButton : JButton
+-pauseButton : JButton
+-runButton : JButton
+-pickColor : JButton
+-parser : Parser
+--
++CuePanel(CueController)
+-setupPanel() : void
+-setupListeners() : void
+-setupLayout() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>8</x>
+      <y>512</y>
+      <w>160</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>group=0
+CueFrame
+--
+-controller : CueController
+-panel : CuePanel
+--
++CueFrame(CueController)
+-setupFrame() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>8</x>
+      <y>352</y>
+      <w>160</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>group=-1
+Runner
+--
+--
++main(String[]) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>8</x>
+      <y>400</y>
+      <w>160</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>group=-1
+CueController
+--
+-frame : CueFrame
+--
++CueController()
++start() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

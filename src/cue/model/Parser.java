@@ -11,16 +11,16 @@ import javax.swing.JTextPane;
 
 public class Parser
 {
-	private static HashMap<String,Class<? extends Keyword>> keywords; //Create Custom Objects for each keyword all following the abstract Keyword.
+	private static HashMap<String,Class<? extends Keyword>> KEYWORDS; //Create Custom Objects for each keyword all following the abstract Keyword.
 	static {
-		keywords = new HashMap<String,Class<? extends Keyword>>();
-		keywords.put(KEY.VARIABLE,	Keyword.class);
-		keywords.put(KEY.FADE,		FadeKeyword.class);
-		keywords.put(KEY.HOLD,		Keyword.class);
-		keywords.put(KEY.WAIT,		Keyword.class);
-		keywords.put(KEY.REPEAT,	Keyword.class);
-		keywords.put(KEY.START,		Keyword.class);
-		keywords.put(KEY.STOP,		Keyword.class);
+		KEYWORDS = new HashMap<String,Class<? extends Keyword>>();
+		KEYWORDS.put(KEY.VARIABLE,	Keyword.class);
+		KEYWORDS.put(KEY.FADE,		FadeKeyword.class);
+		KEYWORDS.put(KEY.HOLD,		Keyword.class);
+		KEYWORDS.put(KEY.WAIT,		Keyword.class);
+		KEYWORDS.put(KEY.REPEAT,	Keyword.class);
+		KEYWORDS.put(KEY.START,		Keyword.class);
+		KEYWORDS.put(KEY.STOP,		Keyword.class);
 	}
 	
 	public static String DEFAULT = "defaultStyle";
@@ -28,6 +28,11 @@ public class Parser
 	public static String VARIABLE = "variableStyle";
 	public static String KEYWORD = "keywordStyle";
 	
+	/**
+	 * A static class containing static strings defining the word for each keyword
+	 * @author char2259
+	 *
+	 */
 	public static class KEY {
 		public static String VARIABLE = "VAR";
 		public static String FADE = "FADE";
@@ -80,7 +85,7 @@ public class Parser
 		}
 		catch (Exception e) {}
 		
-		if (keywords.get(word) != null)
+		if (KEYWORDS.get(word) != null)
 		{
 			return KEYWORD;
 		}
@@ -151,7 +156,7 @@ public class Parser
 				keyword = line.substring(0, splitIndex);
 				inputs = line.substring(splitIndex + 1);
 			}
-			Class<? extends Keyword> word = keywords.get(keyword.toUpperCase());
+			Class<? extends Keyword> word = KEYWORDS.get(keyword.toUpperCase());
 			
 			
 			if (word != null)

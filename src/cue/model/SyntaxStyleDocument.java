@@ -13,8 +13,6 @@ import javax.swing.text.StyleConstants;
 
 public class SyntaxStyleDocument extends DefaultStyledDocument
 {
-	private static final long serialVersionUID = 1L;
-	
 	/**
 	 * Initializes this style document
 	 */
