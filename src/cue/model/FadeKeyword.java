@@ -13,6 +13,8 @@ public class FadeKeyword extends Keyword
 	private long startMilis = 0;
 	private int[] startColor;
 	
+	private boolean isFinished = false;
+	
 	/**
 	 * Sets up the required variables and checks if the inputs are valid:<br>
 	 * <pre>
@@ -170,6 +172,11 @@ public class FadeKeyword extends Keyword
 												startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
 	}
 
+	private void finalStep()
+	{
+		parser.panel.setBackground(new Color(endColor[0], endColor[1], endColor[2]));
+	}
+	
 	/**
 	 * Returns whether or not the time passed since first step exceeds the duration found in the inputs
 	 */
@@ -177,6 +184,11 @@ public class FadeKeyword extends Keyword
 	public boolean hasStep()
 	{
 		if (startMilis == 0) { return true; }
+		if (System.currentTimeMillis() > startMilis + duration)
+		{
+			finalStep();
+		}
+		else { return true; }
 		return System.currentTimeMillis() < startMilis + duration;
 	}
 	

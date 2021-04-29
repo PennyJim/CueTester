@@ -140,11 +140,13 @@ _Node&lt;T&gt;_
 -duration : int
 -startColor : int[]
 -startMilis : long
+-isFinished : boolean
 --
 +FadeKeyword(Parser, String)
 +step() : void
 +hasStep() : boolean
-+validateInputs() : String</panel_attributes>
++validateInputs() : String
+-finalStep() : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
