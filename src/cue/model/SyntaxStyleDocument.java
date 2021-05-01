@@ -11,6 +11,7 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 
 
+@SuppressWarnings("serial")
 public class SyntaxStyleDocument extends DefaultStyledDocument
 {
 	/**

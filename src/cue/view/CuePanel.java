@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -14,8 +12,10 @@ import cue.controller.CueController;
 import cue.model.Parser;
 import cue.model.SyntaxStyleDocument;
 
+@SuppressWarnings("serial")
 public class CuePanel extends JPanel {
 
+	@SuppressWarnings("unused")
 	private CueController controller;
 	private SpringLayout layout;
 	private Font font;
