@@ -14,7 +14,7 @@ public class Parser //Plan to shove into the actual controller, instead of being
 	private static HashMap<String,Class<? extends Keyword>> KEYWORDS;
 	static {
 		KEYWORDS = new HashMap<String,Class<? extends Keyword>>();
-		KEYWORDS.put(KEY.VARIABLE,	Keyword.class);
+		KEYWORDS.put(KEY.VARIABLE,	VariableKeyword.class);
 		KEYWORDS.put(KEY.FADE,		FadeKeyword.class);
 		KEYWORDS.put(KEY.HOLD,		Keyword.class);
 		KEYWORDS.put(KEY.WAIT,		Keyword.class);
@@ -121,7 +121,8 @@ public class Parser //Plan to shove into the actual controller, instead of being
 	{
 		this.panel = panel;
 		this.defaultBG = defaultBG;
-		thread = new CueThread("Cues", this);
+		this.variables = new HashMap<String,Variable>();
+		this.thread = new CueThread("Cues", this);
 		thread.start();
 	}
 	
