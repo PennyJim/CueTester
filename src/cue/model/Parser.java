@@ -134,14 +134,20 @@ public class Parser //Plan to shove into the actual controller, instead of being
 	 */
 	public void initParse(String code) throws IOException
 	{
+		int lineNumber = 0;
 		Scanner lines = new Scanner(code);
 		syntaxTree = new CueSyntaxTree();
+		this.variables = new HashMap<String,Variable>();
 		
 		while (lines.hasNext())
 		{
+			lineNumber++;
 			String line = lines.nextLine();
 			int splitIndex = line.indexOf(' ');
 			String keyword,inputs;
+
+			System.out.println(line);
+			if (line.equals("")) { continue; }
 			
 			if (splitIndex == -1)
 			{
@@ -161,7 +167,7 @@ public class Parser //Plan to shove into the actual controller, instead of being
 				String error;
 				try
 				{
-					Class args[] = new Class[] {Parser.class, String.class};
+					Class<?> args[] = new Class[] {Parser.class, String.class};
 					
 					Keyword constructedWord = word.getConstructor(args).newInstance(this, inputs);
 					
@@ -172,7 +178,7 @@ public class Parser //Plan to shove into the actual controller, instead of being
 					}
 					else
 					{
-						throw new IOException(error);
+						throw new IOException(lineNumber + ": " + error);
 					}
 				}
 				catch (IOException e)
