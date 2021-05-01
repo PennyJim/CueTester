@@ -5,17 +5,14 @@ import java.util.Scanner;
 
 public class VariableKeyword extends Keyword
 {
-	private boolean hasStepped = false;
-	
-	private String varName;
-	private Variable varValue;
 	
 	public VariableKeyword(Parser parser, String inputs)
 	{
 		super(parser, inputs);
 		Scanner input = new Scanner(inputs);
 		
-		varName = input.next();
+		String varName = input.next();
+		Variable varValue = null;
 		
 		try
 		{
@@ -50,22 +47,21 @@ public class VariableKeyword extends Keyword
 		{
 			validateString = "Value is not a valid number";
 		}
-		
+
+		if (varValue != null)
+		{
+			parser.addVariable(varName, varValue);
+			System.out.println("Added " + varName + ": " + varValue);
+		}
 		input.close();
 	}
 
 	@Override
-	public void step()
-	{
-		// TODO Auto-generated method stub
-		parser.addVariable(varName, varValue);
-		
-		hasStepped = true;
-	}
+	public void step() {}
 
 	@Override
 	public boolean hasStep()
 	{
-		return !hasStepped;
+		return false;
 	}
 }
