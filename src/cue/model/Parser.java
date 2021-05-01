@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import javax.swing.JTextPane;
@@ -195,6 +196,8 @@ public class Parser //Plan to shove into the actual controller, instead of being
 		thread.play();
 		thread.setRunTree(syntaxTree);
 		
+		listVariables();
+		
 		lines.close();
 	}
 	
@@ -293,5 +296,17 @@ public class Parser //Plan to shove into the actual controller, instead of being
 	public Variable getVariable(String variable)
 	{
 		return variables.get(variable);
+	}
+	/**
+	 * @return a string of all the variables and their values
+	 */
+	public String listVariables()
+	{
+		String variableList = "";
+		for (Entry<String,Variable> variable : variables.entrySet())
+		{
+			variableList += variable.getKey() + ": " + variable.getValue().toString() + "\n";
+		}
+		return variableList;
 	}
 }

@@ -54,4 +54,16 @@ public class Variable //TODO: make an abstract type, just for the fun of it?
 	{
 		return isThree;
 	}
+
+	@Override
+	public String toString() {
+		if (isThree)
+		{
+			return "[" + a + ", " + b + ", " + c + "]";
+		}
+		else
+		{
+			return "" + a;
+		}
+	}
 }
