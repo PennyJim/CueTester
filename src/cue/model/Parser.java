@@ -18,7 +18,7 @@ public class Parser //Plan to shove into the actual controller, instead of being
 		KEYWORDS.put(KEY.VARIABLE,	VariableKeyword.class);
 		KEYWORDS.put(KEY.FADE,		FadeKeyword.class);
 		KEYWORDS.put(KEY.HOLD,		Keyword.class);
-		KEYWORDS.put(KEY.WAIT,		Keyword.class);
+		KEYWORDS.put(KEY.WAIT,		WaitKeyword.class);
 		KEYWORDS.put(KEY.REPEAT,	Keyword.class);
 		KEYWORDS.put(KEY.START,		Keyword.class);
 		KEYWORDS.put(KEY.STOP,		Keyword.class);
