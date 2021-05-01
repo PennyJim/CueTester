@@ -65,7 +65,6 @@ public class SyntaxStyleDocument extends DefaultStyledDocument
 	@Override
 	public void remove(int offs, int len) throws BadLocationException
 	{
-		// TODO Auto-generated method stub
 		super.remove(offs, len);
 		refreshDocument();
 	}

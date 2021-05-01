@@ -9,9 +9,9 @@ import java.util.Scanner;
 
 import javax.swing.JTextPane;
 
-public class Parser
+public class Parser //Plan to shove into the actual controller, instead of being a sudo controller
 {
-	private static HashMap<String,Class<? extends Keyword>> KEYWORDS; //Create Custom Objects for each keyword all following the abstract Keyword.
+	private static HashMap<String,Class<? extends Keyword>> KEYWORDS;
 	static {
 		KEYWORDS = new HashMap<String,Class<? extends Keyword>>();
 		KEYWORDS.put(KEY.VARIABLE,	Keyword.class);
@@ -28,6 +28,12 @@ public class Parser
 	public static String VARIABLE = "variableStyle";
 	public static String KEYWORD = "keywordStyle";
 	
+	//Basic list of keywords wanted:
+	//Var - Creates a static variable
+	//Fade - Fades to a color over x time
+	//Hold - Waits for a user input to move on
+	//Wait - Waits x amount of time and moves on
+	//Repeat - Starts (and ends) a loop that loops x times or moves on on go
 	/**
 	 * A static class containing static strings defining the word for each keyword
 	 * @author char2259
@@ -98,17 +104,6 @@ public class Parser
 		return DEFAULT;
 	}
 	
-	//Basic list of keywords wanted:
-	//ColorVar - create a static color variable
-	//Var - Creates a static variable			//Entirely new for me to implement
-	//Fade - Fades to a color over x time
-	//Hold - Waits for a user input to move on
-	//Wait - Waits x amount of time and moves on
-	//Repeat - Starts (and ends) a loop that loops x times or moves on on go
-	
-	//Custom tree to implement Abstract Tree Syntax for loops?
-	//Otherwise I'll use an array
-	//Need to learn how to implement properly
 	private CueSyntaxTree syntaxTree;
 	
 	public JTextPane panel;

@@ -49,7 +49,6 @@ public class CueThread extends Thread
 	{
 		while(true)
 		{
-//			System.out.println("Scree");
 			if (runTree != null)
 			{
 				synchronized(this)
@@ -84,7 +83,6 @@ public class CueThread extends Thread
 			}
 			try { Thread.sleep(100); }
 			catch (InterruptedException e) {}
-//			System.out.println("Die");
 		}
 	}
 	
