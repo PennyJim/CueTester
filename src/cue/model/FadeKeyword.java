@@ -4,8 +4,6 @@ import java.awt.Color;
 
 public class FadeKeyword extends Keyword
 {
-	private Parser parser;
-	private String validateString;
 	
 	private int[] endColor;
 	private int duration;
@@ -27,7 +25,6 @@ public class FadeKeyword extends Keyword
 	public FadeKeyword(Parser parser, String inputs)
 	{
 		super(parser, inputs);
-		this.parser = parser;
 		
 		String[] input = inputs.split(" ");
 		Boolean usedVariable = null;
@@ -189,15 +186,4 @@ public class FadeKeyword extends Keyword
 		else { return true; }
 		return System.currentTimeMillis() < startMilis + duration;
 	}
-	
-	/**
-	 * Returns the generated string in {@link FadeKeyword#FadeKeyword(Parser, String) FadeKeyword}
-	 */
-	@Override
-	public String validateInputs()
-	{
-		
-		return validateString;
-	}
-
 }
