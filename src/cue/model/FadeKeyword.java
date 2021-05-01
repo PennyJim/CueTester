@@ -13,8 +13,6 @@ public class FadeKeyword extends Keyword
 	private long startMilis = 0;
 	private int[] startColor;
 	
-	private boolean isFinished = false;
-	
 	/**
 	 * Sets up the required variables and checks if the inputs are valid:<br>
 	 * <pre>
