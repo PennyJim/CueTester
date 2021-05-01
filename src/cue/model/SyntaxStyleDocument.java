@@ -79,15 +79,14 @@ public class SyntaxStyleDocument extends DefaultStyledDocument
 		String code = getText(0, getLength());
 		List<String> variables = Parser.parseVariables(code);
 		
-		Scanner lines = new Scanner(code);
+		String[] words = code.split("[\n ]");
 		int cPosition = 0;
 		
 		setCharacterAttributes(0, code.length(), getStyle(Parser.DEFAULT), true);
-		while (lines.hasNext())
+		for(int index = 0; words.length > index; index++)
 		{
-			String word = lines.next();
-			setCharacterAttributes(cPosition, word.length(), getStyle(Parser.wordType(word, variables)), true);
-			cPosition += word.length() + 1;
-		} lines.close();
+			setCharacterAttributes(cPosition, words[index].length(), getStyle(Parser.wordType(words[index], variables)), true);
+			cPosition += words[index].length() + 1;
+		}
 	}
 }
