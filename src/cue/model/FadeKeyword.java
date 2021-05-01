@@ -1,6 +1,8 @@
 package cue.model;
 
 import java.awt.Color;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class FadeKeyword extends Keyword
 {
@@ -26,122 +28,98 @@ public class FadeKeyword extends Keyword
 	{
 		super(parser, inputs);
 		
-		String[] input = inputs.split(" ");
-		Boolean usedVariable = null;
-		
+		Scanner input = new Scanner(inputs);
+		String testInput = input.next();
 		try
 		{
-			Double colorR = Double.parseDouble(input[0]);
-			Double colorG = Double.parseDouble(input[1]);
-			Double colorB = Double.parseDouble(input[2]);
+			double colorR = Double.parseDouble(testInput);
+			testInput = null;
+			double colorG = Double.parseDouble(input.next());
+			double colorB = Double.parseDouble(input.next());
 			
-			
-			if (colorR > 100.0 || colorR < 0.0) { validateString = "Input 1 is out of bounds"; }
-			else if (colorG > 100.0 || colorG < 0.0) { validateString = "Input 2 is out of bounds"; }
-			else if (colorB > 100.0 || colorB < 0.0) { validateString = "Input 3 is out of bounds"; } 
+			if (colorR > 100.0 || colorR < 0.0) { validateString = "Red value is out of bounds"; }
+			else if (colorG > 100.0 || colorG < 0.0) { validateString = "Green value is out of bounds"; }
+			else if (colorB > 100.0 || colorB < 0.0) { validateString = "Blue value is out of bounds"; } 
 			else
 			{
-				validateString = "";
-				usedVariable = false;
-				
 				endColor = new int[] {	(int)(colorR * 2.55),
 										(int)(colorG * 2.55),
 										(int)(colorB * 2.55)};
 			}
 		}
-		catch (Exception e)
+		catch (NumberFormatException e)
 		{
-			if (parser.isVariable(input[0]))
+			if (testInput == null) { validateString = "Not all color values are numbers"; }
+			else
 			{
-				Variable var = parser.getVariable(input[0]); //Might need secondary checks for variable type. At least for single/multiple value variables
-				if (var.isThree())
+				Variable var = parser.getVariable(testInput);
+				
+				if (var == null) { validateString = "Variable for color does not exist"; }
+				else if (!var.isThree()) { validateString = "Variable for color needs 3 values"; }
+				else
 				{
 					double[] values = var.getValue();
-					
-					if (values[0] > 100.0 || values[0] < 0.0) { validateString = "Variable '" + input[0] + "', value 1 is out of bounds"; }
-					else if (values[1] > 100.0 || values[1] < 0.0) { validateString = "Variable '" + input[0] + "', value 2 is out of bounds"; }
-					else if (values[2] > 100.0 || values[2] < 0.0) { validateString = "Variable '" + input[0] + "', value 3 is out of bounds"; } 
+					if (values[0] > 100.0 || values[0] < 0.0) { validateString = "Red value is out of bounds"; }
+					else if (values[1] > 100.0 || values[1] < 0.0) { validateString = "Green value is out of bounds"; }
+					else if (values[2] > 100.0 || values[2] < 0.0) { validateString = "Blue value is out of bounds"; } 
 					else
 					{
-						validateString = "";
-						usedVariable = true;
-						
 						endColor = new int[] {	(int)(values[0] * 2.55),
 												(int)(values[1] * 2.55),
 												(int)(values[2] * 2.55)};
 					}
 				}
-				else
-				{
-					validateString = "Color variable needs 3 values";
-				}
 			}
-			else
-			{
-				validateString = "A color input is neither a number or variable";
-			}
+		}
+		catch (NoSuchElementException e)
+		{
+			validateString = "Not enough input values";
+			input.close();
+			return;
 		}
 		
-		if (usedVariable == null) { return; }
-		try
+		if (validateString == null)
 		{
-			Double duration;
-			if (usedVariable)
+			try
 			{
-				duration = Double.parseDouble(input[1]);
+				testInput = input.next();
+				double length = Double.parseDouble(testInput);
+				if (length < 0)
+				{
+					validateString = "Duration cannot be negative";
+				}
+				else
+				{
+					duration = (int)length;
+					validateString = "";
+				}
 			}
-			else
+			catch (NumberFormatException e)
 			{
-				duration = Double.parseDouble(input[3]);
+				Variable var = parser.getVariable(testInput);
+				
+				if (var == null) { validateString = "Variable for duration does not exist"; }
+				else if (var.isThree()) { validateString = "Variable for duration can't have 3 values"; }
+				else
+				{
+					double length = var.getValue()[0];
+					if (length < 0)
+					{
+						validateString = "Duration cannot be negative";
+					}
+					else
+					{
+						duration = (int)length;
+						validateString = "";
+					}
+				}
 			}
-			
-			if (duration < 0.0) { validateString = "Value of duration cannot be negative"; }
-			else
+			catch (NoSuchElementException e)
 			{
-				this.duration = duration.intValue();
+				validateString = "Not enough input values";
 			}
 		}
-		catch (Exception e)
-		{
-			Variable var = null;
-			if (usedVariable)
-			{
-				if (parser.isVariable(input[1]))
-				{
-					var = parser.getVariable(input[1]);
-				}
-				else
-				{
-					validateString = "Duration input is neither a number or variable";
-				}
-			}
-			else
-			{
-				if (parser.isVariable(input[3]))
-				{
-					var = parser.getVariable(input[3]);
-				}
-				else
-				{
-					validateString = "Duration input is neither a number or variable";
-				}
-			}
-			
-			if (var == null) { return; }
-			if (var.isThree())
-			{
-				validateString = "Duration variable cannot hold 3 values";
-			}
-			else
-			{
-				Double duration = var.getValue()[0];
-				if (duration < 0.0) { validateString = "Value of duration cannot be negative"; }
-				else
-				{
-					this.duration = duration.intValue();
-				}
-			}
-		}
+		input.close();
 	}
 
 	/**
