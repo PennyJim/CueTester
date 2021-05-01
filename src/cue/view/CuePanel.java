@@ -95,80 +95,52 @@ public class CuePanel extends JPanel {
 	 */
 	private void setupListeners()
 	{
-		stopButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent click)
-			{
-				parser.stop();
-			}
-		});
+		stopButton.addActionListener(click -> parser.stop());
 		
 		proceedButton.addActionListener(click -> parser.moveForward());
 		
-		pauseButton.addActionListener(new ActionListener()
+		pauseButton.addActionListener(click ->
 		{
-			public void actionPerformed(ActionEvent click)
+			if (parser.isPaused())
 			{
-				if (parser.isPaused())
-				{
-					parser.play();
-				}
-				else
-				{
-					parser.pause();
-				}
+				parser.play();
+			}
+			else
+			{
+				parser.pause();
 			}
 		});
 		
-		runButton.addActionListener(new ActionListener()
+		runButton.addActionListener(click ->
 		{
-			public void actionPerformed(ActionEvent click)
+			try
 			{
-				try
-				{
-					parser.initParse(textArea.getText());
-				}
-				catch (IOException e)
-				{
-					JOptionPane.showMessageDialog(null, e.getMessage(), "Cue Tester", JOptionPane.WARNING_MESSAGE, null);
-				}
-				
-//				runner.setCode(textArea.getText().toUpperCase());
-//				String output = runner.compile();
-//				if (output != null && runner.iFailed)
-//				{
-//					textArea.setBackground(Color.WHITE);
-//					JOptionPane.showMessageDialog(null, "Program Failed:\n" + output , "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
-//				}
-//				else
-//				{
-//					runner.execute();
-////					JOptionPane.showMessageDialog(null, "Program Succeded", "Cue Tester", JOptionPane.INFORMATION_MESSAGE, null);
-//				}
+				parser.initParse(textArea.getText());
+			}
+			catch (IOException e)
+			{
+				JOptionPane.showMessageDialog(null, e.getMessage(), "Cue Tester", JOptionPane.WARNING_MESSAGE, null);
 			}
 		});
 		
-		pickColor.addActionListener(new ActionListener()
+		pickColor.addActionListener(click ->
 		{
-			public void actionPerformed(ActionEvent click)
-			{
-				Color color = Color.white;
-			    JFrame frame = new JFrame();
-			    frame.setAlwaysOnTop(true);
-			    color = JColorChooser.showDialog(frame, "Pick a color", color);
-			    
-				int position = textArea.getCaretPosition();
-				String codeFull = textArea.getText();
-				String codeFHalf = codeFull.substring(0, position);
-				String codeSHalf = codeFull.substring(position);
-				System.out.println(codeFHalf + "|" + codeSHalf);
-				
-				double red = ((double)color.getRed() / 255.0) * 100;
-				double green = ((double)color.getGreen() / 255.0) * 100;
-				double blue = ((double)color.getBlue() / 255.0) * 100;
-				
-				textArea.setText(codeFHalf + String.format("%.2f", red) + " " + String.format("%.2f", green) + " " + String.format("%.2f", blue) + "\n" + codeSHalf);
-			}
+			Color color = Color.white;
+		    JFrame frame = new JFrame();
+		    frame.setAlwaysOnTop(true);
+		    color = JColorChooser.showDialog(frame, "Pick a color", color);
+		    
+			int position = textArea.getCaretPosition();
+			String codeFull = textArea.getText();
+			String codeFHalf = codeFull.substring(0, position);
+			String codeSHalf = codeFull.substring(position);
+			System.out.println(codeFHalf + "|" + codeSHalf);
+			
+			double red = ((double)color.getRed() / 255.0) * 100;
+			double green = ((double)color.getGreen() / 255.0) * 100;
+			double blue = ((double)color.getBlue() / 255.0) * 100;
+			
+			textArea.setText(codeFHalf + String.format("%.2f", red) + " " + String.format("%.2f", green) + " " + String.format("%.2f", blue) + "\n" + codeSHalf);
 		});
 	}
 	
