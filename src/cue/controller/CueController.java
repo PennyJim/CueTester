@@ -24,12 +24,14 @@ public class CueController {
 		this.defaultBG = Color.WHITE;
 		this.variables = new HashMap<String,Variable>();
 		this.thread = new CueThread("Cues", this);
-		thread.start();
 	}
 	
 	public void start()
 	{
 		System.out.println("Program Started");
+		
+		thread.start();
+		frame.display();
 	}
 	
 	private static HashMap<String,Class<? extends Keyword>> KEYWORDS;

@@ -26,6 +26,10 @@ public class CueFrame extends JFrame
 		this.setTitle("Cue Tester");
 		this.setResizable(true);
 		this.setLocationRelativeTo(null);
+	}
+	
+	public void display()
+	{
 		this.setVisible(true);
 	}
 }
