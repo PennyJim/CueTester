@@ -71,6 +71,14 @@ public class CuePanel extends JPanel {
 
 		textArea.setMargin(new Insets(5, 5, 5, 5));
 		textArea.setBackground(new Color(50, 50, 50));
+		textArea.setText("Var flashColor 0.00 0.00 82.75\n"
+						+ "Var holdTime 2000\n"
+						+ "\n"
+						+ "Fade 100   100 100    1000\n"
+						+ "Hold\n"
+						+ "Fade flashColor 200\n"
+						+ "Wait holdTime\n"
+						+ "Fade 0 0 0 1000");
 		textPane.setViewportView(textArea);
 		textPane.setBorder(null);
 		this.add(textPane);
