@@ -19,9 +19,9 @@ public class CueController {
 	
 	public CueController()
 	{
-		this.frame = new CueFrame(this);
 		this.panel = null;
 		this.defaultBG = Color.WHITE;
+		this.frame = new CueFrame(this);
 		this.variables = new HashMap<String,Variable>();
 		this.thread = new CueThread("Cues", this);
 	}
@@ -29,7 +29,7 @@ public class CueController {
 	public void start()
 	{
 		System.out.println("Program Started");
-		
+
 		thread.start();
 		frame.display();
 	}
@@ -153,8 +153,7 @@ public class CueController {
 			String line = lines.nextLine();
 			int splitIndex = line.indexOf(' ');
 			String keyword,inputs;
-
-			System.out.println(line);
+			
 			if (line.equals("")) { continue; }
 			
 			if (splitIndex == -1)
