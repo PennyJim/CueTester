@@ -1,11 +1,13 @@
 package cue.model;
 
+import cue.controller.CueController;
+
 public class HoldKeyword extends Keyword
 {
 
-	public HoldKeyword(Parser parser, String inputs)
+	public HoldKeyword(CueController controller, String inputs)
 	{
-		super(parser, inputs);
+		super(controller, inputs);
 		validateString = "";
 	}
 

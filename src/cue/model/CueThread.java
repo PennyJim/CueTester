@@ -2,13 +2,15 @@ package cue.model;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import cue.controller.CueController;
+
 public class CueThread extends Thread
 {
 	private AtomicBoolean exitEarly;
 	private AtomicBoolean stopEarly;
 	private AtomicBoolean isPaused;
 	
-	private Parser parser;
+	private CueController controller;
 	private CueSyntaxTree runTree;
 	private Keyword currentWord;
 	
@@ -17,10 +19,10 @@ public class CueThread extends Thread
 	 * @param name The name of the thread created
 	 * @param parser The connection to the panel
 	 */
-	public CueThread(String name, Parser parser)
+	public CueThread(String name, CueController controller)
 	{
 		super(name);
-		this.parser = parser;
+		this.controller = controller;
 		exitEarly = new AtomicBoolean();
 		stopEarly = new AtomicBoolean();
 		isPaused = new AtomicBoolean();
@@ -78,7 +80,7 @@ public class CueThread extends Thread
 					runTree = null; //May regret
 					try { wait(2000); }
 					catch (InterruptedException e) {}
-					parser.resetPanel();
+					controller.resetPanel();
 				}
 			}
 			try { Thread.sleep(100); }

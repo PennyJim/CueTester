@@ -1,5 +1,7 @@
 package cue.model;
 
+import cue.controller.CueController;
+
 public class WaitKeyword extends Keyword
 {
 	private boolean hasStepped = false;
@@ -7,9 +9,9 @@ public class WaitKeyword extends Keyword
 	private long startMilis;
 	private int duration;
 	
-	public WaitKeyword(Parser parser, String inputs)
+	public WaitKeyword(CueController controller, String inputs)
 	{
-		super(parser, inputs);
+		super(controller, inputs);
 		String durationStr = inputs.split(" ")[0];
 		try
 		{
@@ -19,7 +21,7 @@ public class WaitKeyword extends Keyword
 		}
 		catch (NumberFormatException e)
 		{
-			Variable var = parser.getVariable(durationStr);
+			Variable var = controller.getVariable(durationStr);
 			
 			if (var == null) { validateString = "Variable for duration does not exist"; }
 			else if (var.isThree()) { validateString = "Variable for duration can't have 3 values"; }

@@ -173,7 +173,7 @@ public class CueController {
 				String error;
 				try
 				{
-					Class<?> args[] = new Class[] {Parser.class, String.class};
+					Class<?> args[] = new Class[] {CueController.class, String.class};
 					
 					Keyword constructedWord = word.getConstructor(args).newInstance(this, inputs);
 					
