@@ -2,7 +2,6 @@ package cue.model;
 
 import java.awt.Color;
 import java.util.List;
-import java.util.Scanner;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
