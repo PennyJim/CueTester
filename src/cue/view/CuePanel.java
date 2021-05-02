@@ -62,10 +62,11 @@ public class CuePanel extends JPanel {
 		
 		font = this.getFont();
 		font = new Font(font.getFontName(), font.getStyle(), 20);
+		controller.setDefaultBG(new Color(50, 50, 50));
+		controller.setPanel(textArea);
 
 		textArea.setMargin(new Insets(5, 5, 5, 5));
 		textArea.setBackground(new Color(50, 50, 50));
-		controller.setDefaultBG(new Color(50, 50, 50));
 		textPane.setViewportView(textArea);
 		textPane.setBorder(null);
 		this.add(textPane);

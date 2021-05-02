@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
-import javax.swing.JTextPane;
+import javax.swing.JComponent;
 
 import cue.model.*;
 import cue.view.CueFrame;
@@ -129,7 +129,7 @@ public class CueController {
 	
 	private CueSyntaxTree syntaxTree;
 	
-	public JTextPane panel;
+	public JComponent panel;
 	private Color defaultBG;
 	
 	private HashMap<String,Variable> variables;
@@ -221,6 +221,14 @@ public class CueController {
 	public void resetPanel()
 	{
 		panel.setBackground(defaultBG);
+	}
+	public void setPanel(JComponent panel)
+	{
+		this.panel = panel;
+	}
+	public JComponent getPanel()
+	{
+		return panel;
 	}
 	public void setDefaultBG(Color newBG)
 	{

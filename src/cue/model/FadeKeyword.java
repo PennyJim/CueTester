@@ -134,7 +134,7 @@ public class FadeKeyword extends Keyword
 		if (startMilis == 0 || startColor == null)
 		{
 			startMilis = System.currentTimeMillis();
-			Color start = controller.panel.getBackground();
+			Color start = controller.getPanel().getBackground();
 			startColor = new int[] {start.getRed(), start.getGreen(), start.getBlue()};
 			
 			
