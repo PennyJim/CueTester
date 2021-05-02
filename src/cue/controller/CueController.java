@@ -140,7 +140,7 @@ public class CueController {
 	 * @param code The code that's parsed into a syntax tree
 	 * @throws IOException An error defining what is wrong with the given code. Currently does not give line numbers
 	 */
-	public void initParse(String code) throws IOException
+	public void parse(String code) throws IOException
 	{
 		int lineNumber = 0;
 		Scanner lines = new Scanner(code);

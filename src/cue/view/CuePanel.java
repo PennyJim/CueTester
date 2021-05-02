@@ -111,7 +111,7 @@ public class CuePanel extends JPanel {
 		{
 			try
 			{
-				controller.initParse(textArea.getText());
+				controller.parse(textArea.getText());
 			}
 			catch (IOException e)
 			{
