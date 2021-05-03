@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>984</x>
-      <y>328</y>
+      <x>480</x>
+      <y>248</y>
       <w>224</w>
       <h>232</h>
     </coordinates>
@@ -27,8 +27,8 @@ CueSyntaxTree
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>992</x>
-      <y>472</y>
+      <x>488</x>
+      <y>392</y>
       <w>208</w>
       <h>80</h>
     </coordinates>
@@ -63,8 +63,8 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>504</x>
-      <y>728</y>
+      <x>952</x>
+      <y>464</y>
       <w>264</w>
       <h>96</h>
     </coordinates>
@@ -81,7 +81,7 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>776</x>
+      <x>992</x>
       <y>712</y>
       <w>200</w>
       <h>136</h>
@@ -102,8 +102,8 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>984</x>
-      <y>568</y>
+      <x>480</x>
+      <y>488</y>
       <w>224</w>
       <h>208</h>
     </coordinates>
@@ -117,20 +117,20 @@ _Node&lt;T&gt;_
 -currentWord : Keyword
 --
 +CueThread(String, CueController)
++setRunTree(CueSyntaxTree) : void
 +run() : void
-+stopCues() : void
-+pause() : void
-+play() : void
-+moveForward() : void
-+isPaused() : boolean
-+setRunTree(CueSyntaxTree) : void</panel_attributes>
+*+stopCues() : void*
+*+pause() : void*
+*+play() : void*
+*+isPaused() : boolean*
+*+moveForward() : void*</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
-      <y>272</y>
+      <x>712</x>
+      <y>160</y>
       <w>216</w>
       <h>184</h>
     </coordinates>
@@ -154,13 +154,13 @@ _Node&lt;T&gt;_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>552</x>
-      <y>232</y>
-      <w>48</w>
-      <h>56</h>
+      <x>664</x>
+      <y>136</y>
+      <w>80</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;40.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;80.0;10.0;80.0;30.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>

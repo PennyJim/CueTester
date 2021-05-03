@@ -107,19 +107,19 @@ public class CueThread extends Thread
 	}
 	
 	/**
-	 * @return Whether or not execution is paused
-	 */
-	public synchronized boolean isPaused()
-	{
-		return isPaused.get();
-	}
-	
-	/**
 	 * Resumes execution of the current syntax tree
 	 */
 	public synchronized void play()
 	{
 		isPaused.set(false);
+	}
+	
+	/**
+	 * @return Whether or not execution is paused
+	 */
+	public synchronized boolean isPaused()
+	{
+		return isPaused.get();
 	}
 	
 	/**
