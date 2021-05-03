@@ -132,7 +132,7 @@ _Node&lt;T&gt;_
     <coordinates>
       <x>712</x>
       <y>208</y>
-      <w>208</w>
+      <w>232</w>
       <h>136</h>
     </coordinates>
     <panel_attributes>FadeKeyword
@@ -184,7 +184,7 @@ _+STOP : String_</panel_attributes>
     <coordinates>
       <x>464</x>
       <y>160</y>
-      <w>776</w>
+      <w>744</w>
       <h>752</h>
     </coordinates>
     <panel_attributes>model</panel_attributes>
@@ -335,8 +335,8 @@ _+wordType(String, List&lt;String&gt;) : String_
     <coordinates>
       <x>712</x>
       <y>368</y>
-      <w>208</w>
-      <h>128</h>
+      <w>232</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes>HoldKeyword
 --
@@ -349,10 +349,10 @@ _+wordType(String, List&lt;String&gt;) : String_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>928</x>
+      <x>952</x>
       <y>208</y>
-      <w>208</w>
-      <h>128</h>
+      <w>232</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes>VariableKeyword
 --
@@ -367,21 +367,29 @@ _+wordType(String, List&lt;String&gt;) : String_
     <coordinates>
       <x>720</x>
       <y>184</y>
-      <w>240</w>
+      <w>264</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;10.0;280.0;10.0;280.0;30.0</additional_attributes>
+    <additional_attributes>10.0;10.0;310.0;10.0;310.0;30.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>928</x>
+      <x>952</x>
       <y>368</y>
-      <w>208</w>
-      <h>128</h>
+      <w>232</w>
+      <h>136</h>
     </coordinates>
-    <panel_attributes>SimpleClass</panel_attributes>
+    <panel_attributes>WaitKeyword
+--
+-hasStepped : boolean
+-startMilis : long
+-duration : int
+--
++WaitKeyword(CueController, String)
++step() : void
++hasStep() : boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -389,10 +397,10 @@ _+wordType(String, List&lt;String&gt;) : String_
     <coordinates>
       <x>720</x>
       <y>344</y>
-      <w>240</w>
+      <w>264</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;10.0;280.0;10.0;280.0;30.0</additional_attributes>
+    <additional_attributes>10.0;10.0;310.0;10.0;310.0;30.0</additional_attributes>
   </element>
 </diagram>
