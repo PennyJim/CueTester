@@ -17,6 +17,11 @@ public class CueFrame extends JFrame
 		setupFrame();
 	}
 	
+	public void display()
+	{
+		this.setVisible(true);
+	}
+	
 	private void setupFrame()
 	{
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,10 +30,5 @@ public class CueFrame extends JFrame
 		this.setTitle("Cue Tester");
 		this.setResizable(true);
 		this.setLocationRelativeTo(null);
-	}
-	
-	public void display()
-	{
-		this.setVisible(true);
 	}
 }

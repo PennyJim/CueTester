@@ -197,7 +197,7 @@ _+STOP : String_</panel_attributes>
       <x>120</x>
       <y>112</y>
       <w>344</w>
-      <h>472</h>
+      <h>480</h>
     </coordinates>
     <panel_attributes>group=-1
 controller</panel_attributes>
@@ -207,9 +207,9 @@ controller</panel_attributes>
     <id>UMLPackage</id>
     <coordinates>
       <x>120</x>
-      <y>592</y>
+      <y>600</y>
       <w>344</w>
-      <h>272</h>
+      <h>264</h>
     </coordinates>
     <panel_attributes>group=0
 view</panel_attributes>
@@ -219,9 +219,9 @@ view</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>296</x>
-      <y>624</y>
+      <y>632</y>
       <w>160</w>
-      <h>232</h>
+      <h>224</h>
     </coordinates>
     <panel_attributes>group=0
 CuePanel
@@ -255,10 +255,10 @@ CuePanel
     <panel_attributes>group=0
 CueFrame
 --
--controller : CueController
 -panel : CuePanel
 --
 +CueFrame(CueController)
++display() : void
 -setupFrame() : void</panel_attributes>
     <additional_attributes/>
   </element>
@@ -266,7 +266,7 @@ CueFrame
     <id>UMLClass</id>
     <coordinates>
       <x>128</x>
-      <y>536</y>
+      <y>544</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
@@ -283,7 +283,7 @@ Runner
       <x>128</x>
       <y>136</y>
       <w>328</w>
-      <h>392</h>
+      <h>400</h>
     </coordinates>
     <panel_attributes>group=-1
 CueController
