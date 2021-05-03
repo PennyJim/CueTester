@@ -8,8 +8,8 @@ public class HoldKeyword extends Keyword
 	/**
 	 * Only constructs HoldKeyword
 	 * 
-	 * @param controller
-	 * @param inputs
+	 * @param controller only passed to super
+	 * @param inputs ignored
 	 */
 	public HoldKeyword(CueController controller, String inputs)
 	{

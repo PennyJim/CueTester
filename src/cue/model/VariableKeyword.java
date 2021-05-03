@@ -11,7 +11,7 @@ public class VariableKeyword extends Keyword
 	 * Creates a variable, held in {@link CueController}, to be used<br>
 	 * By other keywords. Can only hold 1 or 3 double values.
 	 * 
-	 * @param controller Used to store the varaible
+	 * @param controller Used to store the variable
 	 * @param inputs 1 or 3 numbers
 	 * @see CueController#addVariable(String, Variable)
 	 */
