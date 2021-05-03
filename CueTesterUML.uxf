@@ -44,17 +44,19 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>872</x>
-      <y>240</y>
-      <w>176</w>
-      <h>80</h>
+      <x>480</x>
+      <y>136</y>
+      <w>192</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes>/Keyword/
 --
+#controller : CueController
+#validateString : String
 --
 +Keyword(CueController, String)
-+step() : void
-+hasStep() : boolean
+/+step() : void/
+/+hasStep() : boolean/
 +validateInputs() : String</panel_attributes>
     <additional_attributes/>
   </element>
@@ -127,10 +129,10 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1056</x>
-      <y>136</y>
-      <w>160</w>
-      <h>160</h>
+      <x>480</x>
+      <y>272</y>
+      <w>216</w>
+      <h>184</h>
     </coordinates>
     <panel_attributes>FadeKeyword
 --
@@ -152,13 +154,13 @@ _Node&lt;T&gt;_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>952</x>
-      <y>168</y>
-      <w>120</w>
-      <h>88</h>
+      <x>552</x>
+      <y>232</y>
+      <w>48</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0;130.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;40.0;50.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
