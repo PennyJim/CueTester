@@ -9,6 +9,12 @@ public class WaitKeyword extends Keyword
 	private long startMilis;
 	private int duration;
 	
+	/**
+	 * Sets up the duration based on the input
+	 * 
+	 * @param controller Used to get variables values
+	 * @param inputs a non-negative number either plainly or within a variable
+	 */
 	public WaitKeyword(CueController controller, String inputs)
 	{
 		super(controller, inputs);
@@ -34,6 +40,10 @@ public class WaitKeyword extends Keyword
 		}
 	}
 
+	/**
+	 * When first called, sets startMilis to current time<br>
+	 * It otherwise does nothing.
+	 */
 	@Override
 	public void step()
 	{
@@ -44,10 +54,13 @@ public class WaitKeyword extends Keyword
 		}
 	}
 
+	/**
+	 * Returns whether or not the time passed since<br>
+	 * first step, exceeds the duration given.
+	 */
 	@Override
 	public boolean hasStep()
 	{
-		// TODO Auto-generated method stub
 		if (!hasStepped) { return true; }
 		return System.currentTimeMillis() < startMilis + duration;
 	}
