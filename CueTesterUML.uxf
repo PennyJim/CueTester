@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
-      <y>248</y>
+      <x>472</x>
+      <y>296</y>
       <w>224</w>
       <h>232</h>
     </coordinates>
@@ -27,8 +27,8 @@ CueSyntaxTree
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>488</x>
-      <y>392</y>
+      <x>480</x>
+      <y>440</y>
       <w>208</w>
       <h>80</h>
     </coordinates>
@@ -44,8 +44,8 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
-      <y>136</y>
+      <x>472</x>
+      <y>184</y>
       <w>192</w>
       <h>104</h>
     </coordinates>
@@ -63,8 +63,8 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
-      <y>704</y>
+      <x>472</x>
+      <y>752</y>
       <w>264</w>
       <h>96</h>
     </coordinates>
@@ -81,8 +81,8 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>752</x>
-      <y>704</y>
+      <x>744</x>
+      <y>752</y>
       <w>200</w>
       <h>152</h>
     </coordinates>
@@ -103,8 +103,8 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
-      <y>488</y>
+      <x>472</x>
+      <y>536</y>
       <w>224</w>
       <h>208</h>
     </coordinates>
@@ -130,8 +130,8 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>720</x>
-      <y>160</y>
+      <x>712</x>
+      <y>208</y>
       <w>208</w>
       <h>136</h>
     </coordinates>
@@ -151,8 +151,8 @@ _Node&lt;T&gt;_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>664</x>
-      <y>136</y>
+      <x>656</x>
+      <y>184</y>
       <w>88</w>
       <h>40</h>
     </coordinates>
@@ -162,8 +162,8 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>328</x>
-      <y>176</y>
+      <x>320</x>
+      <y>224</y>
       <w>120</w>
       <h>112</h>
     </coordinates>
@@ -182,8 +182,8 @@ _+STOP : String_</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>472</x>
-      <y>112</y>
+      <x>464</x>
+      <y>160</y>
       <w>776</w>
       <h>752</h>
     </coordinates>
@@ -193,8 +193,8 @@ _+STOP : String_</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>120</x>
-      <y>112</y>
+      <x>112</x>
+      <y>160</y>
       <w>344</w>
       <h>480</h>
     </coordinates>
@@ -205,8 +205,8 @@ controller</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>120</x>
-      <y>600</y>
+      <x>112</x>
+      <y>648</y>
       <w>344</w>
       <h>264</h>
     </coordinates>
@@ -217,8 +217,8 @@ view</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>296</x>
-      <y>632</y>
+      <x>288</x>
+      <y>680</y>
       <w>160</w>
       <h>224</h>
     </coordinates>
@@ -246,8 +246,8 @@ CuePanel
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>128</x>
-      <y>776</y>
+      <x>120</x>
+      <y>824</y>
       <w>160</w>
       <h>80</h>
     </coordinates>
@@ -264,8 +264,8 @@ CueFrame
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>128</x>
-      <y>544</y>
+      <x>120</x>
+      <y>592</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
@@ -279,8 +279,8 @@ Runner
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>128</x>
-      <y>136</y>
+      <x>120</x>
+      <y>184</y>
       <w>328</w>
       <h>400</h>
     </coordinates>
@@ -322,12 +322,49 @@ _+wordType(String, List&lt;String&gt;) : String_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>704</x>
-      <y>136</y>
+      <x>696</x>
+      <y>184</y>
       <w>48</w>
       <h>200</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;210.0;40.0;210.0;40.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>712</x>
+      <y>368</y>
+      <w>208</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>SimpleClass</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>928</x>
+      <y>208</y>
+      <w>208</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>VariableKeyword
+--
++VariableKeyword(CueController, String)
++step() : void
++hasStep() : boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>184</y>
+      <w>240</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;280.0;10.0;280.0;30.0</additional_attributes>
   </element>
 </diagram>
