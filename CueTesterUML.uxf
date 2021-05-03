@@ -132,24 +132,20 @@ _Node&lt;T&gt;_
     <coordinates>
       <x>720</x>
       <y>160</y>
-      <w>216</w>
-      <h>184</h>
+      <w>208</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes>FadeKeyword
 --
--controller : CueController
--validateString : String
 -endColor : int[]
 -duration : int
--startColor : int[]
 -startMilis : long
--isFinished : boolean
+-startColor : int[]
 --
 +FadeKeyword(CueController, String)
 +step() : void
-+hasStep() : boolean
-+validateInputs() : String
--finalStep() : void</panel_attributes>
+-finalStep() : void
++hasStep() : boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -172,7 +168,7 @@ _Node&lt;T&gt;_
       <h>112</h>
     </coordinates>
     <panel_attributes>group=-1
-_+KEY_
+_KEY_
 --
 _+VARIABLE : String_
 _+FADE : String_
@@ -329,9 +325,9 @@ _+wordType(String, List&lt;String&gt;) : String_
       <x>704</x>
       <y>136</y>
       <w>48</w>
-      <h>248</h>
+      <h>200</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;290.0;40.0;290.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;210.0;40.0;210.0;40.0;230.0</additional_attributes>
   </element>
 </diagram>
