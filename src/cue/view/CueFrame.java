@@ -9,6 +9,10 @@ public class CueFrame extends JFrame
 {
 	private CuePanel 		panel;
 	
+	/**
+	 * Initializes the panel and {@link #setupFrame() sets up the frame}
+	 * @param controller Passes down to the panel
+	 */
 	public CueFrame(CueController controller)
 	{
 		super();
@@ -17,11 +21,17 @@ public class CueFrame extends JFrame
 		setupFrame();
 	}
 	
+	/**
+	 * Makes the constructed frame visible
+	 */
 	public void display()
 	{
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Sets up the necessary values of the frame
+	 */
 	private void setupFrame()
 	{
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
