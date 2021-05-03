@@ -7,7 +7,14 @@ import cue.controller.CueController;
 
 public class VariableKeyword extends Keyword
 {
-	
+	/**
+	 * Creates a variable, held in {@link CueController}, to be used<br>
+	 * By other keywords. Can only hold 1 or 3 double values.
+	 * 
+	 * @param controller Used to store the varaible
+	 * @param inputs 1 or 3 numbers
+	 * @see CueController#addVariable(String, Variable)
+	 */
 	public VariableKeyword(CueController controller, String inputs)
 	{
 		super(controller, inputs);
@@ -58,9 +65,16 @@ public class VariableKeyword extends Keyword
 		input.close();
 	}
 
+	/**
+	 * Empty function
+	 */
 	@Override
 	public void step() {}
 
+	/**
+	 * As VariableKeyword has nothing to do,<br>
+	 * this always returns false.
+	 */
 	@Override
 	public boolean hasStep()
 	{
