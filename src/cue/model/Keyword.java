@@ -1,17 +1,19 @@
 package cue.model;
 
+import cue.controller.CueController;
+
 public abstract class Keyword
 {
-	protected Parser parser;
+	protected CueController controller;
 	protected String validateString;
 	/**
 	 * The required constructor to any inherited keyword 
 	 * @param parser The object running the cues
 	 * @param inputs A string of what is given along with the keyword
 	 */
-	public Keyword(Parser parser, String inputs)
+	public Keyword(CueController controller, String inputs)
 	{
-		this.parser = parser;
+		this.controller = controller;
 	}
 	/**
 	 * Take a step forward in the keyword's execution

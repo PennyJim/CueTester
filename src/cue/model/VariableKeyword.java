@@ -3,12 +3,14 @@ package cue.model;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import cue.controller.CueController;
+
 public class VariableKeyword extends Keyword
 {
 	
-	public VariableKeyword(Parser parser, String inputs)
+	public VariableKeyword(CueController controller, String inputs)
 	{
-		super(parser, inputs);
+		super(controller, inputs);
 		Scanner input = new Scanner(inputs);
 		
 		String varName = input.next();
@@ -50,7 +52,7 @@ public class VariableKeyword extends Keyword
 
 		if (varValue != null)
 		{
-			parser.addVariable(varName, varValue);
+			controller.addVariable(varName, varValue);
 			System.out.println("Added " + varName + ": " + varValue);
 		}
 		input.close();

@@ -9,13 +9,11 @@ import java.io.IOException;
 import javax.swing.*;
 
 import cue.controller.CueController;
-import cue.model.Parser;
 import cue.model.SyntaxStyleDocument;
 
 @SuppressWarnings("serial")
 public class CuePanel extends JPanel {
 
-	@SuppressWarnings("unused")
 	private CueController controller;
 	private SpringLayout layout;
 	private Font font;
@@ -28,8 +26,6 @@ public class CuePanel extends JPanel {
 	private JButton pauseButton;
 	private JButton runButton;
 	private JButton pickColor;
-	
-	private Parser parser;
 	
 	/**
 	 * Initializes and sets up the UI elements.
@@ -50,8 +46,6 @@ public class CuePanel extends JPanel {
 		this.runButton = new JButton("Run");
 		this.pickColor = new JButton("Pick Color");
 		
-		parser = new Parser(textArea, new Color(50, 50, 50));
-		
 		setupPanel();
 		setupListeners();
 		setupLayout();
@@ -68,6 +62,8 @@ public class CuePanel extends JPanel {
 		
 		font = this.getFont();
 		font = new Font(font.getFontName(), font.getStyle(), 20);
+		controller.setDefaultBG(new Color(50, 50, 50));
+		controller.setPanel(textArea);
 
 		textArea.setMargin(new Insets(5, 5, 5, 5));
 		textArea.setBackground(new Color(50, 50, 50));
@@ -103,19 +99,19 @@ public class CuePanel extends JPanel {
 	 */
 	private void setupListeners()
 	{
-		stopButton.addActionListener(click -> parser.stop());
+		stopButton.addActionListener(click -> controller.stop());
 		
-		proceedButton.addActionListener(click -> parser.moveForward());
+		proceedButton.addActionListener(click -> controller.moveForward());
 		
 		pauseButton.addActionListener(click ->
 		{
-			if (parser.isPaused())
+			if (controller.isPaused())
 			{
-				parser.play();
+				controller.play();
 			}
 			else
 			{
-				parser.pause();
+				controller.pause();
 			}
 		});
 		
@@ -123,7 +119,7 @@ public class CuePanel extends JPanel {
 		{
 			try
 			{
-				parser.initParse(textArea.getText());
+				controller.parse(textArea.getText());
 			}
 			catch (IOException e)
 			{

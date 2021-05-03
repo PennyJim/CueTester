@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import cue.controller.CueController;
+
 public class FadeKeyword extends Keyword
 {
 	
@@ -20,13 +22,13 @@ public class FadeKeyword extends Keyword
 	 * Variable two/last number:	must be non-zero
 	 * </pre>
 	 * 
-	 * @param parser Used to access Panel to change its color
+	 * @param controller Used to access Panel to change its color
 	 * @param inputs 4 numbers or 2 variables (3 and 1 number)
 	 * @see Keyword#Keyword(Parser, String)
 	 */
-	public FadeKeyword(Parser parser, String inputs)
+	public FadeKeyword(CueController controller, String inputs)
 	{
-		super(parser, inputs);
+		super(controller, inputs);
 		
 		Scanner input = new Scanner(inputs);
 		String testInput = input.next();
@@ -52,7 +54,7 @@ public class FadeKeyword extends Keyword
 			if (testInput == null) { validateString = "Not all color values are numbers"; }
 			else
 			{
-				Variable var = parser.getVariable(testInput);
+				Variable var = controller.getVariable(testInput);
 				
 				if (var == null) { validateString = "Variable for color does not exist"; }
 				else if (!var.isThree()) { validateString = "Variable for color needs 3 values"; }
@@ -96,7 +98,7 @@ public class FadeKeyword extends Keyword
 			}
 			catch (NumberFormatException e)
 			{
-				Variable var = parser.getVariable(testInput);
+				Variable var = controller.getVariable(testInput);
 				
 				if (var == null) { validateString = "Variable for duration does not exist"; }
 				else if (var.isThree()) { validateString = "Variable for duration can't have 3 values"; }
@@ -132,7 +134,7 @@ public class FadeKeyword extends Keyword
 		if (startMilis == 0 || startColor == null)
 		{
 			startMilis = System.currentTimeMillis();
-			Color start = parser.panel.getBackground();
+			Color start = controller.getPanel().getBackground();
 			startColor = new int[] {start.getRed(), start.getGreen(), start.getBlue()};
 			
 			
@@ -140,14 +142,14 @@ public class FadeKeyword extends Keyword
 		}
 		
 		double factor = (double)(System.currentTimeMillis() - startMilis) / (double)duration;
-		parser.panel.setBackground(new Color(	startColor[0] + (int)(factor * (double)(endColor[0] - startColor[0])),
+		controller.panel.setBackground(new Color(	startColor[0] + (int)(factor * (double)(endColor[0] - startColor[0])),
 												startColor[1] + (int)(factor * (double)(endColor[1] - startColor[1])),
 												startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
 	}
 
 	private void finalStep()
 	{
-		parser.panel.setBackground(new Color(endColor[0], endColor[1], endColor[2]));
+		controller.panel.setBackground(new Color(endColor[0], endColor[1], endColor[2]));
 	}
 	
 	/**
