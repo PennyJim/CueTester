@@ -19,7 +19,7 @@ public class FadeKeyword extends Keyword
 	 * Sets up the required variables and checks if the inputs are valid:<br>
 	 * <pre>
 	 * Variable one/first 3 numbers:	must be 0-100
-	 * Variable two/last number:	must be non-zero
+	 * Variable two/last number:	must be non-negative
 	 * </pre>
 	 * 
 	 * @param controller Used to access Panel to change its color
@@ -125,8 +125,9 @@ public class FadeKeyword extends Keyword
 	}
 
 	/**
-	 * {@inheritDoc}<br>
-	 * This takes a step proportional to the color of the panel during the first step and the time since the first step
+	 * {@inheritDoc}<br><br>
+	 * Proportionally alters the color of the panel, which is<br>
+	 * Proportional to the time since first step and the duration
 	 */
 	@Override
 	public void step()
@@ -147,6 +148,13 @@ public class FadeKeyword extends Keyword
 												startColor[2] + (int)(factor * (double)(endColor[2] - startColor[2]))));
 	}
 
+	/**
+	 * Sets the panel to the final color given.<br>
+	 * Used to avoid cases where the last step is only<br>
+	 * 70% complete due to extremely small duration<br>
+	 * <br>
+	 * Called in {@link #hasStep()} when it returns false
+	 */
 	private void finalStep()
 	{
 		controller.panel.setBackground(new Color(endColor[0], endColor[1], endColor[2]));
@@ -162,8 +170,8 @@ public class FadeKeyword extends Keyword
 		if (System.currentTimeMillis() > startMilis + duration)
 		{
 			finalStep();
+			return false;
 		}
 		else { return true; }
-		return System.currentTimeMillis() < startMilis + duration;
 	}
 }
