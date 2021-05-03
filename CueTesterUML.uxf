@@ -300,14 +300,13 @@ _-KEYWORD : String_
 -thread : CueThread
 -variables : HashMap&lt;String,Variable&gt;
 --
-+CueController()
-+start() : void
 _+parseVariables(String) : List&lt;String&gt;_
 _+wordType(String, List&lt;String&gt;) : String_
-+Parser(JTextPane, Color)
++CueController()
++start() : void
 +parse(String) : void
 +resetPanel() : void
-+setPanel() : void
++setPanel(JComponent) : void
 +getPanel() : JComponent
 +setDefaultBG(Color) : void
 +stop() : void
@@ -317,7 +316,8 @@ _+wordType(String, List&lt;String&gt;) : String_
 +moveForward() : void
 +isVariable(String) : boolean
 +addVariable(String,Variable) : boolean
-+getVariable(String) : Variable</panel_attributes>
++getVariable(String) : Variable
++listVariables() : String</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

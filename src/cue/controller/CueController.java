@@ -15,25 +15,6 @@ import cue.view.CueFrame;
 
 public class CueController {
 
-	private CueFrame frame;
-	
-	public CueController()
-	{
-		this.panel = null;
-		this.defaultBG = Color.WHITE;
-		this.frame = new CueFrame(this);
-		this.variables = new HashMap<String,Variable>();
-		this.thread = new CueThread("Cues", this);
-	}
-	
-	public void start()
-	{
-		System.out.println("Program Started");
-
-		thread.start();
-		frame.display();
-	}
-	
 	private static HashMap<String,Class<? extends Keyword>> KEYWORDS;
 	static {
 		KEYWORDS = new HashMap<String,Class<? extends Keyword>>();
@@ -127,13 +108,31 @@ public class CueController {
 		return DEFAULT;
 	}
 	
+	private CueFrame frame;
 	private CueSyntaxTree syntaxTree;
 	
 	public JComponent panel;
 	private Color defaultBG;
 	
-	private HashMap<String,Variable> variables;
 	private CueThread thread;
+	private HashMap<String,Variable> variables;
+	
+	public CueController()
+	{
+		this.panel = null;
+		this.defaultBG = Color.WHITE;
+		this.frame = new CueFrame(this);
+		this.variables = new HashMap<String,Variable>();
+		this.thread = new CueThread("Cues", this);
+	}
+	
+	public void start()
+	{
+		System.out.println("Program Started");
+		
+		thread.start();
+		frame.display();
+	}
 	
 	/**
 	 * Initializes the syntax tree and puts it within the thread running the cue
@@ -247,14 +246,6 @@ public class CueController {
 		}
 	}
 	/**
-	 * @return whether or not the cue is paused
-	 * @see CueThread#isPaused()
-	 */
-	public boolean isPaused()
-	{
-		return thread.isPaused();
-	}
-	/**
 	 * @see CueThread#pause()
 	 */
 	public void pause()
@@ -275,6 +266,14 @@ public class CueController {
 			thread.play();
 			thread.notifyAll();
 		}
+	}
+	/**
+	 * @return whether or not the cue is paused
+	 * @see CueThread#isPaused()
+	 */
+	public boolean isPaused()
+	{
+		return thread.isPaused();
 	}
 	/**
 	 * @see CueThread#moveForward()
