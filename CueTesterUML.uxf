@@ -81,10 +81,10 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>992</x>
-      <y>712</y>
+      <x>752</x>
+      <y>704</y>
       <w>200</w>
-      <h>136</h>
+      <h>152</h>
     </coordinates>
     <panel_attributes>Variable
 --
@@ -96,7 +96,8 @@ _Node&lt;T&gt;_
 +Variable(double)
 +Variable(double,double,double)
 +getValue() : double[]
-+isThree : boolean</panel_attributes>
++isThree : boolean
++toString : String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -129,7 +130,7 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>712</x>
+      <x>720</x>
       <y>160</y>
       <w>216</w>
       <h>184</h>
@@ -156,11 +157,11 @@ _Node&lt;T&gt;_
     <coordinates>
       <x>664</x>
       <y>136</y>
-      <w>80</w>
+      <w>88</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;80.0;10.0;80.0;30.0</additional_attributes>
+    <additional_attributes>10.0;10.0;90.0;10.0;90.0;30.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -321,5 +322,16 @@ _+wordType(String, List&lt;String&gt;) : String_
 +getVariable(String) : Variable
 +listVariables() : String</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>704</x>
+      <y>136</y>
+      <w>48</w>
+      <h>248</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;290.0;40.0;290.0</additional_attributes>
   </element>
 </diagram>
