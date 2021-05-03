@@ -75,7 +75,7 @@ _Node&lt;T&gt;_
 -createStyles() : void
 +insertString(int, String, AttributeSet) : void
 +remove(int, int) : void
-*-refreshDocument : void*</panel_attributes>
+*-refreshDocument() : void*</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -338,7 +338,12 @@ _+wordType(String, List&lt;String&gt;) : String_
       <w>208</w>
       <h>128</h>
     </coordinates>
-    <panel_attributes>SimpleClass</panel_attributes>
+    <panel_attributes>HoldKeyword
+--
+--
++HoldKeyword(CueController, String)
++step() : void
++hasStep() : boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -351,6 +356,7 @@ _+wordType(String, List&lt;String&gt;) : String_
     </coordinates>
     <panel_attributes>VariableKeyword
 --
+--
 +VariableKeyword(CueController, String)
 +step() : void
 +hasStep() : boolean</panel_attributes>
@@ -361,6 +367,28 @@ _+wordType(String, List&lt;String&gt;) : String_
     <coordinates>
       <x>720</x>
       <y>184</y>
+      <w>240</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;280.0;10.0;280.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>928</x>
+      <y>368</y>
+      <w>208</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>SimpleClass</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>344</y>
       <w>240</w>
       <h>40</h>
     </coordinates>
