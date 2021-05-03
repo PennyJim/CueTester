@@ -61,7 +61,7 @@ public class SyntaxStyleDocument extends DefaultStyledDocument
 	
 	/**
 	 * {@inheritDoc}
-	 * <br>(Adds a call to a private function: refreshDocument)
+	 * <br>(Adds a call to a private function: {@link #refreshDocument() refreshDocument})
 	 * @see SyntaxStyleDocument#refreshDocument()
 	 */
 	@Override
@@ -73,7 +73,7 @@ public class SyntaxStyleDocument extends DefaultStyledDocument
 	
 	/**
 	 * A private function used to style the current document according to the predefined rules and defined styles
-	 * @throws BadLocationException Should never throw exception (0, getLength())
+	 * @throws BadLocationException Should never throw exception: (0, getLength())
 	 */
 	private synchronized void refreshDocument() throws BadLocationException
 	{
