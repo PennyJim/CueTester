@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>696</x>
-      <y>304</y>
+      <x>984</x>
+      <y>328</y>
       <w>224</w>
       <h>232</h>
     </coordinates>
@@ -27,8 +27,8 @@ CueSyntaxTree
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>704</x>
-      <y>448</y>
+      <x>992</x>
+      <y>472</y>
       <w>208</w>
       <h>80</h>
     </coordinates>
@@ -44,15 +44,15 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>584</x>
-      <y>216</y>
+      <x>872</x>
+      <y>240</y>
       <w>176</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>/Keyword/
 --
 --
-+Keyword(Parser, String)
++Keyword(CueController, String)
 +step() : void
 +hasStep() : boolean
 +validateInputs() : String</panel_attributes>
@@ -61,8 +61,8 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>216</x>
-      <y>704</y>
+      <x>504</x>
+      <y>728</y>
       <w>264</w>
       <h>96</h>
     </coordinates>
@@ -79,8 +79,8 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>488</x>
-      <y>688</y>
+      <x>776</x>
+      <y>712</y>
       <w>200</w>
       <h>136</h>
     </coordinates>
@@ -100,8 +100,8 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>696</x>
-      <y>544</y>
+      <x>984</x>
+      <y>568</y>
       <w>224</w>
       <h>208</h>
     </coordinates>
@@ -110,11 +110,11 @@ _Node&lt;T&gt;_
 -exitEarly : AtomicBoolean
 -stopEarly : AtomicBoolean
 -isPaused : AtomicBoolean
--parser : Parser
+-controller : CueController
 -runTree : CueSyntaxTree
 -currentWord : Keyword
 --
-+CueThread(String, Parser)
++CueThread(String, CueController)
 +run() : void
 +stopCues() : void
 +pause() : void
@@ -127,14 +127,14 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>768</x>
-      <y>112</y>
+      <x>1056</x>
+      <y>136</y>
       <w>160</w>
       <h>160</h>
     </coordinates>
     <panel_attributes>FadeKeyword
 --
--parser : Parser
+-controller : CueController
 -validateString : String
 -endColor : int[]
 -duration : int
@@ -142,7 +142,7 @@ _Node&lt;T&gt;_
 -startMilis : long
 -isFinished : boolean
 --
-+FadeKeyword(Parser, String)
++FadeKeyword(CueController, String)
 +step() : void
 +hasStep() : boolean
 +validateInputs() : String
@@ -152,8 +152,8 @@ _Node&lt;T&gt;_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>664</x>
-      <y>144</y>
+      <x>952</x>
+      <y>168</y>
       <w>120</w>
       <h>88</h>
     </coordinates>
@@ -163,53 +163,13 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>320</x>
-      <y>320</y>
-      <w>360</w>
-      <h>344</h>
-    </coordinates>
-    <panel_attributes>group=2
-Parser
---
-_-KEYWORDS : HashMap&lt;String,Class&lt;? extends Keyword\&gt;&gt;_
-_-DEFAULT : String_
-_-NUMBER : String_
-_-VARIABLE : String_
-_-KEYWORD : String_
--syntaxTree : CueSyntaxTree
--panel : JTextPane
--defaultBG : Color
--variables : HashMap&lt;String,Variable&gt;
--thread : CueThread
-
---
-_+parseVariables(String) : List&lt;String&gt;_
-_+wordType(String, List&lt;String&gt;) : String_
-+Parser(JTextPane, Color)
-+initParse(String) : void
-+resetPanel() : void
-+setDefaultBG(Color) : void
-+stop() : void
-+pause() : void
-+play() : void
-+isPaused() : boolean
-+moveForward() : void
-+isVariable(String) : boolean
-+addVariable(String,Variable) : boolean
-+getVariable(String) : Variable</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>552</x>
-      <y>360</y>
+      <x>328</x>
+      <y>176</y>
       <w>120</w>
       <h>112</h>
     </coordinates>
-    <panel_attributes>group=0
-group=2
-_KEY_
+    <panel_attributes>group=-1
+_+KEY_
 --
 _+VARIABLE : String_
 _+FADE : String_
@@ -223,8 +183,8 @@ _+STOP : String_</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>184</x>
-      <y>88</y>
+      <x>472</x>
+      <y>112</y>
       <w>776</w>
       <h>752</h>
     </coordinates>
@@ -234,10 +194,10 @@ _+STOP : String_</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>0</x>
-      <y>328</y>
-      <w>176</w>
-      <h>152</h>
+      <x>120</x>
+      <y>112</y>
+      <w>344</w>
+      <h>472</h>
     </coordinates>
     <panel_attributes>group=-1
 controller</panel_attributes>
@@ -246,10 +206,10 @@ controller</panel_attributes>
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>0</x>
-      <y>488</y>
-      <w>176</w>
-      <h>352</h>
+      <x>120</x>
+      <y>592</y>
+      <w>344</w>
+      <h>272</h>
     </coordinates>
     <panel_attributes>group=0
 view</panel_attributes>
@@ -258,8 +218,8 @@ view</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>8</x>
-      <y>600</y>
+      <x>296</x>
+      <y>624</y>
       <w>160</w>
       <h>232</h>
     </coordinates>
@@ -277,7 +237,6 @@ CuePanel
 -pauseButton : JButton
 -runButton : JButton
 -pickColor : JButton
--parser : Parser
 --
 +CuePanel(CueController)
 -setupPanel() : void
@@ -288,8 +247,8 @@ CuePanel
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>8</x>
-      <y>512</y>
+      <x>128</x>
+      <y>776</y>
       <w>160</w>
       <h>80</h>
     </coordinates>
@@ -306,8 +265,8 @@ CueFrame
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>8</x>
-      <y>352</y>
+      <x>128</x>
+      <y>536</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
@@ -321,18 +280,44 @@ Runner
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>8</x>
-      <y>400</y>
-      <w>160</w>
-      <h>72</h>
+      <x>128</x>
+      <y>136</y>
+      <w>328</w>
+      <h>392</h>
     </coordinates>
     <panel_attributes>group=-1
 CueController
 --
+_-KEYWORDS : HashMap&lt;String,Class&lt;? extends Keyword\&gt;&gt;_
+_-DEFAULT : String_
+_-NUMBER : String_
+_-VARIABLE : String_
+_-KEYWORD : String_
 -frame : CueFrame
+-syntaxTree : CueSyntaxTree
+-panel : JComponent
+-defaultBG : Color
+-thread : CueThread
+-variables : HashMap&lt;String,Variable&gt;
 --
 +CueController()
-+start() : void</panel_attributes>
++start() : void
+_+parseVariables(String) : List&lt;String&gt;_
+_+wordType(String, List&lt;String&gt;) : String_
++Parser(JTextPane, Color)
++parse(String) : void
++resetPanel() : void
++setPanel() : void
++getPanel() : JComponent
++setDefaultBG(Color) : void
++stop() : void
++pause() : void
++play() : void
++isPaused() : boolean
++moveForward() : void
++isVariable(String) : boolean
++addVariable(String,Variable) : boolean
++getVariable(String) : Variable</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
