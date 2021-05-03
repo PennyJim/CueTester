@@ -22,7 +22,7 @@ public class FadeKeyword extends Keyword
 	 * Variable two/last number:	must be non-negative
 	 * </pre>
 	 * 
-	 * @param controller Used to access Panel to change its color
+	 * @param controller Used to access Panel to change its color and get variable values
 	 * @param inputs 4 numbers or 2 variables (3 and 1 number)
 	 * @see Keyword#Keyword(Parser, String)
 	 */
@@ -161,7 +161,8 @@ public class FadeKeyword extends Keyword
 	}
 	
 	/**
-	 * Returns whether or not the time passed since first step exceeds the duration found in the inputs
+	 * Returns whether or not the time passed since<br>
+	 * first step, exceeds the duration given.
 	 */
 	@Override
 	public boolean hasStep()
