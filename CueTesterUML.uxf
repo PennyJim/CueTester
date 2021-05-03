@@ -63,8 +63,8 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>952</x>
-      <y>464</y>
+      <x>480</x>
+      <y>704</y>
       <w>264</w>
       <h>96</h>
     </coordinates>
@@ -72,10 +72,10 @@ _Node&lt;T&gt;_
 --
 --
 +SyntaxStyleDocument()
+-createStyles() : void
 +insertString(int, String, AttributeSet) : void
 +remove(int, int) : void
--createStyles() : void
--refreshDocument : void</panel_attributes>
+*-refreshDocument : void*</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
