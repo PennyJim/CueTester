@@ -2,6 +2,7 @@ package cue.controller;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 import cue.model.*;
 import cue.view.CueFrame;
@@ -187,15 +189,11 @@ public class CueController {
 						throw new IOException(lineNumber + ": " + error);
 					}
 				}
-				catch (IOException e)
-				{
-					lines.close();
-					throw e;
-				}
-				catch (Exception e)
+				catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | SecurityException e)
 				{
 					lines.close();
 					e.printStackTrace();
+					JOptionPane.showMessageDialog(frame, "Keyword didn't create properly.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 			else
