@@ -10,6 +10,7 @@
       <h>232</h>
     </coordinates>
     <panel_attributes>group=1
+bg=#00ffff
 CueSyntaxTree
 --
 -root : Node&lt;Keyword&gt;
@@ -33,6 +34,8 @@ CueSyntaxTree
       <h>80</h>
     </coordinates>
     <panel_attributes>group=1
+layer=1
+bg=#ffffff
 _Node&lt;T&gt;_
 --
 -data : T
@@ -49,7 +52,8 @@ _Node&lt;T&gt;_
       <w>192</w>
       <h>104</h>
     </coordinates>
-    <panel_attributes>/Keyword/
+    <panel_attributes>bg=green
+/Keyword/
 --
 #controller : CueController
 #validateString : String
@@ -63,12 +67,13 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>472</x>
-      <y>752</y>
+      <x>680</x>
+      <y>808</y>
       <w>264</w>
       <h>96</h>
     </coordinates>
-    <panel_attributes>SyntaxStyleDocument
+    <panel_attributes>bg=#ce6a40
+SyntaxStyleDocument
 --
 --
 +SyntaxStyleDocument()
@@ -81,12 +86,13 @@ _Node&lt;T&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>744</x>
+      <x>472</x>
       <y>752</y>
       <w>200</w>
       <h>152</h>
     </coordinates>
-    <panel_attributes>Variable
+    <panel_attributes>bg=#888800
+Variable
 --
 -a : double
 -b : double
@@ -108,7 +114,8 @@ _Node&lt;T&gt;_
       <w>224</w>
       <h>208</h>
     </coordinates>
-    <panel_attributes>CueThread
+    <panel_attributes>bg=#0000ff
+CueThread
 --
 -exitEarly : AtomicBoolean
 -stopEarly : AtomicBoolean
@@ -136,6 +143,7 @@ _Node&lt;T&gt;_
       <h>136</h>
     </coordinates>
     <panel_attributes>FadeKeyword
+bg=green
 --
 -endColor : int[]
 -duration : int
@@ -156,7 +164,9 @@ _Node&lt;T&gt;_
       <w>88</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <panel_attributes>lt=&lt;&lt;-
+bg=green
+fg=#00aa00</panel_attributes>
     <additional_attributes>10.0;10.0;90.0;10.0;90.0;30.0</additional_attributes>
   </element>
   <element>
@@ -168,6 +178,7 @@ _Node&lt;T&gt;_
       <h>112</h>
     </coordinates>
     <panel_attributes>group=-1
+layer=1
 _KEY_
 --
 _+VARIABLE : String_
@@ -187,7 +198,9 @@ _+STOP : String_</panel_attributes>
       <w>744</w>
       <h>752</h>
     </coordinates>
-    <panel_attributes>model</panel_attributes>
+    <panel_attributes>layer=-1
+bg=pink
+model</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -199,6 +212,8 @@ _+STOP : String_</panel_attributes>
       <h>480</h>
     </coordinates>
     <panel_attributes>group=-1
+layer=-1
+bg=gray
 controller</panel_attributes>
     <additional_attributes/>
   </element>
@@ -211,6 +226,8 @@ controller</panel_attributes>
       <h>264</h>
     </coordinates>
     <panel_attributes>group=0
+layer=-1
+bg=gray
 view</panel_attributes>
     <additional_attributes/>
   </element>
@@ -223,6 +240,7 @@ view</panel_attributes>
       <h>224</h>
     </coordinates>
     <panel_attributes>group=0
+bg=#ff00ff
 CuePanel
 --
 -controller : CueController
@@ -285,6 +303,7 @@ Runner
       <h>400</h>
     </coordinates>
     <panel_attributes>group=-1
+bg=#6666
 CueController
 --
 _-KEYWORDS : HashMap&lt;String,Class&lt;? extends Keyword\&gt;&gt;_
@@ -327,7 +346,8 @@ _+wordType(String, List&lt;String&gt;) : String_
       <w>48</w>
       <h>200</h>
     </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
+    <panel_attributes>lt=-
+fg=#00aa00</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;210.0;40.0;210.0;40.0;230.0</additional_attributes>
   </element>
   <element>
@@ -343,7 +363,8 @@ _+wordType(String, List&lt;String&gt;) : String_
 --
 +HoldKeyword(CueController, String)
 +step() : void
-+hasStep() : boolean</panel_attributes>
++hasStep() : boolean
+bg=green</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -354,7 +375,8 @@ _+wordType(String, List&lt;String&gt;) : String_
       <w>232</w>
       <h>136</h>
     </coordinates>
-    <panel_attributes>VariableKeyword
+    <panel_attributes>bg=green
+VariableKeyword
 --
 --
 +VariableKeyword(CueController, String)
@@ -370,7 +392,8 @@ _+wordType(String, List&lt;String&gt;) : String_
       <w>264</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
+    <panel_attributes>lt=-
+fg=#00aa00</panel_attributes>
     <additional_attributes>10.0;10.0;310.0;10.0;310.0;30.0</additional_attributes>
   </element>
   <element>
@@ -389,7 +412,8 @@ _+wordType(String, List&lt;String&gt;) : String_
 --
 +WaitKeyword(CueController, String)
 +step() : void
-+hasStep() : boolean</panel_attributes>
++hasStep() : boolean
+bg=green</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -400,7 +424,8 @@ _+wordType(String, List&lt;String&gt;) : String_
       <w>264</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
+    <panel_attributes>lt=-
+fg=#00aa00</panel_attributes>
     <additional_attributes>10.0;10.0;310.0;10.0;310.0;30.0</additional_attributes>
   </element>
 </diagram>
