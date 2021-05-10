@@ -15,7 +15,7 @@ import cue.view.CueFrame;
 
 public class CueController {
 
-	private static HashMap<String,Class<? extends Keyword>> KEYWORDS;
+	private static final HashMap<String,Class<? extends Keyword>> KEYWORDS;
 	static {
 		KEYWORDS = new HashMap<String,Class<? extends Keyword>>();
 		KEYWORDS.put(KEY.VARIABLE,	VariableKeyword.class);
@@ -27,10 +27,10 @@ public class CueController {
 		KEYWORDS.put(KEY.STOP,		Keyword.class);
 	}
 	
-	public static String DEFAULT = "defaultStyle";
-	public static String NUMBER = "numberStyle";
-	public static String VARIABLE = "variableStyle";
-	public static String KEYWORD = "keywordStyle";
+	public static final String DEFAULT = "defaultStyle";
+	public static final String NUMBER = "numberStyle";
+	public static final String VARIABLE = "variableStyle";
+	public static final String KEYWORD = "keywordStyle";
 	
 	//Basic list of keywords wanted:
 	//Var - Creates a static variable
@@ -43,14 +43,14 @@ public class CueController {
 	 * @author char2259
 	 *
 	 */
-	public static class KEY {
-		public static String VARIABLE = "VAR";
-		public static String FADE = "FADE";
-		public static String HOLD = "HOLD";
-		public static String WAIT = "WAIT";
-		public static String REPEAT = "REPEAT";
-		public static String START = "START";
-		public static String STOP = "STOP";
+	public static final class KEY {
+		public static final String VARIABLE	= "VAR";
+		public static final String FADE		= "FADE";
+		public static final String HOLD		= "HOLD";
+		public static final String WAIT		= "WAIT";
+		public static final String REPEAT	= "REPEAT";
+		public static final String START	= "START";
+		public static final String STOP		= "STOP";
 	}
 	
 	/**
