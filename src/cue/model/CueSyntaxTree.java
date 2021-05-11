@@ -1,5 +1,6 @@
 package cue.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +25,9 @@ public class CueSyntaxTree
 	 * Adds the Keyword to the tree and automatically creates a new branch if the given Keyword is a repeat
 	 * @param word The Keyword to be added to the tree
 	 * @return Itself, for chaining methods
+	 * @throws IOException If order is incorrect
 	 */
-	public CueSyntaxTree add(Keyword word)
+	public CueSyntaxTree add(Keyword word) throws IOException
 	{
 		Node<Keyword> newNode = new Node<Keyword>();
 		newNode.data = word;
@@ -36,14 +38,21 @@ public class CueSyntaxTree
 			newNode.children = new ArrayList<Node<Keyword>>();
 			
 			curBuild = newNode;
+			newNode.parent.children.add(newNode);
+		}
+		else if (word.getClass().equals(StopRepeatKeyword.class))
+		{
+			try
+			{
+				curBuild = curBuild.parent;
+			}
+			catch (NullPointerException e)
+			{
+				throw new IOException("StopRepeat must be after a Repeat");
+			}
 		}
 		else
 		{
-			if (word.getClass().equals(RepeatRunner.class))
-			{
-				curBuild = root;
-			}
-			
 			newNode.parent = curBuild;
 			newNode.parent.children.add(newNode);
 		}
