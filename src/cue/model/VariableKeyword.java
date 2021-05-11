@@ -80,4 +80,7 @@ public class VariableKeyword extends Keyword
 	{
 		return false;
 	}
+
+	@Override
+	public void reset() {}
 }

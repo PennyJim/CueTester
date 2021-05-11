@@ -62,4 +62,10 @@ public class RepeatKeyword extends Keyword
 		return isInfinite;
 	}
 
+	@Override
+	public void reset()
+	{
+		curRuns = 0;
+	}
+
 }

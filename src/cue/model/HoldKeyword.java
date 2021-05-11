@@ -32,4 +32,7 @@ public class HoldKeyword extends Keyword
 		return true;
 	}
 
+	@Override
+	public void reset() {}
+
 }

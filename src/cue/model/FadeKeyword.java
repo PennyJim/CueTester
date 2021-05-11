@@ -175,4 +175,10 @@ public class FadeKeyword extends Keyword
 		}
 		else { return true; }
 	}
+
+	@Override
+	public void reset()
+	{
+		startMilis = 0;
+	}
 }

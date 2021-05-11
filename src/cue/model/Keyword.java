@@ -16,6 +16,10 @@ public abstract class Keyword
 		this.controller = controller;
 	}
 	/**
+	 * Reset the keyword as if it was never run
+	 */
+	public abstract void reset();
+	/**
 	 * Take a step forward in the keyword's execution
 	 */
 	public abstract void step();

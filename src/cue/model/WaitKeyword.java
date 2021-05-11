@@ -18,7 +18,7 @@ public class WaitKeyword extends Keyword
 	public WaitKeyword(CueController controller, String inputs)
 	{
 		super(controller, inputs);
-		String durationStr = inputs.split(" ")[0];
+		String durationStr = inputs.trim().split(" ")[0];
 		try
 		{
 			duration = (int)Double.parseDouble(durationStr);
@@ -63,6 +63,12 @@ public class WaitKeyword extends Keyword
 	{
 		if (!hasStepped) { return true; }
 		return System.currentTimeMillis() < startMilis + duration;
+	}
+
+	@Override
+	public void reset()
+	{
+		hasStepped = false;
 	}
 
 }
