@@ -95,7 +95,7 @@ public class CueController {
 		}
 		catch (Exception e) {}
 		
-		if (KEYWORDS.get(word) != null)
+		if (KEYWORDS.get(word.trim()) != null)
 		{
 			return KEYWORD;
 		}
@@ -157,12 +157,12 @@ public class CueController {
 			
 			if (splitIndex == -1)
 			{
-				keyword = line;
+				keyword = line.trim();
 				inputs = "";
 			}
 			else
 			{
-				keyword = line.substring(0, splitIndex);
+				keyword = line.substring(0, splitIndex).trim();
 				inputs = line.substring(splitIndex + 1);
 			}
 			Class<? extends Keyword> word = KEYWORDS.get(keyword.toUpperCase());
@@ -202,6 +202,7 @@ public class CueController {
 		}
 		
 		thread.play();
+		System.out.println(syntaxTree);
 		thread.setRunTree(syntaxTree);
 		
 		listVariables();

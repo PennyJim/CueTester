@@ -141,6 +141,57 @@ public class CueSyntaxTree
 	{
 		this.isExit = isExit;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return toString(root, new StringBuilder(), 0, "").toString();
+	}
+	/**
+	 * A recursive function for building the string returned in {@link #toString()}
+	 * @param node The current node to add to the string
+	 * @param builder The builder for the string
+	 * @param recursion What level of recursion it is
+	 * @param childType What to prefix the node with
+	 * @return The builder for the string
+	 */
+	private StringBuilder toString(Node<Keyword> node, StringBuilder builder, int recursion, String childType)
+	{
+		for (int index = 0; index < recursion - 1; index++)
+		{
+			builder.append("│  ");
+		}
+		
+		builder.append(childType);
+		if (node.data != null)
+		{
+			builder.append(node.data.getClass().getSimpleName());
+		}
+		else
+		{
+			builder.append("Node");
+		}
+		builder.append('\n');
+		
+		recursion++;
+		if(node.children != null)
+		{
+			for (int index = 0; index < node.children.size(); index++)
+			{
+				if (index == node.children.size() - 1)
+				{
+					toString(node.children.get(index), builder, recursion, "└──");
+				}
+				else
+				{
+					toString(node.children.get(index), builder, recursion, "├──");
+				}
+			}
+		}
+		
+		return builder;
+	}
+	
 	/**
 	 * The basic node class used to make the tree structure of CueSyntaxTree
 	 * @author char2259
