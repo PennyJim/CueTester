@@ -74,7 +74,8 @@ public class CueThread extends Thread
 								catch (InterruptedException e){}
 							}
 						}
-						exitEarly.set(false);;
+						runTree.setExit(exitEarly.get());
+						exitEarly.set(false);
 					}
 					stopEarly.set(false);
 					runTree = null; //May regret

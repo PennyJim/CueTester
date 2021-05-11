@@ -8,6 +8,7 @@ public class CueSyntaxTree
 	private Node<Keyword> root;
 	private Node<Keyword> curBuild;
 	private Node<Keyword> curSel;
+	private boolean isExit = false;
 	
 	/**
 	 * Initializes the tree with only a root node
@@ -29,7 +30,7 @@ public class CueSyntaxTree
 		Node<Keyword> newNode = new Node<Keyword>();
 		newNode.data = word;
 		
-		if (word.getClass().equals(RepeatRunner.class))
+		if (word.getClass().equals(RepeatKeyword.class))
 		{
 			newNode.parent = root;
 			newNode.children = new ArrayList<Node<Keyword>>();
@@ -44,8 +45,8 @@ public class CueSyntaxTree
 			}
 			
 			newNode.parent = curBuild;
+			newNode.parent.children.add(newNode);
 		}
-		newNode.parent.children.add(newNode);
 		
 		return this;
 	}
@@ -73,19 +74,33 @@ public class CueSyntaxTree
 		if (curSel != null)
 		{
 			curSel.selIndex++;
-			if (curSel.selIndex >= curSel.children.size())
+			if (curSel.selIndex >= curSel.children.size() || (isExit && curSel.data != null && curSel.data.getClass().equals(RepeatKeyword.class)))
 			{
-				if (curSel.parent == null) { return null; }
-				curSel = curSel.parent;
-				return next();
+				if (curSel.data != null && curSel.data.getClass().equals(RepeatKeyword.class) && curSel.data.hasStep() && !isExit)
+				{
+					curSel.selIndex = -1;
+					for (Node<Keyword> node : curSel.children)
+					{
+						node.data.reset();
+					}
+					curSel.data.step();
+					return next();
+				}
+				else if (curSel.parent == null) { return null; }
+				else
+				{
+					if (isExit) { isExit = false; }
+					curSel = curSel.parent;
+					return next();
+				}
 			}
 			else
 			{
 				Node<Keyword> child = curSel.children.get(curSel.selIndex);
 				
 				if (child.children != null) { curSel = child; }
-				
-				return child.data;
+				if (!child.data.getClass().equals(RepeatKeyword.class)) { return child.data; }
+				return next();
 			}
 		}
 		else if (root.children.size() > 0)
@@ -103,37 +118,29 @@ public class CueSyntaxTree
 	 */
 	public boolean hasNext()
 	{
-		if (curSel != null)
-		{
-			int index = curSel.selIndex + 1;
-			if (index >= curSel.children.size())
-			{
-				if (curSel.parent == null) { return false; }
-				return hasNext(curSel.parent);
-			}
-			else
-			{ return true; }
-		}
-		else if (root.children.size() > 0)
-		{ return true; }
-		
-		return false;
+		return hasNext(curSel);
 	}
 	private boolean hasNext(Node<Keyword> testSel)
 	{
 		if (testSel != null)
 		{
 			int index = testSel.selIndex + 1;
-			if (index >= testSel.children.size())
+			if (index >= testSel.children.size() || (isExit && testSel.data != null && testSel.data.getClass().equals(RepeatKeyword.class)))
 			{
+				if (testSel.data != null && testSel.data.getClass().equals(RepeatKeyword.class) && testSel.data.hasStep() && !isExit) { return true; }
 				if (testSel.parent == null) { return false; }
 				return hasNext(testSel.parent);
 			}
 			else { return true; }
 		}
+		else if (root.children.size() > 0) { return true; }
 		return false;
 	}
 	
+	public void setExit(boolean isExit)
+	{
+		this.isExit = isExit;
+	}
 	/**
 	 * The basic node class used to make the tree structure of CueSyntaxTree
 	 * @author char2259

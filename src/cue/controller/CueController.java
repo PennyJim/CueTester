@@ -24,9 +24,8 @@ public class CueController {
 		KEYWORDS.put(KEY.FADE,		FadeKeyword.class);
 		KEYWORDS.put(KEY.HOLD,		HoldKeyword.class);
 		KEYWORDS.put(KEY.WAIT,		WaitKeyword.class);
-		KEYWORDS.put(KEY.REPEAT,	Keyword.class);
-		KEYWORDS.put(KEY.START,		Keyword.class);
-		KEYWORDS.put(KEY.STOP,		Keyword.class);
+		KEYWORDS.put(KEY.REPEAT,	RepeatKeyword.class);
+		KEYWORDS.put(KEY.CLOSE,		StopRepeatKeyword.class);
 	}
 	
 	public static final String DEFAULT = "defaultStyle";
@@ -51,8 +50,7 @@ public class CueController {
 		public static final String HOLD		= "HOLD";
 		public static final String WAIT		= "WAIT";
 		public static final String REPEAT	= "REPEAT";
-		public static final String START	= "START";
-		public static final String STOP		= "STOP";
+		public static final String CLOSE	= "CLOSEREPEAT";
 	}
 	
 	/**
