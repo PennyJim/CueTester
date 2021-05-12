@@ -454,4 +454,46 @@ RepeatKeyword
 +hasStep() : boolean</panel_attributes>
     <additional_attributes/>
   </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>696</x>
+      <y>352</y>
+      <w>48</w>
+      <h>208</h>
+    </coordinates>
+    <panel_attributes>lt=-
+fg=#00aa00</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;220.0;40.0;220.0;40.0;240.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>520</y>
+      <w>264</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-
+fg=#00aa00</panel_attributes>
+    <additional_attributes>10.0;10.0;310.0;10.0;310.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>952</x>
+      <y>544</y>
+      <w>232</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>StopRepeatKeyword
+--
+--
++WaitKeyword(CueController, String)
++reset() : void
++step() : void
++hasStep() : boolean
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
 </diagram>
