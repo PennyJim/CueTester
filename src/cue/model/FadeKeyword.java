@@ -124,6 +124,12 @@ public class FadeKeyword extends Keyword
 		input.close();
 	}
 
+	@Override
+	public void reset()
+	{
+		startMilis = 0;
+	}
+
 	/**
 	 * {@inheritDoc}<br><br>
 	 * Proportionally alters the color of the panel, which is<br>
@@ -174,11 +180,5 @@ public class FadeKeyword extends Keyword
 			return false;
 		}
 		else { return true; }
-	}
-
-	@Override
-	public void reset()
-	{
-		startMilis = 0;
 	}
 }

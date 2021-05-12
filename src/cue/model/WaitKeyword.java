@@ -40,6 +40,12 @@ public class WaitKeyword extends Keyword
 		}
 	}
 
+	@Override
+	public void reset()
+	{
+		hasStepped = false;
+	}
+
 	/**
 	 * When first called, sets startMilis to current time<br>
 	 * It otherwise does nothing.
@@ -63,12 +69,6 @@ public class WaitKeyword extends Keyword
 	{
 		if (!hasStepped) { return true; }
 		return System.currentTimeMillis() < startMilis + duration;
-	}
-
-	@Override
-	public void reset()
-	{
-		hasStepped = false;
 	}
 
 }

@@ -12,14 +12,10 @@ public class StopRepeatKeyword extends Keyword
 	}
 
 	@Override
-	public void reset()
-	{
-	}
+	public void reset() {}
 
 	@Override
-	public void step()
-	{
-	}
+	public void step() {}
 
 	@Override
 	public boolean hasStep()
