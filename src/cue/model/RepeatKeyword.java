@@ -63,9 +63,4 @@ public class RepeatKeyword extends Keyword
 		return curRuns < maxRuns || isInfinite;
 	}
 
-	public boolean isInfinite()
-	{
-		return isInfinite;
-	}
-
 }
