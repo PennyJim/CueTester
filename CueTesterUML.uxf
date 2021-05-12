@@ -433,4 +433,25 @@ bg=green</panel_attributes>
 fg=#00aa00</panel_attributes>
     <additional_attributes>10.0;10.0;310.0;10.0;310.0;30.0</additional_attributes>
   </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>712</x>
+      <y>544</y>
+      <w>232</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>bg=green
+RepeatKeyword
+--
+-maxRuns : int
+-curRuns : int
+-isInfinite : boolean
+--
++HoldKeyword(CueController, String)
++reset() : void
++step() : void
++hasStep() : boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
 </diagram>
