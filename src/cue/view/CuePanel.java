@@ -1,12 +1,23 @@
 package cue.view;
 
 import java.awt.Color;
+import java.awt.Event;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.Stack;
 
 import javax.swing.*;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEdit;
 
 import cue.controller.CueController;
 import cue.model.SyntaxStyleDocument;
@@ -15,6 +26,7 @@ import cue.model.SyntaxStyleDocument;
 public class CuePanel extends JPanel {
 
 	private CueController controller;
+	private UndoManager undoManager;
 	private SpringLayout layout;
 	private Font font;
 	
@@ -35,6 +47,7 @@ public class CuePanel extends JPanel {
 	{
 		super();
 		this.controller = controller;
+		this.undoManager = new UndoManager();
 		this.layout = new SpringLayout();
 		
 		this.textPane = new JScrollPane();
@@ -110,6 +123,24 @@ public class CuePanel extends JPanel {
 	 */
 	private void setupListeners()
 	{
+		textArea.getDocument().addUndoableEditListener(new UndoableEditListener()
+		{
+			@Override
+			public void undoableEditHappened(UndoableEditEvent e)
+			{
+				UndoableEdit edit = e.getEdit();
+				if (!edit.getPresentationName().equals("style change"))
+				{
+					undoManager.addEdit(edit);
+					System.out.println(edit.getPresentationName());
+				}
+				else
+				{
+					edit.die();
+				}
+			}
+		});
+		
 		stopButton.addActionListener(click -> controller.stop());
 		
 		proceedButton.addActionListener(click -> controller.moveForward());
@@ -119,10 +150,12 @@ public class CuePanel extends JPanel {
 			if (controller.isPaused())
 			{
 				controller.play();
+				pauseButton.setText("Pause");
 			}
 			else
 			{
 				controller.pause();
+				pauseButton.setText("Play");
 			}
 		});
 		
