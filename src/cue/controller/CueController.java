@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import cue.model.*;
+import cue.model.keyword.*;
 import cue.view.CueFrame;
 
 public class CueController {

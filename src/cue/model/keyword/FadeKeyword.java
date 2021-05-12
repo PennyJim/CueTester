@@ -1,10 +1,11 @@
-package cue.model;
+package cue.model.keyword;
 
 import java.awt.Color;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import cue.controller.CueController;
+import cue.model.Variable;
 
 public class FadeKeyword extends Keyword
 {

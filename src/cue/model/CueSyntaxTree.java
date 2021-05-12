@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cue.model.keyword.Keyword;
+import cue.model.keyword.RepeatKeyword;
+import cue.model.keyword.StopRepeatKeyword;
+
 public class CueSyntaxTree
 {
 	private Node<Keyword> root;
