@@ -161,6 +161,24 @@ public class CuePanel extends JPanel {
 			}
 		});
 		
+		inputMask.put(KeyStroke.getKeyStroke('Z', Event.SHIFT_MASK + toolkit.getMenuShortcutKeyMask()), "Redo");
+		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, toolkit.getMenuShortcutKeyMask()), "Redo");
+		actionMask.put("Redo", new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(ActionEvent ev)
+			{
+				try
+				{
+					if(undoManager.canRedo())
+					{
+						undoManager.redo();
+					}
+				}
+				catch (CannotRedoException er) {}
+			}
+		});
+		
 		stopButton.addActionListener(click -> controller.stop());
 		
 		proceedButton.addActionListener(click -> controller.moveForward());
