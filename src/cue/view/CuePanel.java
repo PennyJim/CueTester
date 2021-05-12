@@ -141,6 +141,26 @@ public class CuePanel extends JPanel {
 			}
 		});
 		
+		InputMap inputMask = textArea.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap actionMask = textArea.getActionMap();
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()), "Undo");
+		actionMask.put("Undo", new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(ActionEvent ev)
+			{
+				try
+				{
+					if(undoManager.canUndo())
+					{
+						undoManager.undo();
+					}
+				}
+				catch (CannotUndoException er) {}
+			}
+		});
+		
 		stopButton.addActionListener(click -> controller.stop());
 		
 		proceedButton.addActionListener(click -> controller.moveForward());
