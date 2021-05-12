@@ -45,6 +45,12 @@ public class RepeatKeyword extends Keyword
 	}
 
 	@Override
+	public void reset()
+	{
+		curRuns = 0;
+	}
+
+	@Override
 	public void step()
 	{
 		curRuns++;
@@ -60,12 +66,6 @@ public class RepeatKeyword extends Keyword
 	public boolean isInfinite()
 	{
 		return isInfinite;
-	}
-
-	@Override
-	public void reset()
-	{
-		curRuns = 0;
 	}
 
 }

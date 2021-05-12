@@ -17,6 +17,9 @@ public class HoldKeyword extends Keyword
 		validateString = "";
 	}
 
+	@Override
+	public void reset() {}
+
 	/**
 	 * Empty Function
 	 */
@@ -31,8 +34,5 @@ public class HoldKeyword extends Keyword
 	{
 		return true;
 	}
-
-	@Override
-	public void reset() {}
 
 }

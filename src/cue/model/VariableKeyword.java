@@ -65,6 +65,9 @@ public class VariableKeyword extends Keyword
 		input.close();
 	}
 
+	@Override
+	public void reset() {}
+
 	/**
 	 * Empty function
 	 */
@@ -80,7 +83,4 @@ public class VariableKeyword extends Keyword
 	{
 		return false;
 	}
-
-	@Override
-	public void reset() {}
 }
