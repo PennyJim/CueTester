@@ -1,6 +1,7 @@
-package cue.model;
+package cue.model.keyword;
 
 import cue.controller.CueController;
+import cue.model.CueThread;
 
 public class HoldKeyword extends Keyword
 {

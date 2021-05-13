@@ -3,6 +3,7 @@ package cue.model;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import cue.controller.CueController;
+import cue.model.keyword.Keyword;
 
 public class CueThread extends Thread
 {

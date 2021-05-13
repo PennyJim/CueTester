@@ -1,4 +1,4 @@
-package cue.model;
+package cue.model.keyword;
 
 import cue.controller.CueController;
 
