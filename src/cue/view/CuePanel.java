@@ -173,7 +173,9 @@ public class CuePanel extends JPanel {
 		InputMap inputMask = textArea.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap actionMask = textArea.getActionMap();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()), "Undo");
+
+//		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()), "Undo");
+		undo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
 		actionMask.put("Undo", new AbstractAction()
 		{
 			@Override
@@ -190,8 +192,10 @@ public class CuePanel extends JPanel {
 			}
 		});
 		
-		inputMask.put(KeyStroke.getKeyStroke('Z', Event.SHIFT_MASK + toolkit.getMenuShortcutKeyMask()), "Redo");
+//		inputMask.put(KeyStroke.getKeyStroke('Z', Event.SHIFT_MASK + toolkit.getMenuShortcutKeyMask()), "Redo");
 		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, toolkit.getMenuShortcutKeyMask()), "Redo");
+		redo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('Z', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true));
+		redo.setActionCommand("Redo"); //Doesn't do anything?
 		actionMask.put("Redo", new AbstractAction()
 		{
 			@Override
