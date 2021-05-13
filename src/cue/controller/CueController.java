@@ -327,4 +327,9 @@ public class CueController {
 		}
 		return variableList;
 	}
+	
+	public void handleErrors(Exception e)
+	{
+		JOptionPane.showMessageDialog(null, e.getMessage(), "Cue Tester", JOptionPane.WARNING_MESSAGE, null);
+	}
 }

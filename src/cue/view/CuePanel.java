@@ -264,7 +264,7 @@ public class CuePanel extends JPanel {
 				}
 				catch (IOException er)
 				{
-					JOptionPane.showMessageDialog(null, er.getMessage(), "Cue Tester", JOptionPane.WARNING_MESSAGE, null);
+					controller.handleErrors(er);
 				}
 			}
 		});
