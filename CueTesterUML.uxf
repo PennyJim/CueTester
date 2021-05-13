@@ -509,4 +509,19 @@ fg=#00aa00</panel_attributes>
 bg=green</panel_attributes>
     <additional_attributes/>
   </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>512</y>
+      <w>328</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>IOController
+--
+--
+_save(CueController, String, String) : void_
+_loadFile(CueController, String) : String_</panel_attributes>
+    <additional_attributes/>
+  </element>
 </diagram>
