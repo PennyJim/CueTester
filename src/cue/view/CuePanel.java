@@ -20,6 +20,7 @@ import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.BadLocationException;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
@@ -196,6 +197,26 @@ public class CuePanel extends JPanel {
 		ActionMap actionMask = textArea.getActionMap();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
+		//New File Button
+		newFile.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('N', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		//New File Action
+		newFile.addActionListener(click -> newFile());
+		
+		//Open File Button
+		openFile.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('O', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		//Open File Action
+		openFile.addActionListener(click -> openFile());
+		
+		//Save Button
+		save.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('S', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		//Save Action
+		save.addActionListener(click -> saveFile());
+		
+		//Save As Button
+		saveAs.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('S', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true));
+		//Save As Action
+		saveAs.addActionListener(click -> saveFileAs());
+		
 		//Undo Button
 		undo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()).getKeyCode())); //inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()), "Undo");
 		//Undo Action
@@ -209,9 +230,13 @@ public class CuePanel extends JPanel {
 					if(undoManager.canUndo())
 					{
 						undoManager.undo();
+						style.refreshStyle();
 					}
 				}
-				catch (CannotUndoException er) {}
+				catch (CannotUndoException | BadLocationException er)
+				{
+					er.printStackTrace();
+				}
 			}
 		};
 		undo.addActionListener(undoAction);
@@ -238,11 +263,6 @@ public class CuePanel extends JPanel {
 		};
 		redo.addActionListener(redoAction);
 		actionMask.put("Redo", redoAction);
-		
-		//Save Button
-		save.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('S', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
-		//Save Action
-		save.addActionListener(click -> saveFile());
 		
 		stopButton.addActionListener(click -> controller.stop());
 		proceedButton.addActionListener(click -> controller.moveForward());
@@ -331,10 +351,7 @@ public class CuePanel extends JPanel {
 		{
 			IOController.save(controller, pathName, textArea.getText());
 		}
-		else
-		{
-			saveFileAs(); 
-		}
+		else { saveFileAs(); }
 		
 	}
 	
@@ -373,5 +390,13 @@ public class CuePanel extends JPanel {
 		{
 			controller.handleErrors(new Exception("File Chooser returned \"ERROR_OPTION\""));
 		}
+	}
+
+	private void newFile()
+	{
+	}
+	
+	private void openFile()
+	{
 	}
 }
