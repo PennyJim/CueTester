@@ -1,7 +1,6 @@
 package cue.view;
 
 import java.awt.Color;
-import java.awt.Event;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -11,9 +10,9 @@ import java.awt.MenuItem;
 import java.awt.MenuShortcut;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.Stack;
 
 import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
@@ -45,7 +44,7 @@ public class CuePanel extends JPanel {
 	private JButton pickColor;
 	
 	private MenuBar menuBar;
-	private Menu edit;
+	private Menu editMenu;
 	private MenuItem undo;
 	private MenuItem redo;
 	
@@ -143,8 +142,12 @@ public class CuePanel extends JPanel {
 		edit.add(undo);
 		edit.add(redo);
 		menuBar.add(edit);
+		editMenu.add(undo);
+		editMenu.add(redo);
+		menuBar.add(editMenu);
+		
+		
 		frame.setMenuBar(menuBar);
-
 	}
 	
 	/**
@@ -174,9 +177,10 @@ public class CuePanel extends JPanel {
 		ActionMap actionMask = textArea.getActionMap();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-//		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()), "Undo");
-		undo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
-		actionMask.put("Undo", new AbstractAction()
+		//Undo Button
+		undo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()).getKeyCode())); //inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()), "Undo");
+		//Undo Action
+		AbstractAction undoAction = new AbstractAction()
 		{
 			@Override
 			public void actionPerformed(ActionEvent ev)
@@ -190,16 +194,18 @@ public class CuePanel extends JPanel {
 				}
 				catch (CannotUndoException er) {}
 			}
-		});
+		};
+		undo.addActionListener(undoAction);
+		actionMask.put("Undo", undoAction);
 		
-//		inputMask.put(KeyStroke.getKeyStroke('Z', Event.SHIFT_MASK + toolkit.getMenuShortcutKeyMask()), "Redo");
+		//Redo Buttons
 		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, toolkit.getMenuShortcutKeyMask()), "Redo");
-		redo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('Z', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true));
-		redo.setActionCommand("Redo"); //Doesn't do anything?
-		actionMask.put("Redo", new AbstractAction()
+		redo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('Z', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true)); //inputMask.put(KeyStroke.getKeyStroke('Z', Event.SHIFT_MASK + toolkit.getMenuShortcutKeyMask()), "Redo");
+		//Undo Action
+		AbstractAction redoAction = new AbstractAction()
 		{
 			@Override
-			public void actionPerformed(ActionEvent ev)
+			public void actionPerformed(ActionEvent e)
 			{
 				try
 				{
@@ -210,7 +216,9 @@ public class CuePanel extends JPanel {
 				}
 				catch (CannotRedoException er) {}
 			}
-		});
+		};
+		redo.addActionListener(redoAction);
+		actionMask.put("Redo", redoAction);
 		
 		stopButton.addActionListener(click -> controller.stop());
 		
