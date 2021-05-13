@@ -382,7 +382,12 @@ public class CuePanel extends JPanel {
 
 	private void newFile()
 	{
-		if (!isSaved() && confirmSave())
+		boolean confirmed = true;
+		if (!isSaved())
+		{
+			confirmed = confirmSave();
+		}
+		if (confirmed)
 		{
 			controller.stop();
 			controller.stop();
