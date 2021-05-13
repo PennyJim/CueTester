@@ -50,32 +50,32 @@ public class SyntaxStyleDocument extends DefaultStyledDocument
 	/** 
 	 * {@inheritDoc}
 	 * <br>(Adds a call to a private function: refreshDocument)
-	 * @see SytaxStyleDocument#refreshDocument()
+	 * @see SytaxStyleDocument#refreshStyle()
 	 */
 	@Override
 	public void insertString(int offs, String str, AttributeSet a) throws BadLocationException
 	{
 		super.insertString(offs, str, a);
-		refreshDocument();
+		refreshStyle();
 	}
 	
 	/**
 	 * {@inheritDoc}
-	 * <br>(Adds a call to a private function: {@link #refreshDocument() refreshDocument})
-	 * @see SyntaxStyleDocument#refreshDocument()
+	 * <br>(Adds a call to a private function: {@link #refreshStyle() refreshDocument})
+	 * @see SyntaxStyleDocument#refreshStyle()
 	 */
 	@Override
 	public void remove(int offs, int len) throws BadLocationException
 	{
 		super.remove(offs, len);
-		refreshDocument();
+		refreshStyle();
 	}
 	
 	/**
 	 * A private function used to style the current document according to the predefined rules and defined styles
 	 * @throws BadLocationException Should never throw exception: (0, getLength())
 	 */
-	private synchronized void refreshDocument() throws BadLocationException
+	public synchronized void refreshStyle() throws BadLocationException
 	{
 		String code = getText(0, getLength());
 		List<String> variables = CueController.parseVariables(code);

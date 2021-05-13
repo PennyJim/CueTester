@@ -35,9 +35,10 @@ public class CuePanel extends JPanel {
 
 	private CueController controller;
 	private JFrame frame;
-	private UndoManager undoManager;
 	private SpringLayout layout;
 	private Font font;
+	private SyntaxStyleDocument style;
+	private UndoManager undoManager;
 	private String pathName = null;
 	
 	private JScrollPane textPane;
@@ -72,9 +73,10 @@ public class CuePanel extends JPanel {
 		this.layout = new SpringLayout();
 		this.font = getFont();
 		this.font = new Font(font.getFontName(), font.getStyle(), 20);
+		this.style = new SyntaxStyleDocument();
 		
 		this.textPane = new JScrollPane();
-		this.textArea = new JTextPane(new SyntaxStyleDocument());
+		this.textArea = new JTextPane(style);
 		this.buttonPane = new JPanel(new GridLayout(1, 0, 8, 0));
 		this.stopButton = new JButton("Stop");
 		this.proceedButton = new JButton("Proceed");
@@ -256,9 +258,13 @@ public class CuePanel extends JPanel {
 					if(undoManager.canRedo())
 					{
 						undoManager.redo();
+						style.refreshStyle();
 					}
 				}
-				catch (CannotRedoException er) {}
+				catch (CannotRedoException | BadLocationException er)
+				{
+					er.printStackTrace();
+				}
 			}
 		};
 		redo.addActionListener(redoAction);
