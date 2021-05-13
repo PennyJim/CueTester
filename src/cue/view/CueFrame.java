@@ -16,7 +16,7 @@ public class CueFrame extends JFrame
 	public CueFrame(CueController controller)
 	{
 		super();
-		this.panel 		= new CuePanel(controller);
+		this.panel 		= new CuePanel(controller, this);
 		
 		setupFrame();
 	}

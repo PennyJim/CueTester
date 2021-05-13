@@ -5,6 +5,10 @@ import java.awt.Event;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.MenuShortcut;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -26,6 +30,7 @@ import cue.model.SyntaxStyleDocument;
 public class CuePanel extends JPanel {
 
 	private CueController controller;
+	private JFrame frame;
 	private UndoManager undoManager;
 	private SpringLayout layout;
 	private Font font;
@@ -39,16 +44,24 @@ public class CuePanel extends JPanel {
 	private JButton runButton;
 	private JButton pickColor;
 	
+	private MenuBar menuBar;
+	private Menu edit;
+	private MenuItem undo;
+	private MenuItem redo;
+	
 	/**
 	 * Initializes and sets up the UI elements.
 	 * @param controller
 	 */
-	public CuePanel(CueController controller)
+	public CuePanel(CueController controller, JFrame frame)
 	{
 		super();
 		this.controller = controller;
+		this.frame = frame;
 		this.undoManager = new UndoManager();
 		this.layout = new SpringLayout();
+		this.font = getFont();
+		this.font = new Font(font.getFontName(), font.getStyle(), 20);
 		
 		this.textPane = new JScrollPane();
 		this.textArea = new JTextPane(new SyntaxStyleDocument());
@@ -59,7 +72,13 @@ public class CuePanel extends JPanel {
 		this.runButton = new JButton("Run");
 		this.pickColor = new JButton("Pick Color");
 		
+		this.menuBar = new MenuBar();
+		this.edit = new Menu("Edit");
+		this.undo = new MenuItem("Undo");
+		this.redo = new MenuItem("Redo");
+		
 		setupPanel();
+		setupMenu();
 		setupListeners();
 		setupLayout();
 	}
@@ -73,8 +92,6 @@ public class CuePanel extends JPanel {
 		this.setSize(800,600);
 		this.setLayout(layout);
 		
-		font = this.getFont();
-		font = new Font(font.getFontName(), font.getStyle(), 20);
 		controller.setDefaultBG(new Color(50, 50, 50));
 		controller.setPanel(textArea);
 
@@ -116,6 +133,18 @@ public class CuePanel extends JPanel {
 		buttonPane.add(runButton);
 		buttonPane.add(pickColor);
 		this.add(buttonPane);
+	}
+	
+	/**
+	 * Sets up the JMenu components
+	 */
+	private void setupMenu()
+	{
+		edit.add(undo);
+		edit.add(redo);
+		menuBar.add(edit);
+		frame.setMenuBar(menuBar);
+
 	}
 	
 	/**
