@@ -358,32 +358,14 @@ public class CuePanel extends JPanel {
 	private void saveFileAs()
 	{
 		JFileChooser fileChooser = new JFileChooser();
-//		fileChooser.setFileFilter(new FileFilter()
-//		{
-//			
-//			@Override
-//			public String getDescription()
-//			{
-//				return "Basic Light Cue Language (*.blcl)";
-//			}
-//			
-//			@Override
-//			public boolean accept(File f)
-//			{
-//				if (f.isDirectory()) { return true; }
-//				boolean temp = f.getName().trim().toLowerCase().endsWith(".blcl");
-//				System.out.println(f.getName() + " : " + temp);
-//				return temp;
-//			}
-//		});
-		fileChooser.setFileFilter(new FileNameExtensionFilter("test", "blcl"));
+		fileChooser.setFileFilter(new FileNameExtensionFilter("Basic Light Cue Language", new String[] {"blcl", "txt"}));
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fileChooser.setMultiSelectionEnabled(false);
 		int option = fileChooser.showSaveDialog(null);
 		if (option == JFileChooser.APPROVE_OPTION)
 		{
 			pathName = fileChooser.getSelectedFile().getPath();
-			if (!pathName.endsWith(".blcl")) { pathName += ".blcl"; }
+			if (!pathName.endsWith(".blcl") && !pathName.endsWith(".txt")) { pathName += ".blcl"; }
 			saveFile();
 		}
 		else if (option == JFileChooser.ERROR_OPTION)
