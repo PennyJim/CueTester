@@ -221,57 +221,40 @@ public class CuePanel extends JPanel {
 		actionMask.put("Redo", redoAction);
 		
 		stopButton.addActionListener(click -> controller.stop());
-		
 		proceedButton.addActionListener(click -> controller.moveForward());
-		
-		pauseButton.addActionListener(click ->
+		pauseButton.addActionListener(new ActionListener()
 		{
-			if (controller.isPaused())
+			@Override
+			public void actionPerformed(ActionEvent e)
 			{
-				controller.play();
-				pauseButton.setText("Pause");
-			}
-			else
-			{
-				controller.pause();
-				pauseButton.setText("Play");
+				if (controller.isPaused())
+				{
+					controller.play();
+					pauseButton.setText("Pause");
+				}
+				else
+				{
+					controller.pause();
+					pauseButton.setText("Play");
+				}
 			}
 		});
-		
-		runButton.addActionListener(click ->
+		runButton.addActionListener(new ActionListener()
 		{
-			try
+			@Override
+			public void actionPerformed(ActionEvent ev)
 			{
-				controller.parse(textArea.getText());
-			}
-			catch (IOException e)
-			{
-				JOptionPane.showMessageDialog(null, e.getMessage(), "Cue Tester", JOptionPane.WARNING_MESSAGE, null);
+				try
+				{
+					controller.parse(textArea.getText());
+				}
+				catch (IOException er)
+				{
+					JOptionPane.showMessageDialog(null, er.getMessage(), "Cue Tester", JOptionPane.WARNING_MESSAGE, null);
+				}
 			}
 		});
-		
-		pickColor.addActionListener(click ->
-		{
-			Color color = Color.white;
-		    JFrame frame = new JFrame();
-		    frame.setAlwaysOnTop(true);
-		    color = JColorChooser.showDialog(frame, "Pick a color", color);
-		    
-		    if (color != null)
-		    {
-				int position = textArea.getCaretPosition();
-				String codeFull = textArea.getText();
-				String codeFHalf = codeFull.substring(0, position);
-				String codeSHalf = codeFull.substring(position);
-				System.out.println(codeFHalf + "|" + codeSHalf);
-				
-				double red = ((double)color.getRed() / 255.0) * 100;
-				double green = ((double)color.getGreen() / 255.0) * 100;
-				double blue = ((double)color.getBlue() / 255.0) * 100;
-				
-				textArea.setText(codeFHalf + String.format("%.2f", red) + " " + String.format("%.2f", green) + " " + String.format("%.2f", blue) + "\n" + codeSHalf);
-		    }
-		});
+		pickColor.addActionListener(click -> pickColor());
 	}
 	
 	/**
@@ -288,5 +271,33 @@ public class CuePanel extends JPanel {
 		layout.putConstraint(SpringLayout.EAST, buttonPane, 0, SpringLayout.EAST, textPane);
 		layout.putConstraint(SpringLayout.NORTH, buttonPane, -80, SpringLayout.SOUTH, this);
 		layout.putConstraint(SpringLayout.SOUTH, buttonPane, -25, SpringLayout.SOUTH, this);
+	}
+	
+	/**
+	 * Method called by the pickColor button that places the<br>
+	 * rgb value of the color picked in 0-100 percentages<br>
+	 * at the location of the cursor in the text pane
+	 */
+	private void pickColor()
+	{
+		Color color = Color.white;
+	    JFrame frame = new JFrame();
+	    frame.setAlwaysOnTop(true);
+	    color = JColorChooser.showDialog(frame, "Pick a color", color);
+	    
+	    if (color != null)
+	    {
+			int position = textArea.getCaretPosition();
+			String codeFull = textArea.getText();
+			String codeFHalf = codeFull.substring(0, position);
+			String codeSHalf = codeFull.substring(position);
+			System.out.println(codeFHalf + "|" + codeSHalf);
+			
+			double red = ((double)color.getRed() / 255.0) * 100;
+			double green = ((double)color.getGreen() / 255.0) * 100;
+			double blue = ((double)color.getBlue() / 255.0) * 100;
+			
+			textArea.setText(codeFHalf + String.format("%.2f", red) + " " + String.format("%.2f", green) + " " + String.format("%.2f", blue) + "\n" + codeSHalf);
+	    }
 	}
 }
