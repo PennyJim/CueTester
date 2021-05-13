@@ -38,7 +38,7 @@ public class CueFrame extends JFrame
 	 */
 	private void setupFrame()
 	{
-//	    this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+	    this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	    this.addWindowListener(new WindowAdapter()
 		{
 	    	@Override
