@@ -431,7 +431,7 @@ public class CuePanel extends JPanel {
 		}
 	}
 	
-	private boolean isSaved()
+	public boolean isSaved()
 	{
 		return false; //Somehow use the UndoManager to check if the current version equals the version last saved
 	}
