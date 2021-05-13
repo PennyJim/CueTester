@@ -44,6 +44,11 @@ public class CuePanel extends JPanel {
 	private JButton pickColor;
 	
 	private MenuBar menuBar;
+	private Menu fileMenu;
+	private MenuItem newFile;
+	private MenuItem openFile;
+	private MenuItem save;
+	private MenuItem saveAs;
 	private Menu editMenu;
 	private MenuItem undo;
 	private MenuItem redo;
@@ -72,7 +77,12 @@ public class CuePanel extends JPanel {
 		this.pickColor = new JButton("Pick Color");
 		
 		this.menuBar = new MenuBar();
-		this.edit = new Menu("Edit");
+		this.fileMenu = new Menu("File");
+		this.newFile = new MenuItem("New File");
+		this.openFile = new MenuItem("Open File");
+		this.save = new MenuItem("Save");
+		this.saveAs = new MenuItem("Save As…");
+		this.editMenu = new Menu("Edit");
 		this.undo = new MenuItem("Undo");
 		this.redo = new MenuItem("Redo");
 		
@@ -139,9 +149,13 @@ public class CuePanel extends JPanel {
 	 */
 	private void setupMenu()
 	{
-		edit.add(undo);
-		edit.add(redo);
-		menuBar.add(edit);
+		fileMenu.add(newFile);
+		fileMenu.add(openFile);
+		fileMenu.addSeparator();
+		fileMenu.add(save);
+		fileMenu.add(saveAs);
+		menuBar.add(fileMenu);
+		
 		editMenu.add(undo);
 		editMenu.add(redo);
 		menuBar.add(editMenu);
