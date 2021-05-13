@@ -1,34 +1,45 @@
 package cue.view;
 
 import java.awt.Color;
-import java.awt.Event;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.MenuShortcut;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
-import java.util.Stack;
 
 import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.BadLocationException;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 
 import cue.controller.CueController;
+import cue.controller.IOController;
 import cue.model.SyntaxStyleDocument;
 
 @SuppressWarnings("serial")
 public class CuePanel extends JPanel {
 
 	private CueController controller;
-	private UndoManager undoManager;
+	private JFrame frame;
 	private SpringLayout layout;
 	private Font font;
+	private SyntaxStyleDocument style;
+	private UndoManager undoManager;
+	private String pathName = null;
 	
 	private JScrollPane textPane;
 	private JTextPane textArea;
@@ -39,19 +50,33 @@ public class CuePanel extends JPanel {
 	private JButton runButton;
 	private JButton pickColor;
 	
+	private MenuBar menuBar;
+	private Menu fileMenu;
+	private MenuItem newFile;
+	private MenuItem openFile;
+	private MenuItem save;
+	private MenuItem saveAs;
+	private Menu editMenu;
+	private MenuItem undo;
+	private MenuItem redo;
+	
 	/**
 	 * Initializes and sets up the UI elements.
 	 * @param controller
 	 */
-	public CuePanel(CueController controller)
+	public CuePanel(CueController controller, JFrame frame)
 	{
 		super();
 		this.controller = controller;
+		this.frame = frame;
 		this.undoManager = new UndoManager();
 		this.layout = new SpringLayout();
+		this.font = getFont();
+		this.font = new Font(font.getFontName(), font.getStyle(), 20);
+		this.style = new SyntaxStyleDocument();
 		
 		this.textPane = new JScrollPane();
-		this.textArea = new JTextPane(new SyntaxStyleDocument());
+		this.textArea = new JTextPane(style);
 		this.buttonPane = new JPanel(new GridLayout(1, 0, 8, 0));
 		this.stopButton = new JButton("Stop");
 		this.proceedButton = new JButton("Proceed");
@@ -59,7 +84,18 @@ public class CuePanel extends JPanel {
 		this.runButton = new JButton("Run");
 		this.pickColor = new JButton("Pick Color");
 		
+		this.menuBar = new MenuBar();
+		this.fileMenu = new Menu("File");
+		this.newFile = new MenuItem("New File");
+		this.openFile = new MenuItem("Open File");
+		this.save = new MenuItem("Save");
+		this.saveAs = new MenuItem("Save As…");
+		this.editMenu = new Menu("Edit");
+		this.undo = new MenuItem("Undo");
+		this.redo = new MenuItem("Redo");
+		
 		setupPanel();
+		setupMenu();
 		setupListeners();
 		setupLayout();
 	}
@@ -73,8 +109,6 @@ public class CuePanel extends JPanel {
 		this.setSize(800,600);
 		this.setLayout(layout);
 		
-		font = this.getFont();
-		font = new Font(font.getFontName(), font.getStyle(), 20);
 		controller.setDefaultBG(new Color(50, 50, 50));
 		controller.setPanel(textArea);
 
@@ -119,6 +153,26 @@ public class CuePanel extends JPanel {
 	}
 	
 	/**
+	 * Sets up the JMenu components
+	 */
+	private void setupMenu()
+	{
+		fileMenu.add(newFile);
+		fileMenu.add(openFile);
+		fileMenu.addSeparator();
+		fileMenu.add(save);
+		fileMenu.add(saveAs);
+		menuBar.add(fileMenu);
+		
+		editMenu.add(undo);
+		editMenu.add(redo);
+		menuBar.add(editMenu);
+		
+		
+		frame.setMenuBar(menuBar);
+	}
+	
+	/**
 	 * Sets up the listeners to the buttons.
 	 */
 	private void setupListeners()
@@ -144,8 +198,31 @@ public class CuePanel extends JPanel {
 		InputMap inputMask = textArea.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap actionMask = textArea.getActionMap();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()), "Undo");
-		actionMask.put("Undo", new AbstractAction()
+
+		//New File Button
+		newFile.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('N', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		//New File Action
+		newFile.addActionListener(click -> newFile());
+		
+		//Open File Button
+		openFile.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('O', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		//Open File Action
+		openFile.addActionListener(click -> openFile());
+		
+		//Save Button
+		save.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('S', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		//Save Action
+		save.addActionListener(click -> saveFile());
+		
+		//Save As Button
+		saveAs.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('S', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true));
+		//Save As Action
+		saveAs.addActionListener(click -> saveFileAs());
+		
+		//Undo Button
+		undo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()).getKeyCode())); //inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()), "Undo");
+		//Undo Action
+		AbstractAction undoAction = new AbstractAction()
 		{
 			@Override
 			public void actionPerformed(ActionEvent ev)
@@ -155,82 +232,79 @@ public class CuePanel extends JPanel {
 					if(undoManager.canUndo())
 					{
 						undoManager.undo();
+						style.refreshStyle();
 					}
 				}
-				catch (CannotUndoException er) {}
+				catch (CannotUndoException | BadLocationException er)
+				{
+					er.printStackTrace();
+				}
 			}
-		});
+		};
+		undo.addActionListener(undoAction);
+		actionMask.put("Undo", undoAction);
 		
-		inputMask.put(KeyStroke.getKeyStroke('Z', Event.SHIFT_MASK + toolkit.getMenuShortcutKeyMask()), "Redo");
+		//Redo Buttons
 		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, toolkit.getMenuShortcutKeyMask()), "Redo");
-		actionMask.put("Redo", new AbstractAction()
+		redo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('Z', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true)); //inputMask.put(KeyStroke.getKeyStroke('Z', Event.SHIFT_MASK + toolkit.getMenuShortcutKeyMask()), "Redo");
+		//Undo Action
+		AbstractAction redoAction = new AbstractAction()
 		{
 			@Override
-			public void actionPerformed(ActionEvent ev)
+			public void actionPerformed(ActionEvent e)
 			{
 				try
 				{
 					if(undoManager.canRedo())
 					{
 						undoManager.redo();
+						style.refreshStyle();
 					}
 				}
-				catch (CannotRedoException er) {}
+				catch (CannotRedoException | BadLocationException er)
+				{
+					er.printStackTrace();
+				}
 			}
-		});
+		};
+		redo.addActionListener(redoAction);
+		actionMask.put("Redo", redoAction);
 		
 		stopButton.addActionListener(click -> controller.stop());
-		
 		proceedButton.addActionListener(click -> controller.moveForward());
-		
-		pauseButton.addActionListener(click ->
+		pauseButton.addActionListener(new ActionListener()
 		{
-			if (controller.isPaused())
+			@Override
+			public void actionPerformed(ActionEvent e)
 			{
-				controller.play();
-				pauseButton.setText("Pause");
-			}
-			else
-			{
-				controller.pause();
-				pauseButton.setText("Play");
+				if (controller.isPaused())
+				{
+					controller.play();
+					pauseButton.setText("Pause");
+				}
+				else
+				{
+					controller.pause();
+					pauseButton.setText("Play");
+				}
 			}
 		});
-		
-		runButton.addActionListener(click ->
+		runButton.addActionListener(new ActionListener()
 		{
-			try
+			@Override
+			public void actionPerformed(ActionEvent ev)
 			{
-				controller.parse(textArea.getText());
-			}
-			catch (IOException e)
-			{
-				JOptionPane.showMessageDialog(null, e.getMessage(), "Cue Tester", JOptionPane.WARNING_MESSAGE, null);
+				try
+				{
+					controller.parse(textArea.getText());
+				}
+				catch (IOException er)
+				{
+					controller.handleErrors(er);
+				}
 			}
 		});
-		
-		pickColor.addActionListener(click ->
-		{
-			Color color = Color.white;
-		    JFrame frame = new JFrame();
-		    frame.setAlwaysOnTop(true);
-		    color = JColorChooser.showDialog(frame, "Pick a color", color);
-		    
-		    if (color != null)
-		    {
-				int position = textArea.getCaretPosition();
-				String codeFull = textArea.getText();
-				String codeFHalf = codeFull.substring(0, position);
-				String codeSHalf = codeFull.substring(position);
-				System.out.println(codeFHalf + "|" + codeSHalf);
-				
-				double red = ((double)color.getRed() / 255.0) * 100;
-				double green = ((double)color.getGreen() / 255.0) * 100;
-				double blue = ((double)color.getBlue() / 255.0) * 100;
-				
-				textArea.setText(codeFHalf + String.format("%.2f", red) + " " + String.format("%.2f", green) + " " + String.format("%.2f", blue) + "\n" + codeSHalf);
-		    }
-		});
+		pickColor.addActionListener(click -> pickColor());
 	}
 	
 	/**
@@ -247,5 +321,154 @@ public class CuePanel extends JPanel {
 		layout.putConstraint(SpringLayout.EAST, buttonPane, 0, SpringLayout.EAST, textPane);
 		layout.putConstraint(SpringLayout.NORTH, buttonPane, -80, SpringLayout.SOUTH, this);
 		layout.putConstraint(SpringLayout.SOUTH, buttonPane, -25, SpringLayout.SOUTH, this);
+	}
+	
+	/**
+	 * Method called by the pickColor button that places the<br>
+	 * rgb value of the color picked in 0-100 percentages<br>
+	 * at the location of the cursor in the text pane
+	 */
+	private void pickColor()
+	{
+		Color color = Color.white;
+	    JFrame frame = new JFrame();
+	    frame.setAlwaysOnTop(true);
+	    color = JColorChooser.showDialog(frame, "Pick a color", color);
+	    
+	    if (color != null)
+	    {
+			int position = textArea.getCaretPosition();
+			String codeFull = textArea.getText();
+			String codeFHalf = codeFull.substring(0, position);
+			String codeSHalf = codeFull.substring(position);
+			System.out.println(codeFHalf + "|" + codeSHalf);
+			
+			double red = ((double)color.getRed() / 255.0) * 100;
+			double green = ((double)color.getGreen() / 255.0) * 100;
+			double blue = ((double)color.getBlue() / 255.0) * 100;
+			
+			textArea.setText(codeFHalf + String.format("%.2f", red) + " " + String.format("%.2f", green) + " " + String.format("%.2f", blue) + "\n" + codeSHalf);
+	    }
+	}
+
+	/**
+	 * Saves the text of textArea to the saved location<br>
+	 * If there is no saved location, it calls {@link #saveFileAs}
+	 */
+	public void saveFile()
+	{
+		if (pathName != null)
+		{
+			IOController.save(controller, pathName, textArea.getText());
+		}
+		else { saveFileAs(); }
+		
+	}
+	
+	/**
+	 * Prompts the user for a file location, saves it,
+	 * and then calls {@link #saveFile()}
+	 */
+	public void saveFileAs()
+	{
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileFilter(new FileNameExtensionFilter("Basic Light Cue Language", new String[] {"blcl", "txt"}));
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fileChooser.setMultiSelectionEnabled(false);
+		int option = fileChooser.showSaveDialog(null);
+		if (option == JFileChooser.APPROVE_OPTION)
+		{
+			pathName = fileChooser.getSelectedFile().getPath();
+			if (!pathName.endsWith(".blcl") && !pathName.endsWith(".txt")) { pathName += ".blcl"; }
+			saveFile();
+		}
+		else if (option == JFileChooser.ERROR_OPTION)
+		{
+			controller.handleErrors(new Exception("File Chooser returned \"ERROR_OPTION\""));
+		}
+	}
+
+	/**
+	 * {@link #confirmSave() Checks} whether or not the user wants to continue<br>
+	 * before wiping the contents and clearing the saved file location
+	 */
+	public void newFile()
+	{
+		boolean confirmed = true;
+		if (!isSaved())
+		{
+			confirmed = confirmSave();
+		}
+		if (confirmed)
+		{
+			controller.stop();
+			controller.stop();
+			textArea.setText("");
+			undoManager.discardAllEdits();
+			pathName = null;
+		}
+	}
+	
+	/**
+	 * {@link #confirmSave() Checks} whether or not the user wants to continue<br>
+	 * before prompting the user for a file. Saves the location<br>
+	 * and replaces the text with the file's contents.
+	 */
+	public void openFile()
+	{
+		boolean confirmed = true;
+		if (!isSaved())
+		{
+			confirmed = confirmSave();
+		}
+		if (confirmed)
+		{
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileFilter(new FileNameExtensionFilter("Basic Light Cue Language", new String[] {"blcl", "txt"}));
+			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			fileChooser.setMultiSelectionEnabled(false);
+			int option = fileChooser.showOpenDialog(null);
+			if (option == JFileChooser.APPROVE_OPTION)
+			{
+				pathName = fileChooser.getSelectedFile().getPath();
+				textArea.setText(IOController.loadFile(controller, pathName));
+				undoManager.discardAllEdits();
+				try
+				{
+					style.refreshStyle();
+				} catch (BadLocationException e) {
+					controller.handleErrors(e);
+					e.printStackTrace();
+				}
+			}
+			else if (option == JFileChooser.ERROR_OPTION)
+			{
+				controller.handleErrors(new Exception("File Chooser returned \"ERROR_OPTION\""));
+			}
+		}
+	}
+	
+	/**
+	 * Whether or not the contents currently match when it was last saved
+	 * @return false
+	 */
+	public boolean isSaved()
+	{
+		return false; //Somehow use the UndoManager to check if the current version equals the version last saved
+	}
+	
+	/**
+	 * {@link #isSaved() Checks} if it is currently saved and returns true if so.<br>
+	 * It otherwise asks the user if they want to save and does so.<br>
+	 * @return true if following operation should be continued.
+	 */
+	public boolean confirmSave()
+	{
+		int response = JOptionPane.showConfirmDialog(this, "Unsaved progress will be lost.\nDo you want to save first?", "Unsaved Changes", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+		if (response == JOptionPane.YES_OPTION)
+		{
+			saveFile();
+		}
+		return response == JOptionPane.YES_OPTION || response == JOptionPane.NO_OPTION;
 	}
 }
