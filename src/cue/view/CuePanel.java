@@ -394,6 +394,28 @@ public class CuePanel extends JPanel {
 	
 	private void openFile()
 	{
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileFilter(new FileNameExtensionFilter("Basic Light Cue Language", new String[] {"blcl", "txt"}));
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fileChooser.setMultiSelectionEnabled(false);
+		int option = fileChooser.showOpenDialog(null);
+		if (option == JFileChooser.APPROVE_OPTION)
+		{
+			pathName = fileChooser.getSelectedFile().getPath();
+			textArea.setText(IOController.loadFile(controller, pathName));
+			undoManager.discardAllEdits();
+			try
+			{
+				style.refreshStyle();
+			} catch (BadLocationException e) {
+				controller.handleErrors(e);
+				e.printStackTrace();
+			}
+		}
+		else if (option == JFileChooser.ERROR_OPTION)
+		{
+			controller.handleErrors(new Exception("File Chooser returned \"ERROR_OPTION\""));
+		}
 	}
 	
 	private boolean isSaved()
