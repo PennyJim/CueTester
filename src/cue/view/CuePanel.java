@@ -382,20 +382,14 @@ public class CuePanel extends JPanel {
 
 	private void newFile()
 	{
-		if (!isSaved())
+		if (!isSaved() && confirmSave())
 		{
-			int response = JOptionPane.showConfirmDialog(this, "Unsaved progress will be lost.\nDo you want to continue?", "Comfirm Close", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-			if (response == JOptionPane.YES_OPTION)
-			{
-				saveFile();
-			}
+			controller.stop();
+			controller.stop();
+			textArea.setText("");
+			undoManager.discardAllEdits();
+			pathName = null;
 		}
-		
-		controller.stop();
-		controller.stop();
-		textArea.setText("");
-		undoManager.discardAllEdits();
-		pathName = null;
 	}
 	
 	private void openFile()
@@ -427,5 +421,15 @@ public class CuePanel extends JPanel {
 	private boolean isSaved()
 	{
 		return false; //Somehow use the UndoManager to check if the current version equals the version last saved
+	}
+	
+	public boolean confirmSave()
+	{
+		int response = JOptionPane.showConfirmDialog(this, "Unsaved progress will be lost.\nDo you want to save first?", "Unsaved Changes", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+		if (response == JOptionPane.YES_OPTION)
+		{
+			saveFile();
+		}
+		return response == JOptionPane.YES_OPTION || response == JOptionPane.NO_OPTION;
 	}
 }
