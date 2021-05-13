@@ -12,17 +12,21 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 
 import cue.controller.CueController;
+import cue.controller.IOController;
 import cue.model.SyntaxStyleDocument;
 
 @SuppressWarnings("serial")
@@ -33,6 +37,7 @@ public class CuePanel extends JPanel {
 	private UndoManager undoManager;
 	private SpringLayout layout;
 	private Font font;
+	private String pathName = null;
 	
 	private JScrollPane textPane;
 	private JTextPane textArea;
@@ -234,6 +239,11 @@ public class CuePanel extends JPanel {
 		redo.addActionListener(redoAction);
 		actionMask.put("Redo", redoAction);
 		
+		//Save Button
+		save.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('S', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		//Save Action
+		save.addActionListener(click -> saveFile());
+		
 		stopButton.addActionListener(click -> controller.stop());
 		proceedButton.addActionListener(click -> controller.moveForward());
 		pauseButton.addActionListener(new ActionListener()
@@ -313,5 +323,55 @@ public class CuePanel extends JPanel {
 			
 			textArea.setText(codeFHalf + String.format("%.2f", red) + " " + String.format("%.2f", green) + " " + String.format("%.2f", blue) + "\n" + codeSHalf);
 	    }
+	}
+
+	private void saveFile()
+	{
+		if (pathName != null)
+		{
+			IOController.save(controller, pathName, textArea.getText());
+		}
+		else
+		{
+			saveFileAs(); 
+		}
+		
+	}
+	
+	private void saveFileAs()
+	{
+		JFileChooser fileChooser = new JFileChooser();
+//		fileChooser.setFileFilter(new FileFilter()
+//		{
+//			
+//			@Override
+//			public String getDescription()
+//			{
+//				return "Basic Light Cue Language (*.blcl)";
+//			}
+//			
+//			@Override
+//			public boolean accept(File f)
+//			{
+//				if (f.isDirectory()) { return true; }
+//				boolean temp = f.getName().trim().toLowerCase().endsWith(".blcl");
+//				System.out.println(f.getName() + " : " + temp);
+//				return temp;
+//			}
+//		});
+		fileChooser.setFileFilter(new FileNameExtensionFilter("test", "blcl"));
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fileChooser.setMultiSelectionEnabled(false);
+		int option = fileChooser.showSaveDialog(null);
+		if (option == JFileChooser.APPROVE_OPTION)
+		{
+			pathName = fileChooser.getSelectedFile().getPath();
+			if (!pathName.endsWith(".blcl")) { pathName += ".blcl"; }
+			saveFile();
+		}
+		else if (option == JFileChooser.ERROR_OPTION)
+		{
+			controller.handleErrors(new Exception("File Chooser returned \"ERROR_OPTION\""));
+		}
 	}
 }
