@@ -7,6 +7,12 @@ import java.util.Scanner;
 
 public class IOController
 {
+	/**
+	 * Saves a string to a file on disk
+	 * @param app used to handle errors
+	 * @param filePath where to save
+	 * @param contents what to save
+	 */
 	public static void save(CueController app, String filePath, String contents)
 	{
 		String filename = filePath;
@@ -32,6 +38,12 @@ public class IOController
 		}
 	}
 	
+	/**
+	 * A function that returns the text of a file on disk
+	 * @param app used to handle errors
+	 * @param path location of the file
+	 * @return text of the file
+	 */
 	public static String loadFile(CueController app, String path)
 	{
 		String results = "";
