@@ -351,7 +351,11 @@ public class CuePanel extends JPanel {
 	    }
 	}
 
-	private void saveFile()
+	/**
+	 * Saves the text of textArea to the saved location<br>
+	 * If there is no saved location, it calls {@link #saveFileAs}
+	 */
+	public void saveFile()
 	{
 		if (pathName != null)
 		{
@@ -361,7 +365,11 @@ public class CuePanel extends JPanel {
 		
 	}
 	
-	private void saveFileAs()
+	/**
+	 * Prompts the user for a file location, saves it,
+	 * and then calls {@link #saveFile()}
+	 */
+	public void saveFileAs()
 	{
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new FileNameExtensionFilter("Basic Light Cue Language", new String[] {"blcl", "txt"}));
@@ -380,7 +388,11 @@ public class CuePanel extends JPanel {
 		}
 	}
 
-	private void newFile()
+	/**
+	 * {@link #confirmSave() Checks} whether or not the user wants to continue<br>
+	 * before wiping the contents and clearing the saved file location
+	 */
+	public void newFile()
 	{
 		boolean confirmed = true;
 		if (!isSaved())
@@ -397,7 +409,12 @@ public class CuePanel extends JPanel {
 		}
 	}
 	
-	private void openFile()
+	/**
+	 * {@link #confirmSave() Checks} whether or not the user wants to continue<br>
+	 * before prompting the user for a file. Saves the location<br>
+	 * and replaces the text with the file's contents.
+	 */
+	public void openFile()
 	{
 		boolean confirmed = true;
 		if (!isSaved())
@@ -431,11 +448,20 @@ public class CuePanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Whether or not the contents currently match when it was last saved
+	 * @return false
+	 */
 	public boolean isSaved()
 	{
 		return false; //Somehow use the UndoManager to check if the current version equals the version last saved
 	}
 	
+	/**
+	 * {@link #isSaved() Checks} if it is currently saved and returns true if so.<br>
+	 * It otherwise asks the user if they want to save and does so.<br>
+	 * @return true if following operation should be continued.
+	 */
 	public boolean confirmSave()
 	{
 		int response = JOptionPane.showConfirmDialog(this, "Unsaved progress will be lost.\nDo you want to save first?", "Unsaved Changes", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
