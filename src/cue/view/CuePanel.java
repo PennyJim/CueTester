@@ -9,16 +9,31 @@ import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.MenuShortcut;
 import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
+import javax.swing.SpringLayout;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.undo.CannotRedoException;
@@ -39,6 +54,7 @@ public class CuePanel extends JPanel {
 	private Font font;
 	private SyntaxStyleDocument style;
 	private UndoManager undoManager;
+	private Clipboard clipboard;
 	private String pathName = null;
 	
 	private JScrollPane textPane;
@@ -59,6 +75,10 @@ public class CuePanel extends JPanel {
 	private Menu editMenu;
 	private MenuItem undo;
 	private MenuItem redo;
+	private MenuItem cut;
+	private MenuItem copy;
+	private MenuItem paste;
+	private MenuItem delete;
 	
 	/**
 	 * Initializes and sets up the UI elements.
@@ -74,6 +94,7 @@ public class CuePanel extends JPanel {
 		this.font = getFont();
 		this.font = new Font(font.getFontName(), font.getStyle(), 20);
 		this.style = new SyntaxStyleDocument();
+		this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		
 		this.textPane = new JScrollPane();
 		this.textArea = new JTextPane(style);
@@ -93,6 +114,10 @@ public class CuePanel extends JPanel {
 		this.editMenu = new Menu("Edit");
 		this.undo = new MenuItem("Undo");
 		this.redo = new MenuItem("Redo");
+		this.cut = new MenuItem("Cut");
+		this.copy = new MenuItem("Copy");
+		this.paste = new MenuItem("Paste");
+		this.delete = new MenuItem("Delete");
 		
 		setupPanel();
 		setupMenu();
@@ -166,6 +191,11 @@ public class CuePanel extends JPanel {
 		
 		editMenu.add(undo);
 		editMenu.add(redo);
+		editMenu.addSeparator();
+		editMenu.add(cut);
+		editMenu.add(copy);
+		editMenu.add(paste);
+		editMenu.add(delete);
 		menuBar.add(editMenu);
 		
 		
@@ -199,29 +229,24 @@ public class CuePanel extends JPanel {
 		ActionMap actionMask = textArea.getActionMap();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-		//New File Button
+		//New File
 		newFile.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('N', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
-		//New File Action
 		newFile.addActionListener(click -> newFile());
 		
-		//Open File Button
+		//Open
 		openFile.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('O', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
-		//Open File Action
 		openFile.addActionListener(click -> openFile());
 		
-		//Save Button
+		//Save
 		save.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('S', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
-		//Save Action
 		save.addActionListener(click -> saveFile());
 		
-		//Save As Button
+		//Save As
 		saveAs.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('S', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true));
-		//Save As Action
 		saveAs.addActionListener(click -> saveFileAs());
 		
-		//Undo Button
-		undo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()).getKeyCode())); //inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()), "Undo");
-		//Undo Action
+		//Undo
+		undo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
 		AbstractAction undoAction = new AbstractAction()
 		{
 			@Override
@@ -244,10 +269,9 @@ public class CuePanel extends JPanel {
 		undo.addActionListener(undoAction);
 		actionMask.put("Undo", undoAction);
 		
-		//Redo Buttons
+		//Redo
 		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, toolkit.getMenuShortcutKeyMask()), "Redo");
-		redo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('Z', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true)); //inputMask.put(KeyStroke.getKeyStroke('Z', Event.SHIFT_MASK + toolkit.getMenuShortcutKeyMask()), "Redo");
-		//Undo Action
+		redo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('Z', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true));
 		AbstractAction redoAction = new AbstractAction()
 		{
 			@Override
@@ -269,6 +293,65 @@ public class CuePanel extends JPanel {
 		};
 		redo.addActionListener(redoAction);
 		actionMask.put("Redo", redoAction);
+		
+		//Cut
+		cut.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_X, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		cut.addActionListener(new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				String text = textArea.getSelectedText();
+				StringSelection sel = new StringSelection(text);
+				clipboard.setContents(sel, sel);
+				String newText = textArea.getText();
+				textArea.setText(textArea.getText().substring(0, textArea.getSelectionStart()) + textArea.getText().substring(textArea.getSelectionEnd(), textArea.getText().length()));
+			}
+		});
+		
+		//Copy
+		copy.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_C, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		copy.addActionListener(new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				String text = textArea.getSelectedText();
+				StringSelection sel = new StringSelection(text);
+				clipboard.setContents(sel, sel);
+			}
+		});
+		
+		//Paste
+		paste.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_V, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		paste.addActionListener(new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				try
+				{
+					String text = (String)clipboard.getData(DataFlavor.stringFlavor);
+					String newText = textArea.getText();
+					newText = newText.substring(0, textArea.getSelectionStart()) + text + newText.substring(textArea.getSelectionEnd(), newText.length());
+					textArea.setText(newText);
+				}
+				catch (UnsupportedFlavorException e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				catch (IOException e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		//Delete
+		delete.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		
 		
 		stopButton.addActionListener(click -> controller.stop());
 		proceedButton.addActionListener(click -> controller.moveForward());
