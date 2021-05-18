@@ -1,9 +1,15 @@
 package cue.view;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import cue.controller.CueController;
@@ -65,5 +71,44 @@ public class CueFrame extends JFrame
 		this.setTitle("Cue Tester");
 		this.setResizable(true);
 		this.setLocationRelativeTo(null);
+	}
+	
+
+	public void setupMenuBar(JMenuBar menuBar)
+	{
+		this.setUndecorated(true);
+		
+		JButton minimize = new JButton("_");
+		JButton close = new JButton("X");
+		
+		minimize.setBorderPainted(false);
+		minimize.setBackground(null);
+		close.setBorderPainted(false);
+		close.setBackground(null);
+
+		menuBar.add(new JMenu("Cue Tester"), 0);
+		menuBar.add(new JMenuItem(""));
+		
+		menuBar.add(minimize);
+		menuBar.add(close);
+		
+		JFrame frame = this;
+		minimize.addActionListener(new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				frame.setExtendedState(JFrame.ICONIFIED);
+			}
+		});
+		
+		close.addActionListener(new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+			}
+		});
+		
 	}
 }

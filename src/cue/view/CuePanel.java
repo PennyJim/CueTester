@@ -27,6 +27,8 @@ import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 
+import org.apache.commons.lang3.SystemUtils;
+
 import cue.controller.CueController;
 import cue.controller.IOController;
 import cue.model.SyntaxStyleDocument;
@@ -35,7 +37,7 @@ import cue.model.SyntaxStyleDocument;
 public class CuePanel extends JPanel {
 
 	private CueController controller;
-	private JFrame frame;
+	private CueFrame frame;
 	private SpringLayout layout;
 	private Font font;
 	private SyntaxStyleDocument style;
@@ -70,7 +72,7 @@ public class CuePanel extends JPanel {
 	 * Initializes and sets up the UI elements.
 	 * @param controller
 	 */
-	public CuePanel(CueController controller, JFrame frame)
+	public CuePanel(CueController controller, CueFrame frame)
 	{
 		super();
 		this.controller		= controller;
@@ -168,6 +170,7 @@ public class CuePanel extends JPanel {
 	 */
 	private void setupMenu()
 	{
+		
 		fileMenu.add(newFile);
 		fileMenu.add(openFile);
 		fileMenu.addSeparator();
@@ -184,6 +187,13 @@ public class CuePanel extends JPanel {
 		editMenu.add(delete);
 		menuBar.add(editMenu);
 		
+//		frame.setBackground(new Color(50, 50, 50));
+		menuBar.setBackground(new Color(50, 50, 50));
+		
+		if (!SystemUtils.IS_OS_MAC)
+		{
+			frame.setupMenuBar(menuBar);
+		}
 		
 		frame.setJMenuBar(menuBar);
 	}
