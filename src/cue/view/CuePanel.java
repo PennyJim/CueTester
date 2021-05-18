@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
@@ -228,7 +229,7 @@ public class CuePanel extends JPanel {
 		save.addActionListener(click -> saveFile());
 		
 		//Save As
-		saveAs.setAccelerator(KeyStroke.getKeyStroke('S', menuKey));
+		saveAs.setAccelerator(KeyStroke.getKeyStroke('S', menuKey | InputEvent.SHIFT_DOWN_MASK));
 		saveAs.addActionListener(click -> saveFileAs());
 		
 		//Undo
@@ -256,8 +257,8 @@ public class CuePanel extends JPanel {
 		actionMask.put("Undo", undoAction);
 		
 		//Redo
-		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, menuKey), "Redo");
-		redo.setAccelerator(KeyStroke.getKeyStroke('Z', menuKey));
+		inputMask.put(KeyStroke.getKeyStroke('Y', menuKey), "Redo");
+		redo.setAccelerator(KeyStroke.getKeyStroke('Z', menuKey | InputEvent.SHIFT_DOWN_MASK));
 		AbstractAction redoAction = new AbstractAction()
 		{
 			@Override
@@ -281,19 +282,16 @@ public class CuePanel extends JPanel {
 		actionMask.put("Redo", redoAction);
 		
 		//Cut
-		cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, menuKey));
+		cut.setAccelerator(KeyStroke.getKeyStroke('X', menuKey));
 		cut.addActionListener(new DefaultEditorKit.CutAction());
 		
 		//Copy
-		copy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, menuKey));
+		copy.setAccelerator(KeyStroke.getKeyStroke('C', menuKey));
 		copy.addActionListener(new DefaultEditorKit.CopyAction());
 		
 		//Paste
-		paste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, menuKey));
+		paste.setAccelerator(KeyStroke.getKeyStroke('V', menuKey));
 		paste.addActionListener(new DefaultEditorKit.PasteAction());
-		
-		System.out.println(KeyEvent.VK_DELETE | toolkit.getMenuShortcutKeyMask());
-		System.out.println(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, menuKey).getKeyCode());
 		
 		//Delete
 		delete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
