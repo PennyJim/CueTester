@@ -51,19 +51,19 @@ public class CuePanel extends JPanel {
 	private JButton runButton;
 	private JButton pickColor;
 	
-	private MenuBar menuBar;
-	private Menu fileMenu;
-	private MenuItem newFile;
-	private MenuItem openFile;
-	private MenuItem save;
-	private MenuItem saveAs;
-	private Menu editMenu;
-	private MenuItem undo;
-	private MenuItem redo;
-	private MenuItem cut;
-	private MenuItem copy;
-	private MenuItem paste;
-	private MenuItem delete;
+	private JMenuBar menuBar;
+	private JMenu fileMenu;
+	private JMenuItem newFile;
+	private JMenuItem openFile;
+	private JMenuItem save;
+	private JMenuItem saveAs;
+	private JMenu editMenu;
+	private JMenuItem undo;
+	private JMenuItem redo;
+	private JMenuItem cut;
+	private JMenuItem copy;
+	private JMenuItem paste;
+	private JMenuItem delete;
 	
 	/**
 	 * Initializes and sets up the UI elements.
@@ -72,37 +72,37 @@ public class CuePanel extends JPanel {
 	public CuePanel(CueController controller, JFrame frame)
 	{
 		super();
-		this.controller = controller;
-		this.frame = frame;
-		this.undoManager = new UndoManager();
-		this.layout = new SpringLayout();
-		this.font = getFont();
-		this.font = new Font(font.getFontName(), font.getStyle(), 20);
-		this.style = new SyntaxStyleDocument();
-		this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		this.controller		= controller;
+		this.frame			= frame;
+		this.undoManager	= new UndoManager();
+		this.layout			= new SpringLayout();
+		this.font			= getFont();
+		this.font			= new Font(font.getFontName(), font.getStyle(), 20);
+		this.style			= new SyntaxStyleDocument();
+		this.clipboard		= Toolkit.getDefaultToolkit().getSystemClipboard();
 		
-		this.textPane = new JScrollPane();
-		this.textArea = new JTextPane(style);
-		this.buttonPane = new JPanel(new GridLayout(1, 0, 8, 0));
-		this.stopButton = new JButton("Stop");
-		this.proceedButton = new JButton("Proceed");
-		this.pauseButton = new JButton("Pause");
-		this.runButton = new JButton("Run");
-		this.pickColor = new JButton("Pick Color");
+		this.textPane		= new JScrollPane();
+		this.textArea		= new JTextPane(style);
+		this.buttonPane		= new JPanel(new GridLayout(1, 0, 8, 0));
+		this.stopButton		= new JButton("Stop");
+		this.proceedButton	= new JButton("Proceed");
+		this.pauseButton	= new JButton("Pause");
+		this.runButton		= new JButton("Run");
+		this.pickColor		= new JButton("Pick Color");
 		
-		this.menuBar = new MenuBar();
-		this.fileMenu = new Menu("File");
-		this.newFile = new MenuItem("New File");
-		this.openFile = new MenuItem("Open File");
-		this.save = new MenuItem("Save");
-		this.saveAs = new MenuItem("Save As…");
-		this.editMenu = new Menu("Edit");
-		this.undo = new MenuItem("Undo");
-		this.redo = new MenuItem("Redo");
-		this.cut = new MenuItem("Cut");
-		this.copy = new MenuItem("Copy");
-		this.paste = new MenuItem("Paste");
-		this.delete = new MenuItem("Delete");
+		this.menuBar	= new JMenuBar();
+		this.fileMenu	= new JMenu("File");
+		this.newFile	= new JMenuItem("New File");
+		this.openFile	= new JMenuItem("Open File");
+		this.save		= new JMenuItem("Save");
+		this.saveAs		= new JMenuItem("Save As…");
+		this.editMenu	= new JMenu("Edit");
+		this.undo		= new JMenuItem("Undo");
+		this.redo		= new JMenuItem("Redo");
+		this.cut		= new JMenuItem("Cut");
+		this.copy		= new JMenuItem("Copy");
+		this.paste		= new JMenuItem("Paste");
+		this.delete		= new JMenuItem("Delete");
 		
 		setupPanel();
 		setupMenu();
@@ -184,12 +184,7 @@ public class CuePanel extends JPanel {
 		menuBar.add(editMenu);
 		
 		
-		frame.setMenuBar(menuBar);
-		
-		JMenuBar testBar = new JMenuBar();
-		testBar.add(new JMenu("test"));
-//		testBar.
-		frame.setJMenuBar(testBar);
+		frame.setJMenuBar(menuBar);
 	}
 	
 	/**
@@ -218,25 +213,26 @@ public class CuePanel extends JPanel {
 		InputMap inputMask = textArea.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap actionMask = textArea.getActionMap();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		int menuKey = toolkit.getMenuShortcutKeyMask();
 
 		//New File
-		newFile.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('N', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		newFile.setAccelerator(KeyStroke.getKeyStroke('N', menuKey));
 		newFile.addActionListener(click -> newFile());
 		
 		//Open
-		openFile.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('O', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		openFile.setAccelerator(KeyStroke.getKeyStroke('O', menuKey));
 		openFile.addActionListener(click -> openFile());
 		
 		//Save
-		save.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('S', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		save.setAccelerator(KeyStroke.getKeyStroke('S', menuKey));
 		save.addActionListener(click -> saveFile());
 		
 		//Save As
-		saveAs.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('S', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true));
+		saveAs.setAccelerator(KeyStroke.getKeyStroke('S', menuKey));
 		saveAs.addActionListener(click -> saveFileAs());
 		
 		//Undo
-		undo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, menuKey));
 		AbstractAction undoAction = new AbstractAction()
 		{
 			@Override
@@ -260,8 +256,8 @@ public class CuePanel extends JPanel {
 		actionMask.put("Undo", undoAction);
 		
 		//Redo
-		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, toolkit.getMenuShortcutKeyMask()), "Redo");
-		redo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('Z', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true));
+		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, menuKey), "Redo");
+		redo.setAccelerator(KeyStroke.getKeyStroke('Z', menuKey));
 		AbstractAction redoAction = new AbstractAction()
 		{
 			@Override
@@ -285,23 +281,22 @@ public class CuePanel extends JPanel {
 		actionMask.put("Redo", redoAction);
 		
 		//Cut
-		cut.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_X, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, menuKey));
 		cut.addActionListener(new DefaultEditorKit.CutAction());
 		
 		//Copy
-		copy.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_C, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		copy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, menuKey));
 		copy.addActionListener(new DefaultEditorKit.CopyAction());
 		
 		//Paste
-		paste.setShortcut(new MenuShortcut(KeyEvent.VK_V | toolkit.getMenuShortcutKeyMask()));
+		paste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, menuKey));
 		paste.addActionListener(new DefaultEditorKit.PasteAction());
 		
 		System.out.println(KeyEvent.VK_DELETE | toolkit.getMenuShortcutKeyMask());
-		System.out.println(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, toolkit.getMenuShortcutKeyMask()).getKeyCode());
+		System.out.println(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, menuKey).getKeyCode());
 		
 		//Delete
-		delete.setShortcut(new MenuShortcut(KeyEvent.VK_DELETE));
-		
+		delete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
 		delete.addActionListener(new AbstractAction()
 		{
 			@Override
