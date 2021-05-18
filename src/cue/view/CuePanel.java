@@ -15,21 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JButton;
-import javax.swing.JColorChooser;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.KeyStroke;
-import javax.swing.SpringLayout;
+import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -199,6 +185,11 @@ public class CuePanel extends JPanel {
 		
 		
 		frame.setMenuBar(menuBar);
+		
+		JMenuBar testBar = new JMenuBar();
+		testBar.add(new JMenu("test"));
+//		testBar.
+		frame.setJMenuBar(testBar);
 	}
 	
 	/**
@@ -302,11 +293,15 @@ public class CuePanel extends JPanel {
 		copy.addActionListener(new DefaultEditorKit.CopyAction());
 		
 		//Paste
-		paste.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_V, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
+		paste.setShortcut(new MenuShortcut(KeyEvent.VK_V | toolkit.getMenuShortcutKeyMask()));
 		paste.addActionListener(new DefaultEditorKit.PasteAction());
 		
+		System.out.println(KeyEvent.VK_DELETE | toolkit.getMenuShortcutKeyMask());
+		System.out.println(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, toolkit.getMenuShortcutKeyMask()).getKeyCode());
+		
 		//Delete
-		delete.setShortcut(new MenuShortcut(KeyEvent.VK_DELETE, false));
+		delete.setShortcut(new MenuShortcut(KeyEvent.VK_DELETE));
+		
 		delete.addActionListener(new AbstractAction()
 		{
 			@Override
