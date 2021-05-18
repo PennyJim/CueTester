@@ -9,18 +9,19 @@ import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.MenuShortcut;
 import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultEditorKit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
@@ -39,6 +40,7 @@ public class CuePanel extends JPanel {
 	private Font font;
 	private SyntaxStyleDocument style;
 	private UndoManager undoManager;
+	private Clipboard clipboard;
 	private String pathName = null;
 	
 	private JScrollPane textPane;
@@ -50,15 +52,19 @@ public class CuePanel extends JPanel {
 	private JButton runButton;
 	private JButton pickColor;
 	
-	private MenuBar menuBar;
-	private Menu fileMenu;
-	private MenuItem newFile;
-	private MenuItem openFile;
-	private MenuItem save;
-	private MenuItem saveAs;
-	private Menu editMenu;
-	private MenuItem undo;
-	private MenuItem redo;
+	private JMenuBar menuBar;
+	private JMenu fileMenu;
+	private JMenuItem newFile;
+	private JMenuItem openFile;
+	private JMenuItem save;
+	private JMenuItem saveAs;
+	private JMenu editMenu;
+	private JMenuItem undo;
+	private JMenuItem redo;
+	private JMenuItem cut;
+	private JMenuItem copy;
+	private JMenuItem paste;
+	private JMenuItem delete;
 	
 	/**
 	 * Initializes and sets up the UI elements.
@@ -67,32 +73,37 @@ public class CuePanel extends JPanel {
 	public CuePanel(CueController controller, JFrame frame)
 	{
 		super();
-		this.controller = controller;
-		this.frame = frame;
-		this.undoManager = new UndoManager();
-		this.layout = new SpringLayout();
-		this.font = getFont();
-		this.font = new Font(font.getFontName(), font.getStyle(), 20);
-		this.style = new SyntaxStyleDocument();
+		this.controller		= controller;
+		this.frame			= frame;
+		this.undoManager	= new UndoManager();
+		this.layout			= new SpringLayout();
+		this.font			= getFont();
+		this.font			= new Font(font.getFontName(), font.getStyle(), 20);
+		this.style			= new SyntaxStyleDocument();
+		this.clipboard		= Toolkit.getDefaultToolkit().getSystemClipboard();
 		
-		this.textPane = new JScrollPane();
-		this.textArea = new JTextPane(style);
-		this.buttonPane = new JPanel(new GridLayout(1, 0, 8, 0));
-		this.stopButton = new JButton("Stop");
-		this.proceedButton = new JButton("Proceed");
-		this.pauseButton = new JButton("Pause");
-		this.runButton = new JButton("Run");
-		this.pickColor = new JButton("Pick Color");
+		this.textPane		= new JScrollPane();
+		this.textArea		= new JTextPane(style);
+		this.buttonPane		= new JPanel(new GridLayout(1, 0, 8, 0));
+		this.stopButton		= new JButton("Stop");
+		this.proceedButton	= new JButton("Proceed");
+		this.pauseButton	= new JButton("Pause");
+		this.runButton		= new JButton("Run");
+		this.pickColor		= new JButton("Pick Color");
 		
-		this.menuBar = new MenuBar();
-		this.fileMenu = new Menu("File");
-		this.newFile = new MenuItem("New File");
-		this.openFile = new MenuItem("Open File");
-		this.save = new MenuItem("Save");
-		this.saveAs = new MenuItem("Save As…");
-		this.editMenu = new Menu("Edit");
-		this.undo = new MenuItem("Undo");
-		this.redo = new MenuItem("Redo");
+		this.menuBar	= new JMenuBar();
+		this.fileMenu	= new JMenu("File");
+		this.newFile	= new JMenuItem("New File");
+		this.openFile	= new JMenuItem("Open File");
+		this.save		= new JMenuItem("Save");
+		this.saveAs		= new JMenuItem("Save As…");
+		this.editMenu	= new JMenu("Edit");
+		this.undo		= new JMenuItem("Undo");
+		this.redo		= new JMenuItem("Redo");
+		this.cut		= new JMenuItem("Cut");
+		this.copy		= new JMenuItem("Copy");
+		this.paste		= new JMenuItem("Paste");
+		this.delete		= new JMenuItem("Delete");
 		
 		setupPanel();
 		setupMenu();
@@ -166,10 +177,15 @@ public class CuePanel extends JPanel {
 		
 		editMenu.add(undo);
 		editMenu.add(redo);
+		editMenu.addSeparator();
+		editMenu.add(cut);
+		editMenu.add(copy);
+		editMenu.add(paste);
+		editMenu.add(delete);
 		menuBar.add(editMenu);
 		
 		
-		frame.setMenuBar(menuBar);
+		frame.setJMenuBar(menuBar);
 	}
 	
 	/**
@@ -198,30 +214,26 @@ public class CuePanel extends JPanel {
 		InputMap inputMask = textArea.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap actionMask = textArea.getActionMap();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		int menuKey = toolkit.getMenuShortcutKeyMask();
 
-		//New File Button
-		newFile.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('N', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
-		//New File Action
+		//New File
+		newFile.setAccelerator(KeyStroke.getKeyStroke('N', menuKey));
 		newFile.addActionListener(click -> newFile());
 		
-		//Open File Button
-		openFile.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('O', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
-		//Open File Action
+		//Open
+		openFile.setAccelerator(KeyStroke.getKeyStroke('O', menuKey));
 		openFile.addActionListener(click -> openFile());
 		
-		//Save Button
-		save.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('S', toolkit.getMenuShortcutKeyMask()).getKeyCode()));
-		//Save Action
+		//Save
+		save.setAccelerator(KeyStroke.getKeyStroke('S', menuKey));
 		save.addActionListener(click -> saveFile());
 		
-		//Save As Button
-		saveAs.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('S', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true));
-		//Save As Action
+		//Save As
+		saveAs.setAccelerator(KeyStroke.getKeyStroke('S', menuKey | InputEvent.SHIFT_DOWN_MASK));
 		saveAs.addActionListener(click -> saveFileAs());
 		
-		//Undo Button
-		undo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()).getKeyCode())); //inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, toolkit.getMenuShortcutKeyMask()), "Undo");
-		//Undo Action
+		//Undo
+		undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, menuKey));
 		AbstractAction undoAction = new AbstractAction()
 		{
 			@Override
@@ -244,10 +256,9 @@ public class CuePanel extends JPanel {
 		undo.addActionListener(undoAction);
 		actionMask.put("Undo", undoAction);
 		
-		//Redo Buttons
-		inputMask.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, toolkit.getMenuShortcutKeyMask()), "Redo");
-		redo.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke('Z', toolkit.getMenuShortcutKeyMask()).getKeyCode(), true)); //inputMask.put(KeyStroke.getKeyStroke('Z', Event.SHIFT_MASK + toolkit.getMenuShortcutKeyMask()), "Redo");
-		//Undo Action
+		//Redo
+		inputMask.put(KeyStroke.getKeyStroke('Y', menuKey), "Redo");
+		redo.setAccelerator(KeyStroke.getKeyStroke('Z', menuKey | InputEvent.SHIFT_DOWN_MASK));
 		AbstractAction redoAction = new AbstractAction()
 		{
 			@Override
@@ -269,6 +280,43 @@ public class CuePanel extends JPanel {
 		};
 		redo.addActionListener(redoAction);
 		actionMask.put("Redo", redoAction);
+		
+		//Cut
+		cut.setAccelerator(KeyStroke.getKeyStroke('X', menuKey));
+		cut.addActionListener(new DefaultEditorKit.CutAction());
+		
+		//Copy
+		copy.setAccelerator(KeyStroke.getKeyStroke('C', menuKey));
+		copy.addActionListener(new DefaultEditorKit.CopyAction());
+		
+		//Paste
+		paste.setAccelerator(KeyStroke.getKeyStroke('V', menuKey));
+		paste.addActionListener(new DefaultEditorKit.PasteAction());
+		
+		//Delete
+		delete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+		delete.addActionListener(new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				if (textArea.getSelectedText() == null)
+				{
+					Action[] temp = textArea.getEditorKit().getActions();
+					for (Action act : temp)
+					{
+						if (act.getValue(NAME) == DefaultEditorKit.deleteNextCharAction)
+						{
+							act.actionPerformed(e);
+						}
+					}
+				}
+				else
+				{
+					textArea.replaceSelection("");
+				}
+			}
+		});
 		
 		stopButton.addActionListener(click -> controller.stop());
 		proceedButton.addActionListener(click -> controller.moveForward());
@@ -336,18 +384,14 @@ public class CuePanel extends JPanel {
 	    color = JColorChooser.showDialog(frame, "Pick a color", color);
 	    
 	    if (color != null)
-	    {
-			int position = textArea.getCaretPosition();
-			String codeFull = textArea.getText();
-			String codeFHalf = codeFull.substring(0, position);
-			String codeSHalf = codeFull.substring(position);
-			System.out.println(codeFHalf + "|" + codeSHalf);
-			
+	    {			
 			double red = ((double)color.getRed() / 255.0) * 100;
 			double green = ((double)color.getGreen() / 255.0) * 100;
 			double blue = ((double)color.getBlue() / 255.0) * 100;
 			
-			textArea.setText(codeFHalf + String.format("%.2f", red) + " " + String.format("%.2f", green) + " " + String.format("%.2f", blue) + "\n" + codeSHalf);
+			String newText = String.format("%.2f", red) + " " + String.format("%.2f", green) + " " + String.format("%.2f", blue) + "\n";
+			
+			textArea.replaceSelection(newText);
 	    }
 	}
 
