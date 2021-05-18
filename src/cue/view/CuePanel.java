@@ -296,62 +296,40 @@ public class CuePanel extends JPanel {
 		
 		//Cut
 		cut.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_X, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
-		cut.addActionListener(new AbstractAction()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				String text = textArea.getSelectedText();
-				StringSelection sel = new StringSelection(text);
-				clipboard.setContents(sel, sel);
-				String newText = textArea.getText();
-				textArea.setText(textArea.getText().substring(0, textArea.getSelectionStart()) + textArea.getText().substring(textArea.getSelectionEnd(), textArea.getText().length()));
-			}
-		});
+		cut.addActionListener(new DefaultEditorKit.CutAction());
 		
 		//Copy
 		copy.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_C, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
-		copy.addActionListener(new AbstractAction()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				String text = textArea.getSelectedText();
-				StringSelection sel = new StringSelection(text);
-				clipboard.setContents(sel, sel);
-			}
-		});
+		copy.addActionListener(new DefaultEditorKit.CopyAction());
 		
 		//Paste
 		paste.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_V, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
-		paste.addActionListener(new AbstractAction()
+		paste.addActionListener(new DefaultEditorKit.PasteAction());
+		
+		//Delete
+		delete.setShortcut(new MenuShortcut(KeyEvent.VK_DELETE, false));
+		delete.addActionListener(new AbstractAction()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				try
+				if (textArea.getSelectedText() == null)
 				{
-					String text = (String)clipboard.getData(DataFlavor.stringFlavor);
-					String newText = textArea.getText();
-					newText = newText.substring(0, textArea.getSelectionStart()) + text + newText.substring(textArea.getSelectionEnd(), newText.length());
-					textArea.setText(newText);
+					Action[] temp = textArea.getEditorKit().getActions();
+					for (Action act : temp)
+					{
+						if (act.getValue(NAME) == DefaultEditorKit.deleteNextCharAction)
+						{
+							act.actionPerformed(e);
+						}
+					}
 				}
-				catch (UnsupportedFlavorException e1)
+				else
 				{
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				catch (IOException e1)
-				{
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					textArea.replaceSelection("");
 				}
 			}
 		});
-		
-		//Delete
-		delete.setShortcut(new MenuShortcut(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, toolkit.getMenuShortcutKeyMask()).getKeyCode()));
-		
 		
 		stopButton.addActionListener(click -> controller.stop());
 		proceedButton.addActionListener(click -> controller.moveForward());
