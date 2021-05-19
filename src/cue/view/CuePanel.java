@@ -236,7 +236,7 @@ public class CuePanel extends JPanel {
 		InputMap inputMask = textArea.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap actionMask = textArea.getActionMap();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		int menuKey = toolkit.getMenuShortcutKeyMaskEx();
+		int menuKey = toolkit.getMenuShortcutKeyMask();
 
 		//New File
 		newFile.setAccelerator(KeyStroke.getKeyStroke('N', menuKey));
@@ -280,7 +280,7 @@ public class CuePanel extends JPanel {
 		
 		//Redo
 		inputMask.put(KeyStroke.getKeyStroke('Y', menuKey), "Redo");
-		redo.setAccelerator(KeyStroke.getKeyStroke('Z', menuKey | InputEvent.SHIFT_DOWN_MASK));
+		redo.setAccelerator(KeyStroke.getKeyStroke('Z', menuKey + InputEvent.SHIFT_DOWN_MASK));
 		AbstractAction redoAction = new AbstractAction()
 		{
 			@Override

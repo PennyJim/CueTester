@@ -6,6 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/chris/Downloads/commons-lang3-3.12.0/commons-lang3-3.12.0.jar"/>
+	<classpathentry kind="lib" path="/Users/char2259/Documents/Dev/Java/CueTester/commons-lang3-3.12.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
