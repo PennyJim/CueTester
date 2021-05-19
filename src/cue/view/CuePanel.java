@@ -186,14 +186,22 @@ public class CuePanel extends JPanel {
 		menuBar.add(editMenu);
 		
 //		frame.setBackground(new Color(50, 50, 50));
-		menuBar.setBackground(new Color(50, 50, 50));
-		Component[] comps = menuBar.getComponents();
-		for(int i = 0; i < comps.length; i++)
+		Color menuColor = new Color(50, 50, 50);
+		menuBar.setBackground(menuColor);
+		for(int i = 0; i < menuBar.getMenuCount(); i++)
 		{
-			if (comps[i] != null)
+			JMenu menu = menuBar.getMenu(i);
+			if (menu != null)
 			{
-				comps[i].setBackground(null);
-				comps[i].setForeground(Color.WHITE);
+				menu.setBackground(menuColor);
+				menu.setForeground(Color.WHITE);
+				
+				for (int j = 0; j < menu.getMenuComponentCount(); j++)
+				{
+					Component item = menu.getMenuComponent(j);
+					item.setBackground(menuColor);
+					item.setForeground(Color.WHITE);
+				}
 			}
 		}
 		
