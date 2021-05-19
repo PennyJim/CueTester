@@ -139,6 +139,7 @@ public class CueFrame extends JFrame
 	{
 		JFrame frame;
 		Point clickPoint;
+		Point screenPoint;
 		int resizeDir;
 		
 		int x = -1;
@@ -188,6 +189,7 @@ public class CueFrame extends JFrame
 		public void mousePressed(MouseEvent e)
 		{
 			clickPoint = e.getPoint();
+			screenPoint = e.getLocationOnScreen();
 			resizeDir = getResizeDir(e.getPoint());
 			
 			x = frame.getX();
@@ -237,70 +239,67 @@ public class CueFrame extends JFrame
 			int width = this.width;
 			int height = this.height;
 			
+			Point screenClick = e.getLocationOnScreen();
+			
 			switch (resizeDir)
 			{
 				default:
 					double xChange;
 					double yChange;
 					break;
-				
+					
 				case -1:
 					x = e.getXOnScreen() - clickPoint.x;
 					y = e.getYOnScreen() - clickPoint.y;
 					break;
 				case 0: //N
-					yChange = clickPoint.getY() - e.getY();
+					yChange = screenPoint.getY() - screenClick.getY();
 					height += yChange;
 					y -= yChange;
-//					clickPoint.setLocation(x, y - yChange);
 					break;
 				case 1: //S
-					yChange = clickPoint.getY() - e.getY();
+					yChange = screenPoint.getY() - screenClick.getY();
 					height -= yChange;
 					break;
 				case 2: //W
-					xChange = clickPoint.getX() - e.getX();
+					xChange = screenPoint.getX() - screenClick.getX();
 					width += xChange;
 					x -= xChange;
-//					clickPoint.setLocation(x - xChange, y);
 					break;
 				case 3: //E
-					xChange = clickPoint.getX() - e.getX();
+					xChange = screenPoint.getX() - screenClick.getX();
 					width -= xChange;
 					break;
 				case 4: //NW
-					yChange = clickPoint.getY() - e.getY();
+					yChange = screenPoint.getY() - screenClick.getY();
 					height += yChange;
 					y -= yChange; 
-					
-					xChange = clickPoint.getX() - e.getX();
+
+					xChange = screenPoint.getX() - screenClick.getX();
 					width += xChange;
 					x += xChange;
-//					clickPoint.setLocation(x - xChange, y - yChange);
 					break;
 				case 5: //NE
-					yChange = clickPoint.getY() - e.getY();
+					yChange = screenPoint.getY() - screenClick.getY();
 					height += yChange;
 					y -= yChange;
-					
-					xChange = clickPoint.getX() - e.getX();
+
+					xChange = screenPoint.getX() - screenClick.getX();
 					width -= xChange;
-//					clickPoint.setLocation(x, y - yChange);
 					break;
 				case 6: //SW
-					yChange = clickPoint.getY() - e.getY();
+					yChange = screenPoint.getY() - screenClick.getY();
 					height -= yChange;
-					
-					xChange = clickPoint.getX() - e.getX();
+
+					xChange = screenPoint.getX() - screenClick.getX();
 					width += xChange;
 					x -= xChange;
-//					clickPoint.setLocation(x - xChange, y);
 					break;
 				case 7: //SE
-					yChange = clickPoint.getY() - e.getY();
+					yChange = screenPoint.getY() - screenClick.getY();
 					height -= yChange;
-					
-					xChange = clickPoint.getX() - e.getX();
+
+					xChange = screenPoint.getX() - screenClick.getX();
 					width -= xChange;
 					break;
 			}
