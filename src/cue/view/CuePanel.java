@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -39,7 +38,6 @@ public class CuePanel extends JPanel {
 	private Font font;
 	private SyntaxStyleDocument style;
 	private UndoManager undoManager;
-	private Clipboard clipboard;
 	private String pathName = null;
 	
 	private JScrollPane textPane;
@@ -79,7 +77,6 @@ public class CuePanel extends JPanel {
 		this.font			= getFont();
 		this.font			= new Font(font.getFontName(), font.getStyle(), 20);
 		this.style			= new SyntaxStyleDocument();
-		this.clipboard		= Toolkit.getDefaultToolkit().getSystemClipboard();
 		
 		this.textPane		= new JScrollPane();
 		this.textArea		= new JTextPane(style);
@@ -239,7 +236,7 @@ public class CuePanel extends JPanel {
 		InputMap inputMask = textArea.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap actionMask = textArea.getActionMap();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		int menuKey = toolkit.getMenuShortcutKeyMask();
+		int menuKey = toolkit.getMenuShortcutKeyMaskEx();
 
 		//New File
 		newFile.setAccelerator(KeyStroke.getKeyStroke('N', menuKey));

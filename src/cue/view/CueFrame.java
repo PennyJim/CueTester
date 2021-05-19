@@ -79,6 +79,10 @@ public class CueFrame extends JFrame
 		this.setLocationRelativeTo(null);
 	}
 	
+	/**
+	 * Sets up the MenuBar to act as the application bar
+	 * @param menuBar the, already setup, menuBar
+	 */
 	public void setupMenuBar(JMenuBar menuBar)
 	{
 		this.setUndecorated(true);
@@ -109,9 +113,7 @@ public class CueFrame extends JFrame
 		}
 		comps[comps.length - 3].setForeground(null);
 		
-		CueMouseListener mouseListener = new CueMouseListener(this);
-		this.addMouseListener(mouseListener);
-		this.addMouseMotionListener(mouseListener);
+		new CueMouseListener(this);
 		
 		
 		JFrame frame = this;
@@ -132,9 +134,10 @@ public class CueFrame extends JFrame
 			}
 		});
 	}
+	
 	private class CueMouseListener implements MouseInputListener
 	{
-		CueFrame frame;
+		JFrame frame;
 		Point clickPoint;
 		int resizeDir;
 		
@@ -142,15 +145,45 @@ public class CueFrame extends JFrame
 		int y = -1;
 		int width = -1;
 		int height = -1;
+
+		/**
+		 * A private array consolidate cursor directions
+		 */
+	    int[] cursors = {
+	        Cursor.N_RESIZE_CURSOR,
+	        Cursor.S_RESIZE_CURSOR,
+	        Cursor.W_RESIZE_CURSOR,
+	        Cursor.E_RESIZE_CURSOR,
+	        Cursor.NW_RESIZE_CURSOR,
+	        Cursor.NE_RESIZE_CURSOR,
+	        Cursor.SW_RESIZE_CURSOR,
+	        Cursor.SE_RESIZE_CURSOR
+	    };
 		
-		public CueMouseListener(CueFrame frame)
+		/**
+		 * The listener that makes an undecorated frame<br>
+		 * resizable and movable. Automatically adds<br>
+		 * itself to the given frame.
+		 * @param frame an undecorated JFrame
+		 */
+		public CueMouseListener(JFrame frame)
 		{
 			this.frame = frame;
+			this.frame.addMouseListener(this);
+			this.frame.addMouseMotionListener(this);
 		}
 
+		/**
+		 * Not Used<br><br>
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void mouseClicked(MouseEvent e) {}
 
+		/**
+		 * Saves a couple variables as a state used to make<br>
+		 * {@link #mouseDragged(MouseEvent)} work
+		 */
 		@Override
 		public void mousePressed(MouseEvent e)
 		{
@@ -163,6 +196,9 @@ public class CueFrame extends JFrame
 			height = frame.getHeight();
 		}
 
+		/**
+		 * Resets the variables saved on press
+		 */
 		@Override
 		public void mouseReleased(MouseEvent e)
 		{
@@ -175,12 +211,24 @@ public class CueFrame extends JFrame
 			height = -1;
 		}
 
+		/**
+		 * Not Used<br><br>
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void mouseEntered(MouseEvent e) {}
 
+		/**
+		 * Not Used<br><br>
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void mouseExited(MouseEvent e) {}
 
+		/**
+		 * Either moves or resizes the window<br>
+		 * depending on the location initially clicked
+		 */
 		@Override
 		public void mouseDragged(MouseEvent e)
 		{			
@@ -266,6 +314,10 @@ public class CueFrame extends JFrame
 			frame.setLocation(x, y);
 		}
 
+		/**
+		 * Checks if mouse is at a location to resize the window<br>
+		 * If so, it applies the appropriate cursor<br>
+		 */
 		@Override
 		public void mouseMoved(MouseEvent e)
 		{
@@ -274,18 +326,15 @@ public class CueFrame extends JFrame
 			if (dir != -1) { cursor = Cursor.getPredefinedCursor(cursors[dir]); }
 			setCursor(cursor);
 		}
-
-	    int[] cursors = {
-	        Cursor.N_RESIZE_CURSOR,
-	        Cursor.S_RESIZE_CURSOR,
-	        Cursor.W_RESIZE_CURSOR,
-	        Cursor.E_RESIZE_CURSOR,
-	        Cursor.NW_RESIZE_CURSOR,
-	        Cursor.NE_RESIZE_CURSOR,
-	        Cursor.SW_RESIZE_CURSOR,
-	        Cursor.SE_RESIZE_CURSOR
-	    };
 		
+		/**
+		 * Used to determine the direction of which the<br>
+		 * frame is about to be resized, based on the position<br>
+		 * of the cursor. If it's not about to be resized, it<br>
+		 * returns -1
+		 * @param point where the cursor is
+		 * @return an index to {@link #cursors} or -1
+		 */
 		private int getResizeDir(Point point)
 		{
 			Rectangle rect = frame.getBounds();
