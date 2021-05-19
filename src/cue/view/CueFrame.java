@@ -1,6 +1,12 @@
 package cue.view;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -9,8 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+import javax.swing.JSeparator;
+import javax.swing.event.MouseInputListener;
 
 import cue.controller.CueController;
 
@@ -73,10 +79,10 @@ public class CueFrame extends JFrame
 		this.setLocationRelativeTo(null);
 	}
 	
-
 	public void setupMenuBar(JMenuBar menuBar)
 	{
 		this.setUndecorated(true);
+//		this.getRootPane().setWindowDecorationStyle(this.getRootPane().FRAME);
 		
 		JButton minimize = new JButton("_");
 		JButton close = new JButton("X");
@@ -87,10 +93,22 @@ public class CueFrame extends JFrame
 		close.setBackground(null);
 
 		menuBar.add(new JMenu("Cue Tester"), 0);
-		menuBar.add(new JMenuItem(""));
-		
+		menuBar.getMenu(0).setEnabled(false);
+		menuBar.add(new JSeparator());
 		menuBar.add(minimize);
 		menuBar.add(close);
+
+		Component[] comps = menuBar.getComponents();
+		for(int i = 0; i < comps.length; i++)
+		{
+			if (comps[i] != null)
+			{
+				comps[i].setBackground(null);
+				comps[i].setForeground(Color.WHITE);
+			}
+		}
+		comps[comps.length - 3].setForeground(null);
+		
 		
 		JFrame frame = this;
 		minimize.addActionListener(new AbstractAction()

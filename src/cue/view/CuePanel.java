@@ -1,13 +1,10 @@
 package cue.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-import java.awt.MenuShortcut;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
@@ -127,6 +124,7 @@ public class CuePanel extends JPanel {
 
 		textArea.setMargin(new Insets(5, 5, 5, 5));
 		textArea.setBackground(new Color(50, 50, 50));
+		textArea.setCaretColor(Color.WHITE);
 		textArea.setText("Var flashColor 0.00 0.00 82.75\n" + 
 					"Var holdTime 2000\n" + 
 					"Var rainbowTime 1000\n" + 
@@ -189,6 +187,15 @@ public class CuePanel extends JPanel {
 		
 //		frame.setBackground(new Color(50, 50, 50));
 		menuBar.setBackground(new Color(50, 50, 50));
+		Component[] comps = menuBar.getComponents();
+		for(int i = 0; i < comps.length; i++)
+		{
+			if (comps[i] != null)
+			{
+				comps[i].setBackground(null);
+				comps[i].setForeground(Color.WHITE);
+			}
+		}
 		
 		if (!SystemUtils.IS_OS_MAC)
 		{
