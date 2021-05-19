@@ -1,15 +1,11 @@
 package cue.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-import java.awt.MenuShortcut;
 import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -27,6 +23,8 @@ import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 
+import org.apache.commons.lang3.SystemUtils;
+
 import cue.controller.CueController;
 import cue.controller.IOController;
 import cue.model.SyntaxStyleDocument;
@@ -35,12 +33,11 @@ import cue.model.SyntaxStyleDocument;
 public class CuePanel extends JPanel {
 
 	private CueController controller;
-	private JFrame frame;
+	private CueFrame frame;
 	private SpringLayout layout;
 	private Font font;
 	private SyntaxStyleDocument style;
 	private UndoManager undoManager;
-	private Clipboard clipboard;
 	private String pathName = null;
 	
 	private JScrollPane textPane;
@@ -70,7 +67,7 @@ public class CuePanel extends JPanel {
 	 * Initializes and sets up the UI elements.
 	 * @param controller
 	 */
-	public CuePanel(CueController controller, JFrame frame)
+	public CuePanel(CueController controller, CueFrame frame)
 	{
 		super();
 		this.controller		= controller;
@@ -80,7 +77,6 @@ public class CuePanel extends JPanel {
 		this.font			= getFont();
 		this.font			= new Font(font.getFontName(), font.getStyle(), 20);
 		this.style			= new SyntaxStyleDocument();
-		this.clipboard		= Toolkit.getDefaultToolkit().getSystemClipboard();
 		
 		this.textPane		= new JScrollPane();
 		this.textArea		= new JTextPane(style);
@@ -125,6 +121,7 @@ public class CuePanel extends JPanel {
 
 		textArea.setMargin(new Insets(5, 5, 5, 5));
 		textArea.setBackground(new Color(50, 50, 50));
+		textArea.setCaretColor(Color.WHITE);
 		textArea.setText("Var flashColor 0.00 0.00 82.75\n" + 
 					"Var holdTime 2000\n" + 
 					"Var rainbowTime 1000\n" + 
@@ -168,6 +165,7 @@ public class CuePanel extends JPanel {
 	 */
 	private void setupMenu()
 	{
+		
 		fileMenu.add(newFile);
 		fileMenu.add(openFile);
 		fileMenu.addSeparator();
@@ -184,6 +182,30 @@ public class CuePanel extends JPanel {
 		editMenu.add(delete);
 		menuBar.add(editMenu);
 		
+//		frame.setBackground(new Color(50, 50, 50));
+		Color menuColor = new Color(50, 50, 50);
+		menuBar.setBackground(menuColor);
+		for(int i = 0; i < menuBar.getMenuCount(); i++)
+		{
+			JMenu menu = menuBar.getMenu(i);
+			if (menu != null)
+			{
+				menu.setBackground(menuColor);
+				menu.setForeground(Color.WHITE);
+				
+				for (int j = 0; j < menu.getMenuComponentCount(); j++)
+				{
+					Component item = menu.getMenuComponent(j);
+					item.setBackground(menuColor);
+					item.setForeground(Color.WHITE);
+				}
+			}
+		}
+		
+		if (!SystemUtils.IS_OS_MAC)
+		{
+			frame.setupMenuBar(menuBar);
+		}
 		
 		frame.setJMenuBar(menuBar);
 	}
@@ -258,7 +280,7 @@ public class CuePanel extends JPanel {
 		
 		//Redo
 		inputMask.put(KeyStroke.getKeyStroke('Y', menuKey), "Redo");
-		redo.setAccelerator(KeyStroke.getKeyStroke('Z', menuKey | InputEvent.SHIFT_DOWN_MASK));
+		redo.setAccelerator(KeyStroke.getKeyStroke('Z', menuKey + InputEvent.SHIFT_DOWN_MASK));
 		AbstractAction redoAction = new AbstractAction()
 		{
 			@Override
