@@ -113,7 +113,7 @@ public class CueFrame extends JFrame
 		}
 		comps[comps.length - 3].setForeground(null);
 		
-		new CueMouseListener(this);
+		new ResizeableMouseListener(this, 6);
 		
 		
 		JFrame frame = this;
@@ -135,17 +135,19 @@ public class CueFrame extends JFrame
 		});
 	}
 	
-	private class CueMouseListener implements MouseInputListener
+	private class ResizeableMouseListener implements MouseInputListener
 	{
-		JFrame frame;
-		Point clickPoint;
-		Point screenPoint;
-		int resizeDir;
+		private int resizeRange;
 		
-		int x = -1;
-		int y = -1;
-		int width = -1;
-		int height = -1;
+		private Component frame;
+		private Point clickPoint;
+		private Point screenPoint;
+		private int resizeDir;
+		
+		private int x = -1;
+		private int y = -1;
+		private int width = -1;
+		private int height = -1;
 
 		/**
 		 * A private array consolidate cursor directions
@@ -166,12 +168,15 @@ public class CueFrame extends JFrame
 		 * resizable and movable. Automatically adds<br>
 		 * itself to the given frame.
 		 * @param frame an undecorated JFrame
+		 * @param resizeRange the distance from the edge you can use to reszie
 		 */
-		public CueMouseListener(JFrame frame)
+		public ResizeableMouseListener(Component frame, int resizeRange)
 		{
 			this.frame = frame;
 			this.frame.addMouseListener(this);
 			this.frame.addMouseMotionListener(this);
+			
+			this.resizeRange = resizeRange;
 		}
 
 		/**
@@ -338,8 +343,8 @@ public class CueFrame extends JFrame
 		{
 			Rectangle rect = frame.getBounds();
 			
-			boolean isEW = Math.min(point.getX(), rect.getWidth() - point.getX()) < 5.0;
-			boolean isNS = Math.min(point.getY(), rect.getHeight() - point.getY()) < 5.0;
+			boolean isEW = Math.min(point.getX(), rect.getWidth() - point.getX()) < resizeRange;
+			boolean isNS = Math.min(point.getY(), rect.getHeight() - point.getY()) < resizeRange;
 			
 			boolean isSouth = point.getY() >= rect.getHeight() / 2.0;
 			boolean isEast = point.getX() >= rect.getWidth() / 2.0;
