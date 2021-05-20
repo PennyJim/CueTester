@@ -210,6 +210,34 @@ public class CuePanel extends JPanel {
 		}
 		
 		frame.setJMenuBar(menuBar);
+		
+		menuBar.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				System.out.println("Clicked " + e.getClickCount() + " time(s)");
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				System.out.println("Clicked " + e.getClickCount() + " time(s)");
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				System.out.println("Clicked " + e.getClickCount() + " time(s)");
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				System.out.println("Clicked " + e.getClickCount() + " time(s)");
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("Clicked " + e.getClickCount() + " time(s)");
+			}
+		});
 	}
 	
 	/**

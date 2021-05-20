@@ -206,6 +206,7 @@ public class CueFrame extends JFrame
 		{
 			Component layeredPane = getLayeredPane();
 			Point containerPoint = SwingUtilities.convertPoint(this, e.getPoint(), layeredPane);
+			System.out.println(containerPoint);
 			layeredPane.dispatchEvent(new MouseEvent(	layeredPane,
 														e.getID(),
 														e.getWhen(),
@@ -381,6 +382,7 @@ public class CueFrame extends JFrame
 			int dir = getResizeDir(e.getPoint());
 			Cursor cursor = Cursor.getDefaultCursor();
 			if (dir != -1) { cursor = Cursor.getPredefinedCursor(cursors[dir]); }
+			System.out.println(cursor);
 			setCursor(cursor);
 		}
 		
