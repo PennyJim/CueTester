@@ -202,35 +202,38 @@ public class CueFrame extends JFrame
 			else return true;
 		}
 		
-		private void dispatchEvent(MouseEvent e)
+		private boolean dispatchEvent(MouseEvent e)
 		{
 			Component layeredPane = getLayeredPane();
 			Point containerPoint = SwingUtilities.convertPoint(this, e.getPoint(), layeredPane);
-			System.out.println(containerPoint);
-			layeredPane.dispatchEvent(new MouseEvent(	layeredPane,
-														e.getID(),
-														e.getWhen(),
-														e.getModifiers(),
-														containerPoint.x,
-														containerPoint.y,
-														e.getClickCount(),
-														e.isPopupTrigger()));
-//			Component clickedItem = SwingUtilities.getDeepestComponentAt(layeredPane, containerPoint.x, containerPoint.y);
-//			if ((clickedItem != null))
-//			{
-//				Point itemPoint = SwingUtilities.convertPoint(this, e.getPoint(), clickedItem);
-//				System.out.println(itemPoint);
-//				clickedItem.dispatchEvent(new MouseEvent(	clickedItem,
-//															e.getID(),
-//															e.getWhen(),
-//															e.getModifiers(),
-//															itemPoint.x,
-//															itemPoint.y,
-//															e.getClickCount(),
-//															e.isPopupTrigger()));
-//				return true;
-//			}
-//			else return false;
+//			System.out.println(containerPoint);
+//			layeredPane.dispatchEvent(new MouseEvent(	layeredPane,
+//														e.getID(),
+//														e.getWhen(),
+//														e.getModifiers(),
+//														containerPoint.x,
+//														containerPoint.y,
+//														e.getClickCount(),
+//														e.isPopupTrigger()));
+			Component clickedItem = SwingUtilities.getDeepestComponentAt(layeredPane, containerPoint.x, containerPoint.y);
+			if ((clickedItem != null))
+			{
+				Point itemPoint = SwingUtilities.convertPoint(this, e.getPoint(), clickedItem);
+				System.out.println(itemPoint);
+				MouseEvent test = new MouseEvent(	clickedItem,
+													e.getID(),
+													e.getWhen(),
+													e.getModifiers(),
+													itemPoint.x,
+													itemPoint.y,
+													e.getClickCount(),
+													e.isPopupTrigger());
+				boolean temp = test.isConsumed();
+				clickedItem.dispatchEvent(test);
+				System.out.println(temp + "\t" + test.isConsumed());
+				return true;
+			}
+			else return false;
 		}
 
 		/**
