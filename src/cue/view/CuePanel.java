@@ -92,7 +92,7 @@ public class CuePanel extends JPanel {
 		this.newFile	= new JMenuItem("New File");
 		this.openFile	= new JMenuItem("Open File");
 		this.save		= new JMenuItem("Save");
-		this.saveAs		= new JMenuItem("Save Asâ€¦");
+		this.saveAs		= new JMenuItem("Save As…");
 		this.editMenu	= new JMenu("Edit");
 		this.undo		= new JMenuItem("Undo");
 		this.redo		= new JMenuItem("Redo");
@@ -255,8 +255,8 @@ public class CuePanel extends JPanel {
 		saveAs.addActionListener(click -> saveFileAs());
 		
 		//Undo
-		undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, menuKey));
-		AbstractAction undoAction = new AbstractAction()
+		undo.setAccelerator(KeyStroke.getKeyStroke('Z', menuKey));
+		undo.addActionListener(new AbstractAction()
 		{
 			@Override
 			public void actionPerformed(ActionEvent ev)
@@ -274,9 +274,7 @@ public class CuePanel extends JPanel {
 					er.printStackTrace();
 				}
 			}
-		};
-		undo.addActionListener(undoAction);
-		actionMask.put("Undo", undoAction);
+		});
 		
 		//Redo
 		inputMask.put(KeyStroke.getKeyStroke('Y', menuKey), "Redo");

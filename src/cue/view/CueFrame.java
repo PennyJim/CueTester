@@ -92,9 +92,9 @@ public class CueFrame extends JFrame
 		JButton close = new JButton("X");
 		
 		minimize.setBorderPainted(false);
-		minimize.setBackground(null);
+		minimize.setFocusable(false);
 		close.setBorderPainted(false);
-		close.setBackground(null);
+		close.setFocusable(false);
 
 		menuBar.add(new JMenu("Cue Tester"), 0);
 		menuBar.getMenu(0).setEnabled(false);
