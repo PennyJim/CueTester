@@ -382,7 +382,7 @@ public class CueFrame extends JFrame
 			int dir = getResizeDir(e.getPoint());
 			Cursor cursor = Cursor.getDefaultCursor();
 			if (dir != -1) { cursor = Cursor.getPredefinedCursor(cursors[dir]); }
-			System.out.println(cursor);
+//			System.out.println(cursor);
 			setCursor(cursor);
 		}
 		
