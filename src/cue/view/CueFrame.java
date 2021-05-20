@@ -2,20 +2,28 @@ package cue.view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.MouseInputListener;
 
 import cue.controller.CueController;
@@ -113,7 +121,9 @@ public class CueFrame extends JFrame
 		}
 		comps[comps.length - 3].setForeground(null);
 		
-		new ResizeableMouseListener(this, 6);
+		this.getGlassPane().setVisible(true);
+		this.setGlassPane(new ResizableGlassPane(this, 6));
+//		new ResizableMouseListener(this, 6);
 		
 		
 		JFrame frame = this;
@@ -135,7 +145,7 @@ public class CueFrame extends JFrame
 		});
 	}
 	
-	private class ResizeableMouseListener implements MouseInputListener
+	private class ResizableGlassPane extends JComponent implements MouseInputListener
 	{
 		private int resizeRange;
 		
@@ -170,13 +180,56 @@ public class CueFrame extends JFrame
 		 * @param frame an undecorated JFrame
 		 * @param resizeRange the distance from the edge you can use to reszie
 		 */
-		public ResizeableMouseListener(Component frame, int resizeRange)
+		public ResizableGlassPane(Component frame, int resizeRange)
 		{
+			super();
+	        this.setName("ResizableGlassPane");
+			this.addMouseListener(this);
+			this.addMouseMotionListener(this);
+	        
 			this.frame = frame;
-			this.frame.addMouseListener(this);
-			this.frame.addMouseMotionListener(this);
-			
 			this.resizeRange = resizeRange;
+		}
+		
+		private boolean interruptMouseEvent(MouseEvent e)
+		{
+			int resizeDir = getResizeDir(e.getPoint());
+			if (resizeDir == -1)
+			{
+				dispatchEvent(e);
+				return false;
+			}
+			else return true;
+		}
+		
+		private void dispatchEvent(MouseEvent e)
+		{
+			Component layeredPane = getLayeredPane();
+			Point containerPoint = SwingUtilities.convertPoint(this, e.getPoint(), layeredPane);
+			layeredPane.dispatchEvent(new MouseEvent(	layeredPane,
+														e.getID(),
+														e.getWhen(),
+														e.getModifiers(),
+														containerPoint.x,
+														containerPoint.y,
+														e.getClickCount(),
+														e.isPopupTrigger()));
+//			Component clickedItem = SwingUtilities.getDeepestComponentAt(layeredPane, containerPoint.x, containerPoint.y);
+//			if ((clickedItem != null))
+//			{
+//				Point itemPoint = SwingUtilities.convertPoint(this, e.getPoint(), clickedItem);
+//				System.out.println(itemPoint);
+//				clickedItem.dispatchEvent(new MouseEvent(	clickedItem,
+//															e.getID(),
+//															e.getWhen(),
+//															e.getModifiers(),
+//															itemPoint.x,
+//															itemPoint.y,
+//															e.getClickCount(),
+//															e.isPopupTrigger()));
+//				return true;
+//			}
+//			else return false;
 		}
 
 		/**
@@ -184,7 +237,7 @@ public class CueFrame extends JFrame
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void mouseClicked(MouseEvent e) {}
+		public void mouseClicked(MouseEvent e) { dispatchEvent(e); }
 
 		/**
 		 * Saves a couple variables as a state used to make<br>
@@ -223,14 +276,14 @@ public class CueFrame extends JFrame
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void mouseEntered(MouseEvent e) {}
+		public void mouseEntered(MouseEvent e) { dispatchEvent(e); }
 
 		/**
 		 * Not Used<br><br>
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void mouseExited(MouseEvent e) {}
+		public void mouseExited(MouseEvent e) { dispatchEvent(e); }
 
 		/**
 		 * Either moves or resizes the window<br>
